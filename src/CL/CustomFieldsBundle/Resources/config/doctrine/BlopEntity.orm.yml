@@ -1,0 +1,19 @@
+CL\CustomFieldsBundle\Entity\BlopEntity:
+    type: entity
+    table: blop_entity
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        field1:
+            type: string
+            length: 255
+        field2:
+            type: string
+            length: 255
+        customField:
+            type: json_array
+    lifecycleCallbacks: {  }

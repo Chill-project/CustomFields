@@ -1,0 +1,19 @@
+CL\CustomFieldsBundle\Entity\CustomField:
+    type: entity
+    table: null
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        label:
+            type: string
+            length: 255
+        type:
+            type: string
+            length: 255
+        active:
+            type: boolean
+    lifecycleCallbacks: {  }

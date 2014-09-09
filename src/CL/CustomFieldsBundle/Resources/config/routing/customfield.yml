@@ -1,0 +1,30 @@
+customfield:
+    path:     /
+    defaults: { _controller: "CLCustomFieldsBundle:CustomField:index" }
+
+customfield_show:
+    path:     /{id}/show
+    defaults: { _controller: "CLCustomFieldsBundle:CustomField:show" }
+
+customfield_new:
+    path:     /new
+    defaults: { _controller: "CLCustomFieldsBundle:CustomField:new" }
+
+customfield_create:
+    path:     /create
+    defaults: { _controller: "CLCustomFieldsBundle:CustomField:create" }
+    requirements: { _method: post }
+
+customfield_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "CLCustomFieldsBundle:CustomField:edit" }
+
+customfield_update:
+    path:     /{id}/update
+    defaults: { _controller: "CLCustomFieldsBundle:CustomField:update" }
+    requirements: { _method: post|put }
+
+customfield_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "CLCustomFieldsBundle:CustomField:delete" }
+    requirements: { _method: post|delete }
