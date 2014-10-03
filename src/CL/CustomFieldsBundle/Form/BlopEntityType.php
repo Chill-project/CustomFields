@@ -20,6 +20,7 @@ class BlopEntityType extends AbstractType
       $builder
          ->add('field1')
          ->add('field2')
+         ->add('adress', new AdressType())
          ->add('customField',new CustomFieldType($entityManager))
         ;
     }
@@ -30,7 +31,8 @@ class BlopEntityType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'CL\CustomFieldsBundle\Entity\BlopEntity'
+            'data_class' => 'CL\CustomFieldsBundle\Entity\BlopEntity',
+            'cascade_validation' => true
         ));
 
         // supprimer ça en definissant dans services

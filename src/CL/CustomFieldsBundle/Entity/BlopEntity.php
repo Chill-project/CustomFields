@@ -27,6 +27,8 @@ class BlopEntity
    */
    private $customField;
 
+   private $adress;
+
 
    /**
    * Get id
@@ -36,6 +38,23 @@ class BlopEntity
    public function getId()
    {
       return $this->id;
+   }
+
+   public function setAdress($a)
+   {
+      $this->adress = $a;
+
+      return $this;
+   }
+
+   /**
+   * Get field1
+   *
+   * @return string
+   */
+   public function getAdress()
+   {
+      return $this->adress;
    }
 
    /**

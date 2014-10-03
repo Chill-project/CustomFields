@@ -1,0 +1,30 @@
+adress:
+    path:     /
+    defaults: { _controller: "CLCustomFieldsBundle:Adress:index" }
+
+adress_show:
+    path:     /{id}/show
+    defaults: { _controller: "CLCustomFieldsBundle:Adress:show" }
+
+adress_new:
+    path:     /new
+    defaults: { _controller: "CLCustomFieldsBundle:Adress:new" }
+
+adress_create:
+    path:     /create
+    defaults: { _controller: "CLCustomFieldsBundle:Adress:create" }
+    requirements: { _method: post }
+
+adress_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "CLCustomFieldsBundle:Adress:edit" }
+
+adress_update:
+    path:     /{id}/update
+    defaults: { _controller: "CLCustomFieldsBundle:Adress:update" }
+    requirements: { _method: post|put }
+
+adress_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "CLCustomFieldsBundle:Adress:delete" }
+    requirements: { _method: post|delete }

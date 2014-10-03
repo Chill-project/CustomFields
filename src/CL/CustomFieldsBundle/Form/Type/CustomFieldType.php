@@ -38,9 +38,17 @@ class CustomFieldType extends AbstractType
       ->findAll();
 
       foreach ($customFields as $cf) {
-         $builder->add($cf->getLabel(), $cf->getType());
+        if($cf->getType() === 'ManyToOne(Address)') {
+            $builder->add($cf->getLabel(), 'entity', array(
+                'class' => 'CLCustomFieldsBundle:Adress',
+                'property' => 'data',
+            ));
+        } else {
+            $builder->add($cf->getLabel(), $cf->getType());
+        }
       }
-      $builder->addViewTransformer(new JsonCustomFieldToArrayTransformer());
+
+      $builder->addViewTransformer(new JsonCustomFieldToArrayTransformer($this->om));
    }
 
    public function getName()
