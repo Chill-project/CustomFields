@@ -38,7 +38,7 @@ class CustomFieldType extends AbstractType
       ->findAll();
 
       foreach ($customFields as $cf) {
-        if($cf->getType() === 'ManyToOne(Address)') {
+        if($cf->getType() === 'ManyToOne(Adress)') {
             $builder->add($cf->getLabel(), 'entity', array(
                 'class' => 'CLCustomFieldsBundle:Adress',
                 'property' => 'data',

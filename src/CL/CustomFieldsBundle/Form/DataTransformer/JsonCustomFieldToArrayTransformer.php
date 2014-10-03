@@ -70,7 +70,7 @@ class JsonCustomFieldToArrayTransformer implements DataTransformerInterface {
                 echo "<br> - - - - <br>";
                 */
 
-                if($this->customField[$key]->getType() === 'ManyToOne(Address)') {
+                if($this->customField[$key]->getType() === 'ManyToOne(Adress)') {
                     $customFieldsArrayRet[$key] = $this->om
                             ->getRepository('CLCustomFieldsBundle:Adress')
                             ->findOneById($value);
@@ -104,7 +104,7 @@ class JsonCustomFieldToArrayTransformer implements DataTransformerInterface {
         foreach ($customFieldsArray as $key => $value) {
             $traited = false;
             if(array_key_exists($key, $this->customField)) {
-                if($this->customField[$key]->getType() === 'ManyToOne(Address)') {
+                if($this->customField[$key]->getType() === 'ManyToOne(Adress)') {
                     $customFieldsArrayRet[$key] = $value->getId();
 
                     /*
