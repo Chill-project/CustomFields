@@ -29,16 +29,16 @@ class JsonCustomFieldToArrayTransformer implements DataTransformerInterface {
         $customFieldsByLabel = array_combine($customFieldsLablels, $customFields);
 
         /*
-        echo "<br> - - <br>";
+        echo "<br> - 1 - <br>";
 
         var_dump($customFields);
 
-        echo "<br> - - <br>";
+        echo "<br> - 2 - <br>";
 
         var_dump($customFieldsLablels);
 
-        echo "<br> - - <br>";
-
+        echo "<br> - 3 - <br>";
+    
         var_dump($customFieldsByLabel);
         */
 
@@ -49,32 +49,26 @@ class JsonCustomFieldToArrayTransformer implements DataTransformerInterface {
     {
         echo $customFieldsJSON;
         $customFieldsArray = json_decode($customFieldsJSON,true);
-
         /*
-        echo "<br> - - <br>";
+
+        echo "<br> - 4 - <br>";
 
         var_dump($customFieldsArray);
 
-        echo "<br> - - <br>";
-        */
-
+        echo "<br> - 5 - <br>";
+        ¨*/
 
         $customFieldsArrayRet = array();
 
         foreach ($customFieldsArray as $key => $value) {
             $traited = false;
             if(array_key_exists($key, $this->customField)) {
-                /*
-                echo "<br> - - - - <br>";   
-                echo $value; 
-                echo "<br> - - - - <br>";
-                */
-
-                if($this->customField[$key]->getType() === 'ManyToOne(Adress)') {
+                $type = $this->customField[$key]->getType();
+                if(strpos($type,'ManyToOne') === 0) {
+                    $entityClass = substr($type, 10, -1);
                     $customFieldsArrayRet[$key] = $this->om
-                            ->getRepository('CLCustomFieldsBundle:Adress')
-                            ->findOneById($value);
-
+                        ->getRepository('CLCustomFieldsBundle:' . $entityClass)
+                        ->findOneById($value);
                     $traited = true;
                 }
             }
@@ -84,7 +78,7 @@ class JsonCustomFieldToArrayTransformer implements DataTransformerInterface {
             }
         }
 
-        var_dump($customFieldsArray);
+        //var_dump($customFieldsArray);
 
         return $customFieldsArrayRet;
     }
@@ -92,11 +86,15 @@ class JsonCustomFieldToArrayTransformer implements DataTransformerInterface {
     public function reverseTransform($customFieldsArray)
     {
         /*
-        echo "<br> - - - - <br>";
+        echo "<br> - - 7 - <br>";
 
-        var_dump($customFieldsArray);
+        var_dump(array_keys($customFieldsArray));
 
-        echo "<br> - - - - <br>";
+        echo "<br> - - 8 - <br>";
+
+        var_dump(array_keys($this->customField));
+
+        echo "<br> - - 9 - <br>";
         */
 
         $customFieldsArrayRet = array();
@@ -104,15 +102,11 @@ class JsonCustomFieldToArrayTransformer implements DataTransformerInterface {
         foreach ($customFieldsArray as $key => $value) {
             $traited = false;
             if(array_key_exists($key, $this->customField)) {
-                if($this->customField[$key]->getType() === 'ManyToOne(Adress)') {
+                $type = $this->customField[$key]->getType();
+                if(strpos($type,'ManyToOne') === 0) {
+                    //$entityClass = substr($type, 10, -1);
+                    //echo $entityClasss;
                     $customFieldsArrayRet[$key] = $value->getId();
-
-                    /*
-                    echo "<br> - - - - <br>";                    
-                    echo $value->getId();
-                    echo "<br> - - - - <br>";
-                    */
-
                     $traited = true;
                 }
             }
@@ -120,6 +114,7 @@ class JsonCustomFieldToArrayTransformer implements DataTransformerInterface {
             if(! $traited) {
                 $customFieldsArrayRet[$key] = $value;
             }
+
         }
 
         var_dump($customFieldsArrayRet);
