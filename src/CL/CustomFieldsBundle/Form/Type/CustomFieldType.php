@@ -15,6 +15,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use CL\CustomFieldsBundle\Form\DataTransformer\JsonCustomFieldToArrayTransformer;
 use Doctrine\Common\Persistence\ObjectManager;
+use CL\CustomFieldsBundle\Form\AdressType;
 
 class CustomFieldType extends AbstractType
 {
@@ -43,7 +44,10 @@ class CustomFieldType extends AbstractType
                 'class' => 'CLCustomFieldsBundle:Adress',
                 'property' => 'data',
             ));
-        } else {
+        } else if ($cf->getType() === 'ManyToOnePersist(Adress)') {
+            $builder->add($cf->getLabel(), new AdressType());
+        }
+        else {
             $builder->add($cf->getLabel(), $cf->getType());
         }
       }
