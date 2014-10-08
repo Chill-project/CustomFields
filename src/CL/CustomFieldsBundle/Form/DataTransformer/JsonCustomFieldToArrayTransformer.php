@@ -48,7 +48,13 @@ class JsonCustomFieldToArrayTransformer implements DataTransformerInterface {
     public function transform($customFieldsJSON)
     {
         echo $customFieldsJSON;
-        $customFieldsArray = json_decode($customFieldsJSON,true);
+
+        if($customFieldsJSON === null) { // lors de la creation
+            $customFieldsArray = array();
+        } else {
+            $customFieldsArray = json_decode($customFieldsJSON,true);
+        }
+
         /*
 
         echo "<br> - 4 - <br>";
@@ -115,6 +121,9 @@ class JsonCustomFieldToArrayTransformer implements DataTransformerInterface {
                     //$entityClass = substr($type, 10, -1);
                     //echo $entityClasss;
                     if(strpos($type, 'ManyToOnePersist') === 0) {
+                        // PEUT ETRE A FAIRE SI SEULEMENT $value->getId() ne renvoie rien... 
+                        //
+                        //
                         $this->om->persist($value); // pas bon ici
                         // LE PERSIST NE SERT QUE LA PREMIERE FOIS
                         // plutot le mettre dans une var temporaire de adress
