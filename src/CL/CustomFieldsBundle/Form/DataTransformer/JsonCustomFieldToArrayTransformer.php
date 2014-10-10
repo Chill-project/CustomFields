@@ -4,6 +4,7 @@ namespace CL\CustomFieldsBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class JsonCustomFieldToArrayTransformer implements DataTransformerInterface {
     /**
@@ -28,20 +29,6 @@ class JsonCustomFieldToArrayTransformer implements DataTransformerInterface {
 
         $customFieldsByLabel = array_combine($customFieldsLablels, $customFields);
 
-        /*
-        echo "<br> - 1 - <br>";
-
-        var_dump($customFields);
-
-        echo "<br> - 2 - <br>";
-
-        var_dump($customFieldsLablels);
-
-        echo "<br> - 3 - <br>";
-    
-        var_dump($customFieldsByLabel);
-        */
-
         $this->customField = $customFieldsByLabel;
     }
 
@@ -56,13 +43,12 @@ class JsonCustomFieldToArrayTransformer implements DataTransformerInterface {
         }
 
         /*
-
         echo "<br> - 4 - <br>";
 
         var_dump($customFieldsArray);
 
         echo "<br> - 5 - <br>";
-        ¨*/
+        */
 
         $customFieldsArrayRet = array();
 
@@ -81,6 +67,8 @@ class JsonCustomFieldToArrayTransformer implements DataTransformerInterface {
                         ->getRepository('CLCustomFieldsBundle:' . $entityClass)
                         ->findOneById($value);
                     $traited = true;
+                } else if ($type === 'ManyToMany(Adress)') {
+                    $customFieldsArrayRet[$key] = $value;
                 }
             }
 
@@ -89,7 +77,7 @@ class JsonCustomFieldToArrayTransformer implements DataTransformerInterface {
             }
         }
 
-        //var_dump($customFieldsArray);
+        var_dump($customFieldsArrayRet);
 
         return $customFieldsArrayRet;
     }
@@ -98,15 +86,18 @@ class JsonCustomFieldToArrayTransformer implements DataTransformerInterface {
     {
         /*
         echo "<br> - - 7 - <br>";
+        
 
         var_dump(array_keys($customFieldsArray));
-
+    
         echo "<br> - - 8 - <br>";
 
         var_dump(array_keys($this->customField));
 
         echo "<br> - - 9 - <br>";
         */
+
+        //var_dump($customFieldsArray);
 
         $customFieldsArrayRet = array();
 
@@ -147,7 +138,7 @@ class JsonCustomFieldToArrayTransformer implements DataTransformerInterface {
 
         }
 
-        var_dump($customFieldsArrayRet);
+        //echo json_encode($customFieldsArrayRet);
 
         return json_encode($customFieldsArrayRet);
     }

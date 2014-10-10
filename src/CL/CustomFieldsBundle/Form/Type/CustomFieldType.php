@@ -42,10 +42,31 @@ class CustomFieldType extends AbstractType
         if($cf->getType() === 'ManyToOne(Adress)') {
             $builder->add($cf->getLabel(), 'entity', array(
                 'class' => 'CLCustomFieldsBundle:Adress',
-                'property' => 'data',
+                'property' => 'data'
             ));
         } else if ($cf->getType() === 'ManyToOnePersist(Adress)') {
             $builder->add($cf->getLabel(), new AdressType());
+        } else if($cf->getType() === 'ManyToMany(Adress)') {
+
+            $adress = $this->om
+                ->getRepository('CLCustomFieldsBundle:Adress')
+                ->findAll();
+
+            $adressId = array_map(
+            function($e) { return $e->getId(); },
+                $adress);
+
+            $adressLabel = array_map(
+            function($e) { return (string) $e; },
+                $adress);
+
+            $addressChoices = array_combine($adressId, $adressLabel);
+
+
+            $builder->add($cf->getLabel(), 'choice', array(
+                'choices' => $addressChoices,
+                'multiple' => true
+                ));
         }
         else {
             $builder->add($cf->getLabel(), $cf->getType());

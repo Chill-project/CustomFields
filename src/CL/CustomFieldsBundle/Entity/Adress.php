@@ -20,7 +20,7 @@ class Adress
 
     public function __toString()
     {
-        return $this->data;
+        return $this->data . '(id:' .$this->id .')';
     }
 
     /**
