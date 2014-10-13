@@ -1,0 +1,16 @@
+CL\CustomFieldsBundle\Entity\BlopEntity2:
+    type: entity
+    table: null
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        customFieldData:
+            type: json_array
+    lifecycleCallbacks:
+        postLoad: [ loadCustomFieldConfig, unfoldCustomFieldData ]
+        preFlush: [ preFlush ]
+        prePersist:  [ prePersist ]

@@ -1,0 +1,30 @@
+blopentity2:
+    path:     /
+    defaults: { _controller: "CLCustomFieldsBundle:BlopEntity2:index" }
+
+blopentity2_show:
+    path:     /{id}/show
+    defaults: { _controller: "CLCustomFieldsBundle:BlopEntity2:show" }
+
+blopentity2_new:
+    path:     /new
+    defaults: { _controller: "CLCustomFieldsBundle:BlopEntity2:new" }
+
+blopentity2_create:
+    path:     /create
+    defaults: { _controller: "CLCustomFieldsBundle:BlopEntity2:create" }
+    requirements: { _method: post }
+
+blopentity2_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "CLCustomFieldsBundle:BlopEntity2:edit" }
+
+blopentity2_update:
+    path:     /{id}/update
+    defaults: { _controller: "CLCustomFieldsBundle:BlopEntity2:update" }
+    requirements: { _method: post|put }
+
+blopentity2_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "CLCustomFieldsBundle:BlopEntity2:delete" }
+    requirements: { _method: post|delete }
