@@ -36,3 +36,7 @@ blopentity_cfget:
 blopentity_cfset:
    path: /{id}/cfset/{key}/{value}
    defaults: { _controller: "CLCustomFieldsBundle:BlopEntity:cfSet" }
+
+blopentity_addmany_to_one:
+   path: /{id}/add/custom/field/{key}
+   defaults: {_controller: "CLCustomFieldsBundle:BlopEntity:addNewManyToOne"}

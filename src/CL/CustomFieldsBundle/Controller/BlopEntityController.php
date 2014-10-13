@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use CL\CustomFieldsBundle\Entity\BlopEntity;
 use CL\CustomFieldsBundle\Form\BlopEntityType;
+use CL\CustomFieldsBundle\Form\AdressType;
 
 /**
  * BlopEntity controller.
@@ -14,6 +15,48 @@ use CL\CustomFieldsBundle\Form\BlopEntityType;
  */
 class BlopEntityController extends Controller
 {
+
+    public function addNewManyToOneAction($id, $key)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $customFields = $em->getRepository('CLCustomFieldsBundle:CustomField')
+            ->findAll();
+   
+        $customFieldsLablels = array_map(
+            function($e) { return $e->getLabel(); },
+            $customFields);
+
+        $customFieldsByLabel = array_combine($customFieldsLablels, $customFields);
+
+        if (array_key_exists($key,$customFieldsByLabel)) {
+            $customFieldConfig = $customFieldsByLabel[$key];
+            if($customFieldConfig->getType() === 'OneToMany(Adress)') {
+                $manyToOneEntity = new AdressType();
+                $form = $this->createCreateForm($manyToOneEntity);
+                $form->handleRequest($request);
+
+                if ($form->isValid()) {
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($manyToOneEntity);
+                    $em->flush();
+
+                    $blopEntity = $this->om
+                        ->getRepository('CLCustomFieldsBundle:CustomField')
+                        ->findOneById($id);
+
+                    $blopEntityCustomFieldArray = json_decode($blopEntity->getCustomField());
+                    $blopEntityCustomFieldArray[$key][] = $manyToOneEntity->getId();
+                }
+            } else {
+                // PAS MANY TO ONE
+                throw new Exception("Error Processing Request", 1);
+            }
+        } else {
+            // PAS RENSEIGNE COMME CF
+            throw new Exception("Error Processing Request", 1);
+        }
+    }
 
     /**
      * Lists all BlopEntity entities.
