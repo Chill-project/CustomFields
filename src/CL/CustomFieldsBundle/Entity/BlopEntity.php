@@ -25,7 +25,7 @@ class BlopEntity
    /**
    * @var array
    */
-   private $customField;
+   private $customField = array();
 
    private $adress;
 
@@ -112,7 +112,7 @@ class BlopEntity
    *
    * @return BlopEntity
    */
-   public function setCustomField($customField)
+   public function setCustomField(array $customField)
    {
       $this->customField = $customField;
 
@@ -126,7 +126,8 @@ class BlopEntity
    */
    public function getCustomField()
    {
-      return $this->customField;
+      
+       return $this->customField;
    }
 
    public function cfGet($key)

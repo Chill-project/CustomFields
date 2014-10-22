@@ -16,6 +16,8 @@ class CustomField
      * @var string
      */
     private $label;
+    
+    private $slug;
 
     /**
      * @var string
@@ -26,6 +28,17 @@ class CustomField
      * @var boolean
      */
     private $active;
+    
+    private $options = array();
+    
+    /**
+     *
+     * @var int 
+     */
+    private $relation = 1;
+    
+    const ONE_TO_ONE = 1;
+    const ONE_TO_MANY = 2;
 
 
     /**
@@ -37,8 +50,13 @@ class CustomField
     {
         return $this->id;
     }
+    
+    function getSlug()
+    {
+        return $this->slug;
+    }
 
-    /**
+        /**
      * Set label
      *
      * @param string $label
@@ -48,10 +66,19 @@ class CustomField
     public function setLabel($label)
     {
         $this->label = $label;
+        
+        if ($this->slug === NULL) {
+            $this->slug = preg_replace('/[^A-Za-z0-9-]+/', '-', $label);
+        }
 
         return $this;
     }
 
+    function getOptions()
+    {
+        return $this->options;
+    } 
+    
     /**
      * Get label
      *
@@ -85,7 +112,20 @@ class CustomField
     {
         return $this->type;
     }
+    
+    function getRelation()
+    {
+        return $this->relation;
+    }
 
+    function setRelation($relation)
+    {
+        $this->relation = $relation;
+        
+        return $this;
+    }
+
+    
     /**
      * Set active
      *

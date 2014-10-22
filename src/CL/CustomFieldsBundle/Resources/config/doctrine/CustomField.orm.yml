@@ -11,9 +11,15 @@ CL\CustomFieldsBundle\Entity\CustomField:
         label:
             type: string
             length: 255
+        slug:
+            type: string
+            length: 255
         type:
             type: string
             length: 255
+        relation:
+            type: integer
+            default: 1
         active:
             type: boolean
     lifecycleCallbacks: {  }

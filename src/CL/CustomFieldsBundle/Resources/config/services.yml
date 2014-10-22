@@ -2,6 +2,34 @@ parameters:
 #    cl_custom_fields.example.class: CL\CustomFieldsBundle\Example
 
 services:
-#    cl_custom_fields.example:
-#        class: %cl_custom_fields.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    chill.custom_field_compiler:
+        class: CL\CustomFieldsBundle\CustomFields\CustomFieldCompiler
+        call:
+            - [setContainer, ["@service_container"]]
+            
+    chill.custom_field.custom_field_choice_type:
+        class: CL\CustomFieldsBundle\Form\CustomFieldType
+        arguments:
+            - "@chill.custom_field_compiler"
+        tags:
+            - { name: 'form.type', alias: 'custom_field_choice' }
+            
+    chill.custom_field.custom_field_type:
+        class: CL\CustomFieldsBundle\Form\Type\CustomFieldType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@chill.custom_field_compiler"
+        tags:
+            - { name: 'form.type', alias: 'custom_field' }
+    
+    chill.custom_field.text:
+        class: CL\CustomFieldsBundle\CustomFields\CustomFieldText
+        tags:
+            - { name: 'chill.custom_field', type: 'text' }
+            
+    chill.custom_field.address:
+        class: CL\CustomFieldsBundle\CustomFields\CustomFieldAddress
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: 'chill.custom_field', type: 'address' }

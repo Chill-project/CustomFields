@@ -19,7 +19,7 @@
                 <td><a href="{{ path('blopentity_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.field1 }}</td>
                 <td>{{ entity.field2 }}</td>
-                <td>{{ entity.customField }}</td>
+                <td>{{ dump(entity.customField) }}</td>
                 <td>
                 <ul>
                     <li>

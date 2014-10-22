@@ -20,8 +20,8 @@ class BlopEntityType extends AbstractType
       $builder
          ->add('field1')
          ->add('field2')
-         ->add('adress', new AdressType())
-         ->add('customField',new CustomFieldType($entityManager))
+         //->add('adress', new AdressType())
+         ->add('customField', 'custom_field')
         ;
     }
     

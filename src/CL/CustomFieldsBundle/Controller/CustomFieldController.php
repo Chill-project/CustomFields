@@ -62,7 +62,7 @@ class CustomFieldController extends Controller
      */
     private function createCreateForm(CustomField $entity)
     {
-        $form = $this->createForm(new CustomFieldType(), $entity, array(
+        $form = $this->createForm('custom_field_choice', $entity, array(
             'action' => $this->generateUrl('customfield_create'),
             'method' => 'POST',
         ));
@@ -142,7 +142,7 @@ class CustomFieldController extends Controller
     */
     private function createEditForm(CustomField $entity)
     {
-        $form = $this->createForm(new CustomFieldType(), $entity, array(
+        $form = $this->createForm('custom_field_choice', $entity, array(
             'action' => $this->generateUrl('customfield_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
