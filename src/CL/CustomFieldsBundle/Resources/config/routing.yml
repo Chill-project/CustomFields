@@ -1,3 +1,7 @@
+cl_custom_fields_customfieldsgroup:
+    resource: "@CLCustomFieldsBundle/Resources/config/routing/customfieldsgroup.yml"
+    prefix:   /customfieldsgroup
+
 cl_custom_fields_blopentity2:
     resource: "@CLCustomFieldsBundle/Resources/config/routing/blopentity2.yml"
     prefix:   /blopentity2

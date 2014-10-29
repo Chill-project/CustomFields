@@ -8,18 +8,23 @@ CL\CustomFieldsBundle\Entity\CustomField:
             generator:
                 strategy: AUTO
     fields:
-        label:
-            type: string
-            length: 255
+        name:
+            type: json_array
         slug:
             type: string
             length: 255
         type:
             type: string
             length: 255
-        relation:
-            type: integer
-            default: 1
         active:
             type: boolean
+        order:
+            type: float
+        options:
+            type: json_array
     lifecycleCallbacks: {  }
+    manyToOne:
+        customFieldGroup:
+            targetEntity: CL\CustomFieldsBundle\Entity\CustomFieldsGroup
+            inversedBy: customFields
+#TODO: add an unique constraint slug+customFieldsGroup

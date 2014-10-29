@@ -30,13 +30,13 @@ class CustomFieldDataTransformer implements DataTransformerInterface
     
     public function reverseTransform($value)
     {
-        return $this->customFieldDefinition->transformFromEntity($value, 
+        return $this->customFieldDefinition->serialize($value, 
                 $this->customField);
     }
 
     public function transform($value)
     {
-        return $this->customFieldDefinition->transformToEntity($value, 
+        return $this->customFieldDefinition->deserialize($value, 
                 $this->customField);
     }
 

@@ -245,4 +245,3 @@ class BlopEntity2
         return $this->customFieldData;
     }
 }
-

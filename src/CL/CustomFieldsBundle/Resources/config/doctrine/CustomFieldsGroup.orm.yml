@@ -1,0 +1,19 @@
+CL\CustomFieldsBundle\Entity\CustomFieldsGroup:
+    type: entity
+    table: null
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: json_array
+        entity:
+            type: string
+            length: 255
+    oneToMany:
+        customFields:
+            targetEntity: CL\CustomFieldsBundle\Entity\CustomField
+            mappedBy: customFieldGroup

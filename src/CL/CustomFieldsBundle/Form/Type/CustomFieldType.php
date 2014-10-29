@@ -16,7 +16,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use CL\CustomFieldsBundle\Form\DataTransformer\JsonCustomFieldToArrayTransformer;
 use Doctrine\Common\Persistence\ObjectManager;
 use CL\CustomFieldsBundle\Form\AdressType;
-use CL\CustomFieldsBundle\CustomFields\CustomFieldCompiler;
+use CL\CustomFieldsBundle\Service\CustomFieldProvider;
 use CL\CustomFieldsBundle\Form\DataTransformer\CustomFieldDataTransformer;
 
 class CustomFieldType extends AbstractType
@@ -36,7 +36,7 @@ class CustomFieldType extends AbstractType
     /**
      * @param ObjectManager $om
      */
-    public function __construct(ObjectManager $om, CustomFieldCompiler $compiler)
+    public function __construct(ObjectManager $om, CustomFieldProvider $compiler)
     {
         $this->om = $om;
         $this->customFieldCompiler = $compiler;
@@ -50,20 +50,19 @@ class CustomFieldType extends AbstractType
 
         foreach ($customFields as $cf) {
 
-            $builder->add(
-                    $builder->create(
-                        $cf->getSlug(), 
+            //$builder->add(
+                    //$builder->create(
+                        //$cf->getSlug(), 
                         $this->customFieldCompiler
                                 ->getCustomFieldByType($cf->getType())
-                                ->buildFormType($builder, $cf),
-                        array('mapped' => true)
-                            )
+                                ->buildForm($builder, $cf);
+                  /*          )
                     ->addModelTransformer(new CustomFieldDataTransformer(
                             $this->customFieldCompiler
                                 ->getCustomFieldByType($cf->getType()),
                             $cf)
-                            )
-            );
+                            )*/
+            //);
 
 //        if($cf->getType() === 'ManyToOne(Adress)') {
 //            $builder->add($cf->getLabel(), 'entity', array(

@@ -5,38 +5,38 @@ namespace CL\CustomFieldsBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use CL\CustomFieldsBundle\Entity\CustomField;
-use CL\CustomFieldsBundle\Form\CustomFieldType;
+use CL\CustomFieldsBundle\Entity\CustomFieldsGroup;
+use CL\CustomFieldsBundle\Form\CustomFieldsGroupType;
 
 /**
- * CustomField controller.
+ * CustomFieldsGroup controller.
  *
  */
-class CustomFieldController extends Controller
+class CustomFieldsGroupController extends Controller
 {
 
     /**
-     * Lists all CustomField entities.
+     * Lists all CustomFieldsGroup entities.
      *
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('CLCustomFieldsBundle:CustomField')->findAll();
+        $entities = $em->getRepository('CLCustomFieldsBundle:CustomFieldsGroup')->findAll();
 
-        return $this->render('CLCustomFieldsBundle:CustomField:index.html.twig', array(
+        return $this->render('CLCustomFieldsBundle:CustomFieldsGroup:index.html.twig', array(
             'entities' => $entities,
         ));
     }
     /**
-     * Creates a new CustomField entity.
+     * Creates a new CustomFieldsGroup entity.
      *
      */
     public function createAction(Request $request)
     {
-        $entity = new CustomField();
-        $form = $this->createCreateForm($entity, $request->query->get('type', null));
+        $entity = new CustomFieldsGroup();
+        $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -44,28 +44,27 @@ class CustomFieldController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('customfield_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('customfieldsgroup_show', array('id' => $entity->getId())));
         }
 
-        return $this->render('CLCustomFieldsBundle:CustomField:new.html.twig', array(
+        return $this->render('CLCustomFieldsBundle:CustomFieldsGroup:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
     }
 
     /**
-     * Creates a form to create a CustomField entity.
+     * Creates a form to create a CustomFieldsGroup entity.
      *
-     * @param CustomField $entity The entity
-     * @param string
+     * @param CustomFieldsGroup $entity The entity
+     *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(CustomField $entity, $type)
+    private function createCreateForm(CustomFieldsGroup $entity)
     {
-        $form = $this->createForm('custom_field_choice', $entity, array(
-            'action' => $this->generateUrl('customfield_create'),
+        $form = $this->createForm(new CustomFieldsGroupType(), $entity, array(
+            'action' => $this->generateUrl('customfieldsgroup_create'),
             'method' => 'POST',
-            'type' => $type
         ));
 
         $form->add('submit', 'submit', array('label' => 'Create'));
@@ -74,60 +73,60 @@ class CustomFieldController extends Controller
     }
 
     /**
-     * Displays a form to create a new CustomField entity.
+     * Displays a form to create a new CustomFieldsGroup entity.
      *
      */
-    public function newAction(Request $request)
+    public function newAction()
     {
-        $entity = new CustomField();
-        $form   = $this->createCreateForm($entity, $request->query->get('type'));
+        $entity = new CustomFieldsGroup();
+        $form   = $this->createCreateForm($entity);
 
-        return $this->render('CLCustomFieldsBundle:CustomField:new.html.twig', array(
+        return $this->render('CLCustomFieldsBundle:CustomFieldsGroup:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
     }
 
     /**
-     * Finds and displays a CustomField entity.
+     * Finds and displays a CustomFieldsGroup entity.
      *
      */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('CLCustomFieldsBundle:CustomField')->find($id);
+        $entity = $em->getRepository('CLCustomFieldsBundle:CustomFieldsGroup')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find CustomField entity.');
+            throw $this->createNotFoundException('Unable to find CustomFieldsGroup entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('CLCustomFieldsBundle:CustomField:show.html.twig', array(
+        return $this->render('CLCustomFieldsBundle:CustomFieldsGroup:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
-     * Displays a form to edit an existing CustomField entity.
+     * Displays a form to edit an existing CustomFieldsGroup entity.
      *
      */
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('CLCustomFieldsBundle:CustomField')->find($id);
+        $entity = $em->getRepository('CLCustomFieldsBundle:CustomFieldsGroup')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find CustomField entity.');
+            throw $this->createNotFoundException('Unable to find CustomFieldsGroup entity.');
         }
 
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('CLCustomFieldsBundle:CustomField:edit.html.twig', array(
+        return $this->render('CLCustomFieldsBundle:CustomFieldsGroup:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -135,16 +134,16 @@ class CustomFieldController extends Controller
     }
 
     /**
-    * Creates a form to edit a CustomField entity.
+    * Creates a form to edit a CustomFieldsGroup entity.
     *
-    * @param CustomField $entity The entity
+    * @param CustomFieldsGroup $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(CustomField $entity)
+    private function createEditForm(CustomFieldsGroup $entity)
     {
-        $form = $this->createForm('custom_field_choice', $entity, array(
-            'action' => $this->generateUrl('customfield_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new CustomFieldsGroupType(), $entity, array(
+            'action' => $this->generateUrl('customfieldsgroup_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -153,17 +152,17 @@ class CustomFieldController extends Controller
         return $form;
     }
     /**
-     * Edits an existing CustomField entity.
+     * Edits an existing CustomFieldsGroup entity.
      *
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('CLCustomFieldsBundle:CustomField')->find($id);
+        $entity = $em->getRepository('CLCustomFieldsBundle:CustomFieldsGroup')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find CustomField entity.');
+            throw $this->createNotFoundException('Unable to find CustomFieldsGroup entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -173,17 +172,17 @@ class CustomFieldController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('customfield_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('customfieldsgroup_edit', array('id' => $id)));
         }
 
-        return $this->render('CLCustomFieldsBundle:CustomField:edit.html.twig', array(
+        return $this->render('CLCustomFieldsBundle:CustomFieldsGroup:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
     /**
-     * Deletes a CustomField entity.
+     * Deletes a CustomFieldsGroup entity.
      *
      */
     public function deleteAction(Request $request, $id)
@@ -193,21 +192,21 @@ class CustomFieldController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('CLCustomFieldsBundle:CustomField')->find($id);
+            $entity = $em->getRepository('CLCustomFieldsBundle:CustomFieldsGroup')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find CustomField entity.');
+                throw $this->createNotFoundException('Unable to find CustomFieldsGroup entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('customfield'));
+        return $this->redirect($this->generateUrl('customfieldsgroup'));
     }
 
     /**
-     * Creates a form to delete a CustomField entity by id.
+     * Creates a form to delete a CustomFieldsGroup entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -216,7 +215,7 @@ class CustomFieldController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('customfield_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('customfieldsgroup_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()

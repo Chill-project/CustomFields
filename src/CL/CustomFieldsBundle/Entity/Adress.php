@@ -57,4 +57,3 @@ class Adress
         return $this->data;
     }
 }
-

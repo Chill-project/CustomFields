@@ -1,0 +1,30 @@
+customfieldsgroup:
+    path:     /
+    defaults: { _controller: "CLCustomFieldsBundle:CustomFieldsGroup:index" }
+
+customfieldsgroup_show:
+    path:     /{id}/show
+    defaults: { _controller: "CLCustomFieldsBundle:CustomFieldsGroup:show" }
+
+customfieldsgroup_new:
+    path:     /new
+    defaults: { _controller: "CLCustomFieldsBundle:CustomFieldsGroup:new" }
+
+customfieldsgroup_create:
+    path:     /create
+    defaults: { _controller: "CLCustomFieldsBundle:CustomFieldsGroup:create" }
+    requirements: { _method: post }
+
+customfieldsgroup_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "CLCustomFieldsBundle:CustomFieldsGroup:edit" }
+
+customfieldsgroup_update:
+    path:     /{id}/update
+    defaults: { _controller: "CLCustomFieldsBundle:CustomFieldsGroup:update" }
+    requirements: { _method: post|put }
+
+customfieldsgroup_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "CLCustomFieldsBundle:CustomFieldsGroup:delete" }
+    requirements: { _method: post|delete }

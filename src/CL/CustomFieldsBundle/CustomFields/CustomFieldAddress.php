@@ -6,6 +6,7 @@ use CL\CustomFieldsBundle\CustomFields\CustomFieldInterface;
 use CL\CustomFieldsBundle\Entity\CustomField;
 use Symfony\Component\Form\FormBuilderInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use CL\CustomFieldsBundle\Form\DataTransformer\CustomFieldDataTransformer;
 use CL\CustomFieldsBundle\Form\AdressType;
 
 /**
@@ -15,35 +16,31 @@ use CL\CustomFieldsBundle\Form\AdressType;
  */
 class CustomFieldAddress implements CustomFieldInterface
 {
-    
+
+    /**
+     *
+     * @var EntityManagerInterface
+     */
     public $om;
-    
+
     public function __construct(EntityManagerInterface $om)
     {
         $this->om = $om;
     }
-    
-    public function buildFormType(FormBuilderInterface $builder, CustomField $customField)
+
+    public function buildForm(FormBuilderInterface $builder, CustomField $customField)
     {
-        switch ($customField->getRelation())
-        {
-            case CustomField::ONE_TO_ONE :
-                $builder->build(
-                        $builder->create($customField->getSlug(), 
-                                new AddressType()
-                                )
-                        );
-                break;
-            case CustomField::ONE_TO_MANY :
-                $builder->build(
-                        $builder->create($customField->getSlug(),
-                                new AddressType(),
-                                array(
-                                    'multiple' => true
-                                ))
-                        );
-                break;
-        }
+        $builder->add(
+              $builder->create('address', 'entity', array(
+                'class' => 'CLCustomFieldsBundle:Adress',
+                 'multiple' => true,
+                 'expanded' => true
+                )
+            )->addModelTransformer(new CustomFieldDataTransformer(
+                            $this,
+                            $customField)
+                  )
+        );
     }
 
     public function getName()
@@ -56,14 +53,39 @@ class CustomFieldAddress implements CustomFieldInterface
         
     }
 
-    public function transformFromEntity($value, CustomField $customField)
+    public function buildOptionsForm(FormBuilderInterface $builder)
     {
-        
+        return null;
     }
 
-    public function transformToEntity($value, CustomField $customField)
+    public function deserialize($serialized, CustomField $customField)
     {
+//        if ($serialized === NULL) {
+//            return null;
+//        }
+//        
+//        return $this->om->getRepository('CLCustomFieldsBundle:Adress')
+//              ->find($serialized);
         
+        return $this->om->getRepository('CLCustomFieldsBundle:Adress')
+              ->findBy(array('id' => $serialized));
+    }
+
+    /**
+     * 
+     * @param \CL\CustomFieldsBundle\Entity\Adress $value
+     * @param CustomField $customField
+     * @return type
+     */
+    public function serialize($value, CustomField $customField)
+    {
+        $arrayId = array();
+        
+        foreach($value as $address) {
+            $arrayId[] = $address->getId();
+        }
+        
+        return $arrayId;
     }
 
 }

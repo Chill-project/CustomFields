@@ -3,7 +3,7 @@ parameters:
 
 services:
     chill.custom_field_compiler:
-        class: CL\CustomFieldsBundle\CustomFields\CustomFieldCompiler
+        class: CL\CustomFieldsBundle\Service\CustomFieldProvider
         call:
             - [setContainer, ["@service_container"]]
             

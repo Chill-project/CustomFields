@@ -29,7 +29,21 @@ class CustomField
      */
     private $active;
     
+    /**
+     *
+     * @var array
+     */
     private $options = array();
+    
+    /**
+     * @var array
+     */
+    private $name;
+
+    /**
+     * @var float
+     */
+    private $order;
     
     /**
      *
@@ -40,6 +54,10 @@ class CustomField
     const ONE_TO_ONE = 1;
     const ONE_TO_MANY = 2;
 
+    /**
+     * @var CustomFieldsGroup
+     */
+    private $customFieldGroup;
 
     /**
      * Get id
@@ -149,5 +167,114 @@ class CustomField
     {
         return $this->active;
     }
-}
 
+    /**
+     * Get customFieldGroup
+     *
+     * @return CustomFieldsGroup
+     */
+    public function getCustomFieldsGroup()
+    {
+        return $this->customFieldGroup;
+    }
+
+    /**
+     * Set customFieldGroup
+     *
+     * @param \CL\CustomFieldsBundle\Entity\CustomFieldsGroup $customFieldGroup
+     *
+     * @return CustomField
+     */
+    public function setCustomFieldsGroup(\CL\CustomFieldsBundle\Entity\CustomFieldsGroup $customFieldGroup = null)
+    {
+        $this->customFieldGroup = $customFieldGroup;
+
+        return $this;
+    }
+
+    /**
+     * Set name
+     *
+     * @param array $name
+     *
+     * @return CustomField
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return array
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set order
+     *
+     * @param float $order
+     *
+     * @return CustomField
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+
+        return $this;
+    }
+
+    /**
+     * Get order
+     *
+     * @return float
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+    /**
+     * Set options
+     *
+     * @param array $options
+     *
+     * @return CustomField
+     */
+    public function setOptions(array $options)
+    {
+        $this->options = $options;
+
+        return $this;
+    }
+
+    /**
+     * Set customFieldGroup
+     *
+     * @param \CL\CustomFieldsBundle\Entity\CustomFieldsGroup $customFieldGroup
+     *
+     * @return CustomField
+     */
+    public function setCustomFieldGroup(\CL\CustomFieldsBundle\Entity\CustomFieldsGroup $customFieldGroup = null)
+    {
+        $this->customFieldGroup = $customFieldGroup;
+
+        return $this;
+    }
+
+    /**
+     * Get customFieldGroup
+     *
+     * @return \CL\CustomFieldsBundle\Entity\CustomFieldsGroup
+     */
+    public function getCustomFieldGroup()
+    {
+        return $this->customFieldGroup;
+    }
+}

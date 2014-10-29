@@ -15,7 +15,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class CustomFieldText implements CustomFieldInterface
 {
-    public function buildFormType(FormBuilderInterface $builder, CustomField $customField)
+    public function buildForm(FormBuilderInterface $builder, CustomField $customField)
     {
         $builder->add($customField->getSlug(), 'text', array(
             'label' => $customField->getLabel()
@@ -27,14 +27,14 @@ class CustomFieldText implements CustomFieldInterface
         
     }
 
-    public function transformFromEntity($value, CustomField $customField)
+    public function serialize($value, CustomField $customField)
     {
         return $value;
     }
 
-    public function transformToEntity($value, CustomField $customField)
+    public function deserialize($serialized, CustomField $customField)
     {
-        return $value;
+        return $serialized;
     }
 
     public function getName()
@@ -42,4 +42,8 @@ class CustomFieldText implements CustomFieldInterface
         return 'text field';
     }
 
+   public function buildOptionsForm(FormBuilderInterface $builder)
+   {
+      return null;
+   }
 }

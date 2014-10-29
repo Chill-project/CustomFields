@@ -159,4 +159,3 @@ class BlopEntity
       var_dump($customFieldArray);
    }
 }
-

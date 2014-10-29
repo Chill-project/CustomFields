@@ -1,7 +1,7 @@
 <?php
 
 
-namespace CL\CustomFieldsBundle\CustomFields;
+namespace CL\CustomFieldsBundle\Service;
 
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
  */
-class CustomFieldCompiler implements ContainerAwareInterface
+class CustomFieldProvider implements ContainerAwareInterface
 {
     private $servicesByType = array();
     
@@ -43,6 +43,10 @@ class CustomFieldCompiler implements ContainerAwareInterface
 
     public function setContainer(ContainerInterface $container = null)
     {
+        if ($container === null) {
+            throw new \LogicException('container should not be null');
+        }
+        
         $this->container = $container;
     }
     

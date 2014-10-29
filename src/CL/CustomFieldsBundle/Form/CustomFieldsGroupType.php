@@ -6,13 +6,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-/**
- * @internal Ne fonctionne pas encore
- */
-class AdressType extends AbstractType
+class CustomFieldsGroupType extends AbstractType
 {
-    
-
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -20,9 +15,8 @@ class AdressType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('data', 'entity', array(
-               
-            ))
+            ->add('name')
+            ->add('entity')
         ;
     }
     
@@ -31,22 +25,16 @@ class AdressType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-//        $resolver->setDefaults(array(
-//            'data_class' => 'CL\CustomFieldsBundle\Entity\Adress',
-//            'class' => 'CL\CustomFieldsBundle\Entity\Adress'
-//        ));
+        $resolver->setDefaults(array(
+            'data_class' => 'CL\CustomFieldsBundle\Entity\CustomFieldsGroup'
+        ));
     }
-    
-    public function getParent()
-    {
-        return 'entity';
-    }
-    
+
     /**
      * @return string
      */
     public function getName()
     {
-        return 'adress';
+        return 'cl_customfieldsbundle_customfieldsgroup';
     }
 }

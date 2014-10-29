@@ -5,21 +5,23 @@ namespace CL\CustomFieldsBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use CL\CustomFieldsBundle\CustomFields\CustomFieldCompiler;
+use CL\CustomFieldsBundle\Service\CustomFieldProvider;
 use CL\CustomFieldsBundle\Entity\CustomField;
 
 class CustomFieldType extends AbstractType
 {
     /**
      *
-     * @var \CL\CustomFieldsBundle\CustomFields\CustomFieldCompiler
+     * @var CustomFieldProvider
      */
-    private $customFieldCompiler;
+    private $customFieldProvider;
+    
+    private $culture = 'fr';
     
     
-    public function __construct(CustomFieldCompiler $compiler)
+    public function __construct(CustomFieldProvider $compiler)
     {
-        $this->customFieldCompiler = $compiler;
+        $this->customFieldProvider = $compiler;
     }
     /**
      * @param FormBuilderInterface $builder
@@ -30,25 +32,26 @@ class CustomFieldType extends AbstractType
         
         $customFieldsList = array();
         
-        foreach ($this->customFieldCompiler->getAllFields() as $key => $field) {
+        foreach ($this->customFieldProvider->getAllFields() as $key => $field) {
             $customFieldsList[$key] = $field->getName();
         }
         
         $builder
             ->add('label')
-            ->add('type', 'choice', array(
-                'choices' => $customFieldsList,
-                'expanded' => false,
-                'multiple' => false
-            ))
             ->add('active')
-            ->add('relation', 'choice', array(
-                'choices' => array(
-                    CustomField::ONE_TO_ONE => 'one to one ',
-                    CustomField::ONE_TO_MANY => 'one to many'
-                )
+            ->add('customFieldsGroup', 'entity', array(
+               'class' => 'CLCustomFieldsBundle:CustomFieldsGroup',
+               'property' => 'name['.$this->culture.']'
             ))
         ;
+        
+        //add options field
+        $optionsType = $this->customFieldProvider
+              ->getCustomFieldByType($options['type'])
+              ->buildOptionsForm($builder);
+        if ($optionsType) {
+            $builder->add('options', $optionsType);
+        }
     }
     
     /**
@@ -58,7 +61,8 @@ class CustomFieldType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'CL\CustomFieldsBundle\Entity\CustomField'
-        ));
+        )); 
+        $resolver->addAllowedTypes(array('type' => 'string'));
     }
 
     /**
