@@ -62,7 +62,11 @@ class CustomFieldType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'Chill\CustomFieldsBundle\Entity\CustomField'
         )); 
-        $resolver->addAllowedTypes(array('type' => 'string'));
+        
+        $resolver->setRequired(array('type'))
+              ->addAllowedValues(array('type' => 
+                 array_keys($this->customFieldProvider->getAllFields())
+              ));
     }
 
     /**
