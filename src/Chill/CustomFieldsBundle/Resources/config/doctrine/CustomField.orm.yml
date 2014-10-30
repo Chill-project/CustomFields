@@ -18,7 +18,7 @@ Chill\CustomFieldsBundle\Entity\CustomField:
             length: 255
         active:
             type: boolean
-        order:
+        ordering:
             type: float
         options:
             type: json_array

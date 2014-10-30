@@ -24,11 +24,31 @@ class CustomFieldController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('ChillCustomFieldsBundle:CustomField')->findAll();
+        
+        //prepare form for new custom type
+        $fieldChoices = array();
+        foreach ($this->get('chill.custom_field_compiler')->getAllFields() 
+              as $key => $customType) {
+            $fieldChoices[$key] = $customType->getName();
+        }
+        $form = $this->get('form.factory')
+              ->createNamedBuilder(null, 'form', null, array(
+                    'method' => 'GET',
+                    'action' => $this->generateUrl('customfield_new'),
+                    'csrf_protection' => false
+                    ))
+              ->add('type', 'choice', array(
+                    'choices' => $fieldChoices
+                   ))
+              ->getForm();
 
         return $this->render('ChillCustomFieldsBundle:CustomField:index.html.twig', array(
             'entities' => $entities,
+            'form'     => $form->createView()
         ));
     }
+    
+    
     /**
      * Creates a new CustomField entity.
      *
@@ -63,7 +83,8 @@ class CustomFieldController extends Controller
     private function createCreateForm(CustomField $entity, $type)
     {
         $form = $this->createForm('custom_field_choice', $entity, array(
-            'action' => $this->generateUrl('customfield_create'),
+            'action' => $this->generateUrl('customfield_create', 
+                  array('type' => $type)),
             'method' => 'POST',
             'type' => $type
         ));
@@ -124,7 +145,7 @@ class CustomFieldController extends Controller
             throw $this->createNotFoundException('Unable to find CustomField entity.');
         }
 
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($entity, $entity->getType());
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('ChillCustomFieldsBundle:CustomField:edit.html.twig', array(
@@ -141,11 +162,12 @@ class CustomFieldController extends Controller
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(CustomField $entity)
+    private function createEditForm(CustomField $entity, $type)
     {
         $form = $this->createForm('custom_field_choice', $entity, array(
             'action' => $this->generateUrl('customfield_update', array('id' => $entity->getId())),
             'method' => 'PUT',
+            'type' => $type
         ));
 
         $form->add('submit', 'submit', array('label' => 'Update'));

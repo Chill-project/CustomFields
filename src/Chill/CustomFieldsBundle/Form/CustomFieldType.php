@@ -37,12 +37,13 @@ class CustomFieldType extends AbstractType
         }
         
         $builder
-            ->add('label')
+            ->add('name', 'text')
             ->add('active')
             ->add('customFieldsGroup', 'entity', array(
                'class' => 'ChillCustomFieldsBundle:CustomFieldsGroup',
                'property' => 'name['.$this->culture.']'
             ))
+            ->add('ordering', 'number')
         ;
         
         //add options field

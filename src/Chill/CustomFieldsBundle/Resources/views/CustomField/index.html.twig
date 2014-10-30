@@ -37,9 +37,14 @@
 
         <ul>
         <li>
-            <a href="{{ path('customfield_new') }}">
+            {{ form_start(form) }}
+            
+            {{ form_row(form) }}
+            <button type="submit">
                 Create a new entry
-            </a>
+            </button>
+            
+            {{ form_end(form) }}
         </li>
     </ul>
     {% endblock %}

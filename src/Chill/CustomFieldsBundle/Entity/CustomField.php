@@ -43,7 +43,7 @@ class CustomField
     /**
      * @var float
      */
-    private $order;
+    private $ordering;
     
     /**
      *
@@ -223,9 +223,9 @@ class CustomField
      *
      * @return CustomField
      */
-    public function setOrder($order)
+    public function setOrdering($order)
     {
-        $this->order = $order;
+        $this->ordering = $order;
 
         return $this;
     }
@@ -235,9 +235,9 @@ class CustomField
      *
      * @return float
      */
-    public function getOrder()
+    public function getOrdering()
     {
-        return $this->order;
+        return $this->ordering;
     }
 
     /**
