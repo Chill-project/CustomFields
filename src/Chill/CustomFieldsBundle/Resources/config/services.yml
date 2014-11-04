@@ -18,7 +18,7 @@ services:
     chill.custom_field.custom_fields_group_type:
         class: Chill\CustomFieldsBundle\Form\CustomFieldsGroupType
         arguments:
-            - %chill_custom_fields.customizable_entities%
+            - %chill_custom_fields.customizables_entities%
             - "@translator"
         tags:
             - { name: 'form.type', alias: 'custom_fields_group' }

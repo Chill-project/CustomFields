@@ -22,10 +22,13 @@ class Configuration implements ConfigurationInterface
         
         $classInfo = "The class which may receive custom fields";
         $nameInfo = "The name which will appears in the user interface. May be translatable";
+        $customizableEntitiesInfo = "A list of customizable entities";
 
         $rootNode
                 ->children()
                     ->arrayNode('customizables_entities')
+                    ->info($customizableEntitiesInfo)
+                    ->defaultValue(array())
                     ->prototype('array')
                         ->children()
                             ->scalarNode('class')->isRequired()->info($classInfo)->end()
