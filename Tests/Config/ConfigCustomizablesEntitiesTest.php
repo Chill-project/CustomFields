@@ -29,7 +29,14 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
  */
 class ConfigCustomizablesEntitiesTest extends KernelTestCase
 {
-    public function testEmptyConfig()
+    /**
+     * Test that the config does work if the option 
+     * chill_custom_fields.customizables_entities IS NOT present
+     * 
+     * In this case, parameter 'chill_custom_fields.customizables_entities'
+     * should be an empty array in container
+     */
+    public function testNotPresentInConfig()
     {
         self::bootKernel(array('environment' => 'test'));
         $customizableEntities = static::$kernel->getContainer()
@@ -37,5 +44,27 @@ class ConfigCustomizablesEntitiesTest extends KernelTestCase
         
         $this->assertInternalType('array', $customizableEntities);
         $this->assertCount(0, $customizableEntities);
+    }
+    
+    /**
+     * Test that the 'chill_custom_fields.customizables_entities' is filled
+     * correctly with a minimal configuration.
+     * 
+     * @internal use a custom config environment
+     */
+    public function testNotEmptyConfig()
+    {
+        self::bootKernel(array('environment' => 'test_customizable_entities_test_not_empty_config'));
+        $customizableEntities = static::$kernel->getContainer()
+                ->getParameter('chill_custom_fields.customizables_entities');
+        
+        $this->assertInternalType('array', $customizableEntities);
+        $this->assertCount(1, $customizableEntities);
+        
+        foreach($customizableEntities as $key => $config) {
+            $this->assertInternalType('array', $config);
+            $this->assertArrayHasKey('name', $config);
+            $this->assertArrayHasKey('class', $config);
+        }
     }
 }

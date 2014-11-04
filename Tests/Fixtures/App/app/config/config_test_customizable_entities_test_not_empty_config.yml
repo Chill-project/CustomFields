@@ -1,0 +1,9 @@
+
+#required by ConfigCustomizablesEntitiesTest::testNotEmptyConfig
+
+imports:
+    - { resource: config_test.yml } 
+
+chill_custom_fields:
+    customizables_entities:
+        - { class: Test\With\A\Dummy\Entity, name: test }
