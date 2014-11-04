@@ -1,6 +1,0 @@
-parameters:
-    database_host: 127.0.0.1
-    database_port: 5434
-    database_name: test0
-    database_user: symfony
-    database_password: symfony
