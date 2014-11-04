@@ -34,7 +34,7 @@ class RoutingLoaderTest extends WebTestCase
     {
         $client = static::createClient();
         
-        $client->request('GET','/customfield/');
+        $client->request('GET','/admin/customfield/');
         
         $this->assertEquals(
             Response::HTTP_OK,
