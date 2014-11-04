@@ -67,3 +67,7 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+    
+chill_custom_fields:
+    customizables_entities:
+        - { class: Chill\CustomFieldsBundle\Entity\BlopEntity, name: blop_entity }

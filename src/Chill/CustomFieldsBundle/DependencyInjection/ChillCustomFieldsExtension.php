@@ -24,5 +24,12 @@ class ChillCustomFieldsExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+        
+        //add at least a blank array at 'customizable_entities' options
+        $customizable_entities = (isset($config['customizables_entities']) 
+                && count($config['customizables_entities']) > 0) 
+                ? $config['customizables_entities'] : array();
+        
+        $container->setParameter('chill_custom_fields.customizable_entities', $customizable_entities);
     }
 }

@@ -11,8 +11,17 @@ services:
         class: Chill\CustomFieldsBundle\Form\CustomFieldType
         arguments:
             - "@chill.custom_field_compiler"
+            
         tags:
             - { name: 'form.type', alias: 'custom_field_choice' }
+            
+    chill.custom_field.custom_fields_group_type:
+        class: Chill\CustomFieldsBundle\Form\CustomFieldsGroupType
+        arguments:
+            - %chill_custom_fields.customizable_entities%
+            - "@translator"
+        tags:
+            - { name: 'form.type', alias: 'custom_fields_group' }
             
     chill.custom_field.custom_field_type:
         class: Chill\CustomFieldsBundle\Form\Type\CustomFieldType

@@ -62,7 +62,7 @@ class CustomFieldsGroupController extends Controller
      */
     private function createCreateForm(CustomFieldsGroup $entity)
     {
-        $form = $this->createForm(new CustomFieldsGroupType(), $entity, array(
+        $form = $this->createForm('custom_fields_group', $entity, array(
             'action' => $this->generateUrl('customfieldsgroup_create'),
             'method' => 'POST',
         ));
@@ -142,7 +142,7 @@ class CustomFieldsGroupController extends Controller
     */
     private function createEditForm(CustomFieldsGroup $entity)
     {
-        $form = $this->createForm(new CustomFieldsGroupType(), $entity, array(
+        $form = $this->createForm('custom_fields_group', $entity, array(
             'action' => $this->generateUrl('customfieldsgroup_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));

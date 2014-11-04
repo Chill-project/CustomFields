@@ -18,11 +18,22 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('cl_custom_fields');
+        $rootNode = $treeBuilder->root('chill_custom_fields');
+        
+        $classInfo = "The class which may receive custom fields";
+        $nameInfo = "The name which will appears in the user interface. May be translatable";
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+                ->children()
+                    ->arrayNode('customizables_entities')
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('class')->isRequired()->info($classInfo)->end()
+                            ->scalarNode('name') ->isRequired()->info($nameInfo) ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ;
 
         return $treeBuilder;
     }

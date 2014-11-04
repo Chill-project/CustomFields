@@ -5,18 +5,44 @@ namespace Chill\CustomFieldsBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Translation\TranslatorInterface;
+
 
 class CustomFieldsGroupType extends AbstractType
 {
+    
+    private $customizableEntities;
+    
+    /**
+     *
+     * @var \Symfony\Component\Translation\TranslatorInterface
+     */
+    private $translator;
+    
+    public function __construct(array $customizableEntities, TranslatorInterface $translator)
+    {
+        $this->customizableEntities = $customizableEntities;
+        $this->translator = $translator;
+    }
+    
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        //prepare translation
+        $customizableEntites = array();
+        
+        foreach($this->customizableEntities as $key => $definition) {
+            $customizableEntites[$definition['class']] = $this->translator->trans($definition['name']);
+        }
+        
         $builder
             ->add('name')
-            ->add('entity')
+            ->add('entity', 'choice', array(
+                'choices' => $customizableEntites
+            ))
         ;
     }
     
@@ -35,6 +61,6 @@ class CustomFieldsGroupType extends AbstractType
      */
     public function getName()
     {
-        return 'cl_customfieldsbundle_customfieldsgroup';
+        return 'custom_fields_group';
     }
 }
