@@ -1,0 +1,42 @@
+blopentity:
+    path:     /
+    defaults: { _controller: "ChillCustomFieldsBundle:BlopEntity:index" }
+
+blopentity_show:
+    path:     /{id}/show
+    defaults: { _controller: "ChillCustomFieldsBundle:BlopEntity:show" }
+
+blopentity_new:
+    path:     /new
+    defaults: { _controller: "ChillCustomFieldsBundle:BlopEntity:new" }
+
+blopentity_create:
+    path:     /create
+    defaults: { _controller: "ChillCustomFieldsBundle:BlopEntity:create" }
+    requirements: { _method: post }
+
+blopentity_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ChillCustomFieldsBundle:BlopEntity:edit" }
+
+blopentity_update:
+    path:     /{id}/update
+    defaults: { _controller: "ChillCustomFieldsBundle:BlopEntity:update" }
+    requirements: { _method: post|put }
+
+blopentity_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ChillCustomFieldsBundle:BlopEntity:delete" }
+    requirements: { _method: post|delete }
+
+blopentity_cfget:
+   path: /{id}/cfget/{key}
+   defaults: { _controller: "ChillCustomFieldsBundle:BlopEntity:cfGet" }
+
+blopentity_cfset:
+   path: /{id}/cfset/{key}/{value}
+   defaults: { _controller: "ChillCustomFieldsBundle:BlopEntity:cfSet" }
+
+blopentity_addmany_to_one:
+   path: /{id}/add/custom/field/{key}
+   defaults: {_controller: "ChillCustomFieldsBundle:BlopEntity:addNewManyToOne"}

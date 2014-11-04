@@ -1,0 +1,14 @@
+Chill\CustomFieldsBundle\Entity\Adress:
+    type: entity
+    table: null
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        data:
+            type: string
+            length: 255
+    lifecycleCallbacks: {  }
