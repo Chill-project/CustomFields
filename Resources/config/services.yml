@@ -2,6 +2,11 @@ parameters:
 #    cl_custom_fields.example.class: Chill\CustomFieldsBundle\Example
 
 services:
+    chill.custom_fields.routing_loader:
+        class: Chill\CustomFieldsBundle\Routing\RoutesLoader
+        tags:
+            - { name: routing.loader }
+    
     chill.custom_field_compiler:
         class: Chill\CustomFieldsBundle\Service\CustomFieldProvider
         call:

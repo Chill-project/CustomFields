@@ -1,4 +1,4 @@
 cl_custom_fields:
-    resource: "@ChillCustomFieldsBundle/Resources/config/routing.yml"
-    prefix:   /
+    resource: .
+    type: chill_routes
 
