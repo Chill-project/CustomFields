@@ -13,7 +13,7 @@ addons:
   
 before_script:
   - psql -c 'create database test0;' -U postgres
-  - cp Tests/Fixtures/App/app/config/parameters.travis.yml Test/Fixtures/App/app/config/parameters.yml
+  - cp Tests/Fixtures/App/app/config/parameters.travis.yml Tests/Fixtures/App/app/config/parameters.yml
   - ./console.sh doctrine:schema:create
 
 install: 
