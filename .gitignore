@@ -22,3 +22,4 @@ app/config/parameters.yml
 *bower_components
 bin/*
 /tmp/*
+src/Chill/CustomFieldsBundle/vendor/*
