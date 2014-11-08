@@ -39,7 +39,7 @@ class CustomFieldsGroupType extends AbstractType
         }
         
         $builder
-            ->add('name')
+            ->add('name', 'translatable_string')
             ->add('entity', 'choice', array(
                 'choices' => $customizableEntites
             ))
