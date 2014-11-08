@@ -6,20 +6,20 @@ services:
         class: Chill\CustomFieldsBundle\Routing\RoutesLoader
         tags:
             - { name: routing.loader }
-    
+
     chill.custom_field.provider:
         class: Chill\CustomFieldsBundle\Service\CustomFieldProvider
         call:
             - [setContainer, ["@service_container"]]
-            
+
     chill.custom_field.custom_field_choice_type:
         class: Chill\CustomFieldsBundle\Form\CustomFieldType
         arguments:
             - "@chill.custom_field.provider"
-            
+
         tags:
             - { name: 'form.type', alias: 'custom_field_choice' }
-            
+
     chill.custom_field.custom_fields_group_type:
         class: Chill\CustomFieldsBundle\Form\CustomFieldsGroupType
         arguments:
@@ -27,7 +27,7 @@ services:
             - "@translator"
         tags:
             - { name: 'form.type', alias: 'custom_fields_group' }
-            
+
     chill.custom_field.custom_field_type:
         class: Chill\CustomFieldsBundle\Form\Type\CustomFieldType
         arguments:
@@ -35,15 +35,27 @@ services:
             - "@chill.custom_field.provider"
         tags:
             - { name: 'form.type', alias: 'custom_field' }
-    
+
     chill.custom_field.text:
         class: Chill\CustomFieldsBundle\CustomFields\CustomFieldText
         tags:
             - { name: 'chill.custom_field', type: 'text' }
-            
+
     chill.custom_field.address:
         class: Chill\CustomFieldsBundle\CustomFields\CustomFieldAddress
         arguments:
             - "@doctrine.orm.entity_manager"
         tags:
             - { name: 'chill.custom_field', type: 'address' }
+
+    chill.custom_field.custom_fields_title_type:
+        class: Chill\CustomFieldsBundle\Form\Type\CustomFieldsTitleType
+        tags:
+            - { name: 'form.type', alias: 'custom_field_title' }
+
+    chill.custom_field.title:
+        class: Chill\CustomFieldsBundle\CustomFields\CustomFieldTitle
+        arguments:
+            - "@request_stack"
+        tags:
+            - { name: 'chill.custom_field', type: 'title' }
