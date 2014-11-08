@@ -7,7 +7,7 @@ services:
         tags:
             - { name: routing.loader }
     
-    chill.custom_field_compiler:
+    chill.custom_field.provider:
         class: Chill\CustomFieldsBundle\Service\CustomFieldProvider
         call:
             - [setContainer, ["@service_container"]]
@@ -15,7 +15,7 @@ services:
     chill.custom_field.custom_field_choice_type:
         class: Chill\CustomFieldsBundle\Form\CustomFieldType
         arguments:
-            - "@chill.custom_field_compiler"
+            - "@chill.custom_field.provider"
             
         tags:
             - { name: 'form.type', alias: 'custom_field_choice' }
@@ -32,7 +32,7 @@ services:
         class: Chill\CustomFieldsBundle\Form\Type\CustomFieldType
         arguments:
             - "@doctrine.orm.entity_manager"
-            - "@chill.custom_field_compiler"
+            - "@chill.custom_field.provider"
         tags:
             - { name: 'form.type', alias: 'custom_field' }
     

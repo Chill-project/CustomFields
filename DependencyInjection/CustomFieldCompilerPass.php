@@ -17,13 +17,13 @@ class CustomFieldCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('chill.custom_field_compiler')) {
-            throw new \LogicException('service chill.custom_field_compiler '
+        if (!$container->hasDefinition('chill.custom_field.provider')) {
+            throw new \LogicException('service chill.custom_field.provider '
                     . 'is not defined.');
         }
         
         $definition = $container->getDefinition(
-            'chill.custom_field_compiler'
+            'chill.custom_field.provider'
         );
 
         $taggedServices = $container->findTaggedServiceIds(

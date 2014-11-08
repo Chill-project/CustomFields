@@ -27,7 +27,7 @@ class CustomFieldController extends Controller
         
         //prepare form for new custom type
         $fieldChoices = array();
-        foreach ($this->get('chill.custom_field_compiler')->getAllFields() 
+        foreach ($this->get('chill.custom_field.provider')->getAllFields() 
               as $key => $customType) {
             $fieldChoices[$key] = $customType->getName();
         }
