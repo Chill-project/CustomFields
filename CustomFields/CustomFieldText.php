@@ -7,6 +7,7 @@ namespace Chill\CustomFieldsBundle\CustomFields;
 use Chill\CustomFieldsBundle\CustomFields\CustomFieldInterface;
 use Chill\CustomFieldsBundle\Entity\CustomField;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * 
@@ -15,6 +16,13 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class CustomFieldText implements CustomFieldInterface
 {
+    
+    private $requestStack;
+    
+    public function __construct(RequestStack $requestStack)
+    {
+        $this->requestStack = $requestStack;
+    }
     
     const MAX_LENGTH = 'maxLength';
     
@@ -33,7 +41,7 @@ class CustomFieldText implements CustomFieldInterface
               : 'textarea';
         
         $builder->add($customField->getSlug(), $type, array(
-            'label' => $customField->getLabel()
+            'label' => $customField->getName()[$this->requestStack->getCurrentRequest()->getLocale()]
         ));
     }
 

@@ -13,7 +13,8 @@ class AppKernel extends Kernel
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
             new \Symfony\Bundle\AsseticBundle\AsseticBundle(),
-            new Doctrine\Bundle\DoctrineBundle\DoctrineBundle()
+            new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
+            new \Chill\MainBundle\ChillMainBundle,
             #add here all the required bundle (some bundle are not required)
         );
     }
