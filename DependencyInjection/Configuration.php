@@ -25,18 +25,18 @@ class Configuration implements ConfigurationInterface
         $customizableEntitiesInfo = "A list of customizable entities";
 
         $rootNode
-                ->children()
-                    ->arrayNode('customizables_entities')
-                    ->info($customizableEntitiesInfo)
-                    ->defaultValue(array())
-                    ->prototype('array')
-                        ->children()
-                            ->scalarNode('class')->isRequired()->info($classInfo)->end()
-                            ->scalarNode('name') ->isRequired()->info($nameInfo) ->end()
-                        ->end()
+            ->children()
+                ->arrayNode('customizables_entities')
+                ->info($customizableEntitiesInfo)
+                ->defaultValue(array())
+                ->prototype('array')
+                    ->children()
+                        ->scalarNode('class')->isRequired()->info($classInfo)->end()
+                        ->scalarNode('name') ->isRequired()->info($nameInfo) ->end()
                     ->end()
                 ->end()
-            ;
+            ->end()
+        ;
 
         return $treeBuilder;
     }
