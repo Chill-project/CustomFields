@@ -12,10 +12,6 @@ class CustomField
      */
     private $id;
 
-    /**
-     * @var string
-     */
-    private $label;
     
     private $slug;
 
@@ -45,11 +41,6 @@ class CustomField
      */
     private $ordering;
     
-    /**
-     *
-     * @var int 
-     */
-    private $relation = 1;
     
     const ONE_TO_ONE = 1;
     const ONE_TO_MANY = 2;
@@ -74,38 +65,11 @@ class CustomField
         return $this->slug;
     }
 
-        /**
-     * Set label
-     *
-     * @param string $label
-     *
-     * @return CustomField
-     */
-    public function setLabel($label)
-    {
-        $this->label = $label;
-        
-        if ($this->slug === NULL) {
-            $this->slug = preg_replace('/[^A-Za-z0-9-]+/', '-', $label);
-        }
-
-        return $this;
-    }
-
     function getOptions()
     {
         return $this->options;
     } 
-    
-    /**
-     * Get label
-     *
-     * @return string
-     */
-    public function getLabel()
-    {
-        return $this->label;
-    }
+
 
     /**
      * Set type
@@ -129,18 +93,6 @@ class CustomField
     public function getType()
     {
         return $this->type;
-    }
-    
-    function getRelation()
-    {
-        return $this->relation;
-    }
-
-    function setRelation($relation)
-    {
-        $this->relation = $relation;
-        
-        return $this;
     }
 
     
@@ -254,29 +206,6 @@ class CustomField
         return $this;
     }
 
-    /**
-     * Set customFieldGroup
-     *
-     * @param \Chill\CustomFieldsBundle\Entity\CustomFieldsGroup $customFieldGroup
-     *
-     * @return CustomField
-     */
-    public function setCustomFieldGroup(\Chill\CustomFieldsBundle\Entity\CustomFieldsGroup $customFieldGroup = null)
-    {
-        $this->customFieldGroup = $customFieldGroup;
-
-        return $this;
-    }
-
-    /**
-     * Get customFieldGroup
-     *
-     * @return \Chill\CustomFieldsBundle\Entity\CustomFieldsGroup
-     */
-    public function getCustomFieldGroup()
-    {
-        return $this->customFieldGroup;
-    }
     
     public function setSlug($slug)
     {

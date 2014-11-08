@@ -16,7 +16,6 @@ services:
         class: Chill\CustomFieldsBundle\Form\CustomFieldType
         arguments:
             - "@chill.custom_field.provider"
-
         tags:
             - { name: 'form.type', alias: 'custom_field_choice' }
 
@@ -38,6 +37,8 @@ services:
 
     chill.custom_field.text:
         class: Chill\CustomFieldsBundle\CustomFields\CustomFieldText
+        arguments:
+            - "@request_stack"
         tags:
             - { name: 'chill.custom_field', type: 'text' }
 
