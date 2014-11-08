@@ -7,6 +7,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Chill\CustomFieldsBundle\Service\CustomFieldProvider;
 use Chill\CustomFieldsBundle\Entity\CustomField;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 class CustomFieldType extends AbstractType
 {
@@ -37,22 +39,37 @@ class CustomFieldType extends AbstractType
         }
         
         $builder
-            ->add('name', 'text')
+            ->add('name', 'translatable_string')
             ->add('active')
             ->add('customFieldsGroup', 'entity', array(
                'class' => 'ChillCustomFieldsBundle:CustomFieldsGroup',
                'property' => 'name['.$this->culture.']'
             ))
             ->add('ordering', 'number')
-        ;
+            ->add('type', 'hidden', array('data' => $options['type']))
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) 
+            {
+                $customField = $event->getData();
+                $form = $event->getForm();
+
+                // check if the customField object is "new"
+                // If no data is passed to the form, the data is "null".
+                // This should be considered a new "customField"
+                if (!$customField || null === $customField->getId()) {
+                    $form->add('slug', 'text');
+                }
+            });
         
-        //add options field
-        $optionsType = $this->customFieldProvider
-              ->getCustomFieldByType($options['type'])
-              ->buildOptionsForm($builder);
-        if ($optionsType) {
-            $builder->add('options', $optionsType);
-        }
+        
+        $builder->add(
+              $this->customFieldProvider
+                    ->getCustomFieldByType($options['type'])
+                    ->buildOptionsForm(
+                        $builder
+                          ->create('options', null, array('compound' => true))
+                    )
+              );
+        
     }
     
     /**

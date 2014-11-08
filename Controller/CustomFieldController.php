@@ -189,7 +189,7 @@ class CustomFieldController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($entity, $entity->getType());
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {

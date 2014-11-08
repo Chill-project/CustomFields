@@ -27,7 +27,7 @@ class CustomField
     /**
      * @var boolean
      */
-    private $active;
+    private $active = true;
     
     /**
      *
@@ -277,4 +277,12 @@ class CustomField
     {
         return $this->customFieldGroup;
     }
+    
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+        return $this;
+    }
+
+
 }

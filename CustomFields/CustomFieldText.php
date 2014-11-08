@@ -15,9 +15,24 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class CustomFieldText implements CustomFieldInterface
 {
+    
+    const MAX_LENGTH = 'maxLength';
+    
+    /**
+     * Create a form according to the maxLength option
+     * 
+     * if maxLength < 256 THEN the form type is 'text'
+     * if not, THEN the form type is textarea
+     * 
+     * @param FormBuilderInterface $builder
+     * @param CustomField $customField
+     */
     public function buildForm(FormBuilderInterface $builder, CustomField $customField)
     {
-        $builder->add($customField->getSlug(), 'text', array(
+        $type = ($customField->getOptions()[self::MAX_LENGTH] < 256) ? 'text' 
+              : 'textarea';
+        
+        $builder->add($customField->getSlug(), $type, array(
             'label' => $customField->getLabel()
         ));
     }
@@ -42,8 +57,10 @@ class CustomFieldText implements CustomFieldInterface
         return 'text field';
     }
 
-   public function buildOptionsForm(FormBuilderInterface $builder)
-   {
-      return null;
-   }
+    public function buildOptionsForm(FormBuilderInterface $builder)
+    {
+       return $builder
+             ->add(self::MAX_LENGTH, 'integer', array('empty_data' => 256))
+          ;
+    }
 }
