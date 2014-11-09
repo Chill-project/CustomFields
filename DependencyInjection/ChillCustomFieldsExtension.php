@@ -6,13 +6,14 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
 /**
  * This is the class that loads and manages your bundle configuration
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class ChillCustomFieldsExtension extends Extension
+class ChillCustomFieldsExtension extends Extension implements PrependExtensionInterface
 {
     /**
      * {@inheritDoc}
@@ -33,4 +34,17 @@ class ChillCustomFieldsExtension extends Extension
         $container->setParameter('chill_custom_fields.customizables_entities', 
                 $config['customizables_entities']);
     }
+    
+    
+     /* (non-PHPdoc)
+      * @see \Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface::prepend()
+      */
+     public function prepend(ContainerBuilder $container) 
+     {
+        // add form layout to twig resources
+         $twigConfig['form']['resources'][] = 'ChillCustomFieldsBundle:Form:form_div_layout.html.twig';
+         $container->prependExtensionConfig('twig', $twigConfig);
+
+     }
+
 }
