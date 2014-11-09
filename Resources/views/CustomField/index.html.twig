@@ -17,7 +17,7 @@
         {% for entity in entities %}
             <tr>
                 <td><a href="{{ path('customfield_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.label }}</td>
+                <td>{{ entity.name(app.request.locale) }}</td>
                 <td>{{ entity.type }}</td>
                 <td>{{ entity.active }}</td>
                 <td>

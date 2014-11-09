@@ -163,9 +163,24 @@ class CustomField
      *
      * @return array
      */
-    public function getName()
+    public function getName($locale = null)
     {
-        return $this->name;
+        if ($locale) {
+          if (isset($this->name[$locale])) {
+             return $this->name[$locale];
+          } else {
+             foreach ($this->name as $name) {
+                if (!empty($name)) {
+                   return $name;
+                }
+             }
+          }
+          
+          return '';
+          
+       } else {
+          return $this->name;
+       };
     }
 
     /**
