@@ -20,7 +20,7 @@
 
 namespace Chill\CustomFieldsBundle\Tests;
 
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Chill\CustomFieldsBundle\Entity\CustomField;
 use Chill\CustomFieldsBundle\CustomFields\CustomFieldText;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -32,7 +32,7 @@ use Chill\CustomFieldsBundle\Tests\CustomFieldTestHelper;
  *
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
  */
-class CustomFieldsTextTest extends KernelTestCase
+class CustomFieldsTextTest extends WebTestCase
 {
     /**
      *
@@ -80,7 +80,7 @@ class CustomFieldsTextTest extends KernelTestCase
               
     }
     
-        public function testPublicFormRenderingLengthMoreThan25()
+    public function testPublicFormRenderingLengthMoreThan25()
     {
         $customField = new CustomField();
         $customField->setType('text')
@@ -94,9 +94,17 @@ class CustomFieldsTextTest extends KernelTestCase
         $crawler = CustomFieldTestHelper::getCrawlerForField($customField, $this, static::$kernel);
         
         $this->assertCount(1, $crawler->filter("textarea"));
-        $this->assertCount(1, $crawler->filter("label:contains('my label')"));
+        $this->assertCount(1, $crawler->filter("label:contains('my label')"));        
+    }
+    
+    public function testFormTextNew()
+    {
+        $client = static::createClient();
         
-              
+        $crawler = $client->request('GET', '/admin/customfield/new?type=text');
+        
+        $form = $crawler->selectButton('custom_field_choice_submit')->form();
+        $this->assertTrue($form->has('custom_field_choice[options][maxLength]'));
     }
     
 }
