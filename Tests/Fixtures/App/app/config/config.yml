@@ -28,3 +28,40 @@ doctrine:
         
 chill_main:
     available_languages: [ fr, nl, en ]
+    
+security:
+    providers:
+        chain_provider:
+            chain :
+                providers: [in_memory, users]
+        in_memory:
+            memory:
+                users:
+                    admin: { password: olala, roles: 'ROLE_ADMIN' }
+        users:
+            entity:
+                class: Chill\MainBundle\Entity\User
+                property: username
+
+    encoders: 
+        Chill\MainBundle\Entity\User: 
+            algorithm: bcrypt
+        Symfony\Component\Security\Core\User\User: plaintext
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        default:
+            anonymous: ~
+            form_login:
+                csrf_parameter: _csrf_token
+                intention: authenticate
+                csrf_provider: form.csrf_provider
+            logout: ~
+    access_control:
+        #disable authentication for tests
+        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        #- { path: ^/admin, roles: ROLE_ADMIN }
+        #- { path: ^/, roles: ROLE_USER }

@@ -1,3 +1,7 @@
+{%  if inputKeys is defined %}
 {% for key in inputKeys %}
-    {{ form_row(form[key]) }}
+{{ form_row(form[key]) }}
 {% endfor %}
+{%  else %}
+{{  form(form) }}
+{% endif %}

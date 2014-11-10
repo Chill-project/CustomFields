@@ -5,3 +5,7 @@ framework:
     test: ~
     session:
         storage_id: session.storage.filesystem
+        
+chill_custom_fields:
+    customizables_entities:
+        - { class: TEST, name: test }

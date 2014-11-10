@@ -146,7 +146,6 @@ class CustomFieldsGroupController extends Controller
             'action' => $this->generateUrl('customfieldsgroup_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
-
         $form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;
@@ -220,5 +219,45 @@ class CustomFieldsGroupController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+    
+    /**
+     * This function render the customFieldsGroup as a form.
+     *
+     * This function is for testing purpose !
+     *
+     * The route which call this action is not in Resources/config/routing.yml,
+     * but in Tests/Fixtures/App/app/config.yml
+     *
+     * @param int $id
+     */
+    public function renderFormAction($id, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('ChillCustomFieldsBundle:CustomFieldsGroup')->find($id);
+    
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find CustomFieldsGroups entity.');
+        }
+    
+        $form = $this->createForm('custom_field', null, array('group' => $entity));
+        $form->add('submit', 'submit', array('label' => 'POST'));
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted()) {
+            var_dump($form->getData());
+            var_dump(json_encode($form->getData()));
+        }
+    
+        $this->get('twig.loader')
+            ->addPath(__DIR__.'/../Tests/Fixtures/App/app/Resources/views/',
+                $namespace = 'test');
+    
+        return $this
+            ->render('@test/CustomField/simple_form_render.html.twig', array(
+                'form' => $form->createView()
+        ));
+    
     }
 }

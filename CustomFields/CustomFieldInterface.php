@@ -39,8 +39,9 @@ interface CustomFieldInterface
 
     /**
      * 
-     * @param type $value
+     * @param mixed $value the raw value, **not deserialized** (= as stored in the db)
      * @param \Chill\CustomFieldsBundle\CustomField\CustomField $customField
+     * @return string an html representation of the value
      */
     public function render($value, CustomField $customField);
     
