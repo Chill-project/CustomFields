@@ -27,9 +27,9 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->arrayNode('customizables_entities')
-                ->info($customizableEntitiesInfo)
-                ->defaultValue(array())
-                ->prototype('array')
+                    ->info($customizableEntitiesInfo)
+                    ->defaultValue(array())
+                    ->prototype('array')
                     ->children()
                         ->scalarNode('class')->isRequired()->info($classInfo)->end()
                         ->scalarNode('name') ->isRequired()->info($nameInfo) ->end()
