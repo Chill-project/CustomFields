@@ -39,12 +39,10 @@ class ChillCustomFieldsExtension extends Extension implements PrependExtensionIn
      /* (non-PHPdoc)
       * @see \Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface::prepend()
       */
-     public function prepend(ContainerBuilder $container) 
-     {
+    public function prepend(ContainerBuilder $container) 
+    {
         // add form layout to twig resources
-         $twigConfig['form']['resources'][] = 'ChillCustomFieldsBundle:Form:form_div_layout.html.twig';
-         $container->prependExtensionConfig('twig', $twigConfig);
-
-     }
-
+        $twigConfig['form']['resources'][] = 'ChillCustomFieldsBundle:Form:fields.html.twig';
+        $container->prependExtensionConfig('twig', $twigConfig);
+    }
 }
