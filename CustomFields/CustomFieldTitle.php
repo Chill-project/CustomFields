@@ -38,8 +38,7 @@ class CustomFieldTitle implements CustomFieldInterface
     public function buildForm(FormBuilderInterface $builder, CustomField $customField)
     {
         $builder->add($customField->getSlug(), 'custom_field_title', array(
-            'label' => $customField->getLabel(
-                $this->requestStack->getCurrentRequest()->getLocale())
+            'label' => $customField->getName()[$this->requestStack->getCurrentRequest()->getLocale()]
         ));
     }
 
