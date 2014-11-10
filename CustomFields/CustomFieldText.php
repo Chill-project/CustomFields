@@ -8,6 +8,7 @@ use Chill\CustomFieldsBundle\CustomFields\CustomFieldInterface;
 use Chill\CustomFieldsBundle\Entity\CustomField;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Bundle\TwigBundle\TwigEngine;
 
 /**
  * 
@@ -19,9 +20,17 @@ class CustomFieldText implements CustomFieldInterface
     
     private $requestStack;
     
-    public function __construct(RequestStack $requestStack)
+    /**
+     * 
+     * @var TwigEngine
+     */
+    private $templating;
+    
+    
+    public function __construct(RequestStack $requestStack, TwigEngine $templating)
     {
         $this->requestStack = $requestStack;
+        $this->templating = $templating;
     }
     
     const MAX_LENGTH = 'maxLength';
@@ -47,7 +56,8 @@ class CustomFieldText implements CustomFieldInterface
 
     public function render($value, CustomField $customField)
     {
-        
+        return $this->templating
+            ->render('ChillCustomFieldsBundle:CustomFieldsRendering:text.html.twig', array('text' => $value));
     }
 
     public function serialize($value, CustomField $customField)

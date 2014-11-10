@@ -1,0 +1,7 @@
+<dl class="custom_fields_group_rendering">
+    <span class="custom_fields_group_name">{{ customFieldsGroup.name(app.request.locale) }}</span>
+    {% for customField in customFieldsGroup.customFields %}
+    <dt>{{ chill_custom_field_label(customField) }}</dt>
+    <dd>{{ chill_custom_field_widget(fields, customField) }}</dd>
+    {% endfor %}
+</dl>

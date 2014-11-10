@@ -242,17 +242,27 @@ class CustomFieldsGroupController extends Controller
         }
     
         $form = $this->createForm('custom_field', null, array('group' => $entity));
-        $form->add('submit', 'submit', array('label' => 'POST'));
+        $form->add('submit_dump', 'submit', array('label' => 'POST AND DUMP'));
+        $form->add('submit_render','submit', array('label' => 'POST AND RENDER'));
         $form->handleRequest($request);
         
+        $this->get('twig.loader')
+        ->addPath(__DIR__.'/../Tests/Fixtures/App/app/Resources/views/',
+            $namespace = 'test');
+        
         if ($form->isSubmitted()) {
+            if ($form->get('submit_render')->isClicked()) {
+                return $this->render('ChillCustomFieldsBundle:CustomFieldsGroup:render.html.twig', array(
+                    'fields' => $form->getData(),
+                    'customFieldsGroup' => $entity
+                ));
+            }
+            
             var_dump($form->getData());
             var_dump(json_encode($form->getData()));
         }
     
-        $this->get('twig.loader')
-            ->addPath(__DIR__.'/../Tests/Fixtures/App/app/Resources/views/',
-                $namespace = 'test');
+        
     
         return $this
             ->render('@test/CustomField/simple_form_render.html.twig', array(
