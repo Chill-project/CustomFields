@@ -1,3 +1,97 @@
 {% block custom_field_title_widget %}
 dump(attr)
+{# suggestion : {{ dump(form) }} to see all attributes from the form and pick the value or label #}
 {% endblock custom_field_title_widget %}
+
+
+{# render an alement in a choice list #}
+{% block cf_choices_list_widget %}
+
+{{ form_row(form.name) }}
+{{ form_row(form.active) }}
+{{ form_row(form.slug) }}
+
+{% endblock cf_choices_list_widget %}
+
+{# render the possibility to add different elements in a choice list #}
+{% block cf_choices_widget %}
+
+{{ form(form) }}
+
+<ul id="ul_{{ form.vars.id }}"></ul>
+{# we use javascrit to add an additional element. All functions are personnalized with the id ( = form.vars.id) #}
+<script type="text/javascript">
+var $collectionHolder_{{ form.vars.id }};
+
+// setup an "add a tag" link
+var $addTagLink_{{ form.vars.id }} = $('<a href="#" class="add_tag_link">Add an element</a>');
+var $newLinkLi_{{ form.vars.id }} = $('<li></li>').append($addTagLink_{{ form.vars.id }});
+
+function initialize_{{ form.vars.id }}(ULelementId) {
+    // Get the ul that holds the collection of tags
+    $collectionHolder_{{ form.vars.id }} = $('#' + ULelementId);
+
+    // add the "add a tag" anchor and li to the tags ul
+    $collectionHolder_{{ form.vars.id }}.append($newLinkLi_{{ form.vars.id }});
+
+    // count the current form inputs we have (e.g. 2), use that as the new
+    // index when inserting a new item (e.g. 2)
+    $collectionHolder_{{ form.vars.id }}.data('index', $collectionHolder_{{ form.vars.id }}.find(':input').length);
+
+    $addTagLink_{{ form.vars.id }}.on('click', function(e) {
+        // prevent the link from creating a "#" on the URL
+        e.preventDefault();
+
+        // add a new tag form (see next code block)
+        addTagForm_{{ form.vars.id }}($collectionHolder_{{ form.vars.id }}, $newLinkLi_{{ form.vars.id }});
+    });
+};
+
+function addTagForm_{{ form.vars.id }}(collection, newLinkLi) {
+	console.log($collectionHolder_{{ form.vars.id }});
+    // Get the data-prototype explained earlier
+    var prototype = $( '#' + '{{ form.vars.id }}').data('prototype');
+    console.log(prototype);
+    // get the new index
+    var index = collection.data('index');
+
+    // Replace '__name__' in the prototype's HTML to
+    // instead be a number based on how many items we have
+    var newForm = prototype.replace(/__name__/g, index);
+
+    // increase the index with one for the next item
+    collection.data('index', index + 1);
+
+    // Display the form in the page in an li, before the "Add a tag" link li
+    var $newFormLi = $('<li></li>').append(newForm);
+    newLinkLi.before($newFormLi);
+};
+
+
+jQuery(document).ready(initialize_{{ form.vars.id }}('ul_' + '{{ form.vars.id }}'));
+
+</script>
+
+{%  endblock cf_choices_widget %} 
+
+
+
+
+
+
+{% block choice_with_other_widget %}
+<h1>echo</h1>
+
+<div {{ block('widget_container_attributes') }}>
+
+{%- for child in form.children._choices %}
+{%- if child.vars.value == '_other'  -%}
+{{- form_widget(child) -}} {{- form_widget(form.children._other) -}}
+{%- else -%}
+{{- form_widget(child) -}}
+{{- form_label(child) -}}
+{%- endif -%}
+{% endfor -%}
+</div>
+
+{% endblock choice_with_other_widget %}

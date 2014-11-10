@@ -2,3 +2,6 @@ cl_custom_fields:
     resource: .
     type: chill_routes
 
+test_custom_field_form_render:
+    path: /customfieldsgroup/test/render/{id}
+    defaults: { _controller: ChillCustomFieldsBundle:CustomFieldsGroup:renderForm }

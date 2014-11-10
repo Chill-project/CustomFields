@@ -28,7 +28,7 @@ class CustomFieldCompilerPass implements CompilerPassInterface
 
         $taggedServices = $container->findTaggedServiceIds(
             'chill.custom_field'
-        );
+        ); 
         
         foreach ($taggedServices as $id => $tagAttributes) {
             foreach ($tagAttributes as $attributes) {
