@@ -76,9 +76,10 @@ class CustomFieldRenderingTwig extends \Twig_Extension implements ContainerAware
 
     /**
      * 
-     * @param CustomField|object|string $customFieldOrClass
-     * @param string $slug
-     * @param array $params the parameters for rendering
+     * @param CustomField|object|string $customFieldOrClass either a customField OR a customizable_entity OR the FQDN of the entity
+     * @param string $slug only necessary if the first argument is NOT a CustomField instance
+     * @param array $params the parameters for rendering. Currently, 'label_layout' allow to choose a different label. Default is 'ChillCustomFieldsBundle:CustomField:render_label.html.twig'
+     * @return string
      */
     public function renderLabel($customFieldOrClass, $slug = null, array $params = array())
     {
@@ -92,6 +93,13 @@ class CustomFieldRenderingTwig extends \Twig_Extension implements ContainerAware
             ->render($resolvedParams['label_layout'], array('customField' => $customField));
     }
     
+    /**
+     * 
+     * @param array $fields the array raw, as stored in the db
+     * @param CustomField|object|string $customFieldOrClass either a customField OR a customizable_entity OR the FQDN of the entity
+     * @param string $slug only necessary if the first argument is NOT a CustomField instance
+     * @return string HTML representation of the custom field, as described in the CustomFieldInterface. Is HTML safe
+     */
     public function renderWidget(array $fields, $customFieldOrClass, $slug = null)
     {
         return $this->container->get('chill.custom_field.helper')
