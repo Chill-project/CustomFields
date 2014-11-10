@@ -28,6 +28,10 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class CustomFieldTitle implements CustomFieldInterface
 {
+    const TYPE = 'type';
+    const TYPE_TITLE = 'title';
+    const TYPE_SUBTITLE = 'subtitle';
+
     private $requestStack;
 
     public function __construct(RequestStack $requestStack)
@@ -38,7 +42,11 @@ class CustomFieldTitle implements CustomFieldInterface
     public function buildForm(FormBuilderInterface $builder, CustomField $customField)
     {
         $builder->add($customField->getSlug(), 'custom_field_title', array(
-            'label' => $customField->getName()[$this->requestStack->getCurrentRequest()->getLocale()]
+            'label' => false,
+            'attr' => array(
+                'title' => $customField->getName()[$this->requestStack->getCurrentRequest()->getLocale()],
+                self::TYPE => $customField->getOptions()[self::TYPE ]
+            )
         ));
     }
 
@@ -64,6 +72,11 @@ class CustomFieldTitle implements CustomFieldInterface
 
     public function buildOptionsForm(FormBuilderInterface $builder)
     {
-      return $builder;
+        return $builder->add(self::TYPE, 'choice',
+            array('choices' => array(
+                self::TYPE_TITLE => self::TYPE_TITLE,
+                self::TYPE_SUBTITLE => self::TYPE_SUBTITLE
+            ))
+        );
     }
 }

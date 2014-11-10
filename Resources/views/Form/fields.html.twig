@@ -1,8 +1,8 @@
 {% block custom_field_title_widget %}
-dump(attr)
-{# suggestion : {{ dump(form) }} to see all attributes from the form and pick the value or label #}
+    <span class="{{ form.vars.attr.type }}">
+        {{ form.vars.attr.title }}
+    </span>
 {% endblock custom_field_title_widget %}
-
 
 {# render an alement in a choice list #}
 {% block cf_choices_list_widget %}
@@ -73,11 +73,6 @@ jQuery(document).ready(initialize_{{ form.vars.id }}('ul_' + '{{ form.vars.id }}
 </script>
 
 {%  endblock cf_choices_widget %} 
-
-
-
-
-
 
 {% block choice_with_other_widget %}
 <h1>echo</h1>
