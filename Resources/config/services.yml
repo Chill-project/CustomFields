@@ -42,7 +42,7 @@ services:
             - "@templating"
         tags:
             - { name: 'chill.custom_field', type: 'text' }
-            
+
     chill.custom_field.choice:
         class: Chill\CustomFieldsBundle\CustomFields\CustomFieldChoice
         arguments:
