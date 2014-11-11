@@ -70,13 +70,13 @@ services:
             - "@request_stack"
         tags:
             - { name: 'chill.custom_field', type: 'title' }
-            
+
     chill.custom_field.helper:
         class: Chill\CustomFieldsBundle\Service\CustomFieldsHelper
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@chill.custom_field.provider"
-            
+
     chill.custom_field.twig.custom_fields_rendering:
         class: Chill\CustomFieldsBundle\Templating\Twig\CustomFieldRenderingTwig
         calls:
