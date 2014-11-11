@@ -44,6 +44,7 @@ class CustomFieldTitle implements CustomFieldInterface
         $builder->add($customField->getSlug(), 'custom_field_title', array(
             'label' => false,
             'attr' => array(
+                'class' => 'no-label',
                 'title' => $customField->getName()[$this->requestStack->getCurrentRequest()->getLocale()],
                 self::TYPE => $customField->getOptions()[self::TYPE ]
             )
