@@ -35,7 +35,6 @@ class ChillCustomFieldsExtension extends Extension implements PrependExtensionIn
                 $config['customizables_entities']);
     }
     
-    
      /* (non-PHPdoc)
       * @see \Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface::prepend()
       */
