@@ -48,6 +48,7 @@ services:
         arguments:
             - "@request_stack"
             - %locale%
+            - "@templating"
         tags:
             - { name: 'chill.custom_field', type: 'choice' }
 

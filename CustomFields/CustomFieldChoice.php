@@ -28,6 +28,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Chill\CustomFieldsBundle\Form\Type\ChoicesListType;
 use Chill\CustomFieldsBundle\Form\DataTransformer\CustomFieldDataTransformer;
 use Chill\CustomFieldsBundle\Form\Type\ChoiceWithOtherType;
+use Symfony\Bridge\Twig\TwigEngine;
 
 /**
  * 
@@ -49,10 +50,17 @@ class CustomFieldChoice implements CustomFieldInterface
 	
 	private $defaultLocale;
 	
-	public function __construct(RequestStack $requestStack, $defaultLocale)
+	/**
+	 * 
+	 * @var TwigEngine
+	 */
+	private $templating;
+	
+	public function __construct(RequestStack $requestStack, $defaultLocale, TwigEngine $templating)
 	{
 	    $this->requestStack = $requestStack;
 	    $this->defaultLocale = $defaultLocale;
+	    $this->templating = $templating;
 	}
 	
 	
@@ -146,7 +154,27 @@ class CustomFieldChoice implements CustomFieldInterface
 
     public function render($value, CustomField $customField)
     {
+        //extract the data. They are under a _choice key if they are stored with allow_other
+        $data = (isset($value['_choices'])) ? $value['_choices'] : $value;
         
+        $selected = (is_array($data)) ? $data : array($data);
+        
+        $choices = $customField->getOptions()[self::CHOICES];
+        
+        if (in_array('_other', $selected)){
+            $choices[] = array('name' => $value['_other'], 'slug' => '_other');
+        }
+        
+        return $this->templating
+            ->render('ChillCustomFieldsBundle:CustomFieldsRendering:choice.html.twig',
+                array(
+                    'choices' => $choices, 
+                    'selected' => $selected,
+                    'multiple' => $customField->getOptions()[self::MULTIPLE],
+                    'expanded' => $customField->getOptions()[self::EXPANDED],
+                    'locale' => $this->defaultLocale
+                )
+            );
     }
 
     public function serialize($value, CustomField $customField)
