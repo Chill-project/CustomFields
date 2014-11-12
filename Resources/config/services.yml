@@ -68,6 +68,7 @@ services:
         class: Chill\CustomFieldsBundle\CustomFields\CustomFieldTitle
         arguments:
             - "@request_stack"
+            - "@templating"
         tags:
             - { name: 'chill.custom_field', type: 'title' }
 

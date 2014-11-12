@@ -1,0 +1,5 @@
+{% if type == "title"%}
+    <h2>{{ title[app.request.locale] }}</h2>
+{% else %}
+    <h3>{{ title[app.request.locale] }}</h3>
+{% endif %}

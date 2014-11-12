@@ -25,6 +25,7 @@ use Chill\CustomFieldsBundle\CustomFields\CustomFieldInterface;
 use Chill\CustomFieldsBundle\Entity\CustomField;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Bundle\TwigBundle\TwigEngine;
 
 class CustomFieldTitle implements CustomFieldInterface
 {
@@ -34,9 +35,16 @@ class CustomFieldTitle implements CustomFieldInterface
 
     private $requestStack;
 
-    public function __construct(RequestStack $requestStack)
+    /**
+     * 
+     * @var TwigEngine
+     */
+    private $templating;
+
+    public function __construct(RequestStack $requestStack, TwigEngine $templating)
     {
         $this->requestStack = $requestStack;
+        $this->templating = $templating;
     }
  
     public function buildForm(FormBuilderInterface $builder, CustomField $customField)
@@ -52,8 +60,14 @@ class CustomFieldTitle implements CustomFieldInterface
     }
 
     public function render($value, CustomField $customField)
-    {
-       return $value; 
+    {   
+        return $this->templating
+            ->render('ChillCustomFieldsBundle:CustomFieldsRendering:title.html.twig', 
+                array(
+                    'title' => $customField->getName(),
+                    'type' => $customField->getOptions()[self::TYPE]
+                )
+            );
     }
 
     public function serialize($value, CustomField $customField)
