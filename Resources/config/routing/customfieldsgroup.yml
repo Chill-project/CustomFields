@@ -1,30 +1,30 @@
 customfieldsgroup:
-    path:     /
+    path:     /{_locale}/admin/customfieldsgroup/
     defaults: { _controller: "ChillCustomFieldsBundle:CustomFieldsGroup:index" }
 
 customfieldsgroup_show:
-    path:     /{id}/show
+    path:     /{_locale}/admin/customfieldsgroup/{id}/show
     defaults: { _controller: "ChillCustomFieldsBundle:CustomFieldsGroup:show" }
 
 customfieldsgroup_new:
-    path:     /new
+    path:     /{_locale}/admin/customfieldsgroup/new
     defaults: { _controller: "ChillCustomFieldsBundle:CustomFieldsGroup:new" }
 
 customfieldsgroup_create:
-    path:     /create
+    path:     /{_locale}/admin/customfieldsgroup/create
     defaults: { _controller: "ChillCustomFieldsBundle:CustomFieldsGroup:create" }
     requirements: { _method: post }
 
 customfieldsgroup_edit:
-    path:     /{id}/edit
+    path:     /{_locale}/admin/customfieldsgroup/{id}/edit
     defaults: { _controller: "ChillCustomFieldsBundle:CustomFieldsGroup:edit" }
 
 customfieldsgroup_update:
-    path:     /{id}/update
+    path:     /{_locale}/admin/customfieldsgroup/{id}/update
     defaults: { _controller: "ChillCustomFieldsBundle:CustomFieldsGroup:update" }
     requirements: { _method: post|put }
 
 customfieldsgroup_delete:
-    path:     /{id}/delete
+    path:     /{_locale}/admin/customfieldsgroup/{id}/delete
     defaults: { _controller: "ChillCustomFieldsBundle:CustomFieldsGroup:delete" }
     requirements: { _method: post|delete }

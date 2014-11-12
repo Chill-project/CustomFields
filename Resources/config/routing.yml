@@ -1,20 +1,20 @@
 cl_custom_fields_customfieldsgroup:
     resource: "@ChillCustomFieldsBundle/Resources/config/routing/customfieldsgroup.yml"
-    prefix:   {_locale}/admin/customfieldsgroup
+    prefix:   /
 
 cl_custom_fields_blopentity2:
     resource: "@ChillCustomFieldsBundle/Resources/config/routing/blopentity2.yml"
-    prefix:   {_locale}/blopentity2
+    prefix:   /blopentity2
 
 cl_custom_fields_adress:
     resource: "@ChillCustomFieldsBundle/Resources/config/routing/adress.yml"
-    prefix:   {_locale}/adress
+    prefix:   /adress
 
 cl_custom_fields_customfield:
     resource: "@ChillCustomFieldsBundle/Resources/config/routing/customfield.yml"
-    prefix:   {_locale}/admin/customfield
+    prefix:   /
 
 cl_custom_fields_blopentity:
     resource: "@ChillCustomFieldsBundle/Resources/config/routing/blopentity.yml"
-    prefix:   {_locale}/
+    prefix:   /
 

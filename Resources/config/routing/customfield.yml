@@ -1,30 +1,30 @@
 customfield:
-    path:     /
+    path:     /{_locale}/admin/customfield/
     defaults: { _controller: "ChillCustomFieldsBundle:CustomField:index" }
 
 customfield_show:
-    path:     /{id}/show
+    path:     /{_locale}/admin/customfield/{id}/show
     defaults: { _controller: "ChillCustomFieldsBundle:CustomField:show" }
 
 customfield_new:
-    path:     /new
+    path:     /{_locale}/admin/customfield/new
     defaults: { _controller: "ChillCustomFieldsBundle:CustomField:new" }
 
 customfield_create:
-    path:     /create
+    path:     /{_locale}/admin/customfield/create
     defaults: { _controller: "ChillCustomFieldsBundle:CustomField:create" }
     requirements: { _method: post }
 
 customfield_edit:
-    path:     /{id}/edit
+    path:     /{_locale}/admin/customfield/{id}/edit
     defaults: { _controller: "ChillCustomFieldsBundle:CustomField:edit" }
 
 customfield_update:
-    path:     /{id}/update
+    path:     /{_locale}/admin/customfield/{id}/update
     defaults: { _controller: "ChillCustomFieldsBundle:CustomField:update" }
     requirements: { _method: post|put }
 
 customfield_delete:
-    path:     /{id}/delete
+    path:     /{_locale}/admin/customfield/{id}/delete
     defaults: { _controller: "ChillCustomFieldsBundle:CustomField:delete" }
     requirements: { _method: post|delete }
