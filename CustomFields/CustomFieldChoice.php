@@ -80,7 +80,8 @@ class CustomFieldChoice implements CustomFieldInterface
         $options = array(
                 'multiple' => $customField->getOptions()[self::MULTIPLE],
                 'choices'  => $choices,
-                'required' => false
+                'required' => false,
+                'label'    => $customField->getName()[$locale]
             );
         
         //if allow_other = true
