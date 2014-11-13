@@ -13,8 +13,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class ChoiceWithOtherType extends AbstractType
 {
-    
-    
      /* (non-PHPdoc)
       * @see \Symfony\Component\Form\AbstractType::buildForm()
       */

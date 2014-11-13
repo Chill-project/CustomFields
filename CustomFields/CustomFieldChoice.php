@@ -86,13 +86,11 @@ class CustomFieldChoice implements CustomFieldInterface
         
         //if allow_other = true
         if ($customField->getOptions()[self::ALLOW_OTHER] === 1) {
-            
             $builder->add(
                 $builder->create($customField->getSlug(), new ChoiceWithOtherType(), $options)
                          ->addModelTransformer(new CustomFieldDataTransformer($this, $customField)));
             
         } else { //if allow_other = false
-            
             //we add the 'expanded' to options
             $options['expanded'] = $customField->getOptions()[self::EXPANDED];
             
