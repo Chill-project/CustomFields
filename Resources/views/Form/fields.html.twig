@@ -94,8 +94,6 @@ jQuery(document).ready(initialize_{{ form.vars.id }}('ul_' + '{{ form.vars.id }}
 {%  endblock cf_choices_widget %} 
 
 {% block choice_with_other_widget %}
-<h1>echo</h1>
-
 <div {{ block('widget_container_attributes') }}>
 
 {%- for child in form.children._choices %}
