@@ -1,12 +1,12 @@
 <ul class="custom_fields choice">
 {%- for choice in choices -%}
     {% if choice['slug'] in selected %}{%- set is_selected = true -%}{%- else -%}{%- set is_selected = false -%}{%- endif -%}
-    {# {%- if choice['slug'] in selected -%} #}
-    <li class="{% if true %} selected {% endif %}">
-    {%- if multiple -%}
-        <input type="checkbox" {% if is_selected %}checked{% endif %} />
+    {%- if is_selected -%}
+    <li class="{% if is_selected or expanded == 1 %} selected {% endif %}">
+    {%- if is_selected -%}
+        <i class="fa fa-check-square-o"></i>
     {%- else -%}
-        <input type="radio" {% if is_selected  %}checked{% endif %} />
+        <i class="fa fa-square-o"></i>
     {%- endif -%}
         {%- if choice['slug'] is not same as('_other') -%}
         {{ choice['name'][app.request.locale]|default(choice['name'][locale]|default('Not available in your language'|trans)) }}
@@ -14,6 +14,6 @@
         <span class="other">{{ 'Other value'|trans }}&nbsp;:</span> {{ choice['name'] }}
         {%- endif -%}
     </li>
-        {# {%- endif -%} #}
+    {%- endif -%}
 {%- endfor -%}
 </ul>
