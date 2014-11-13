@@ -15,5 +15,6 @@ Chill\CustomFieldsBundle\Entity\CustomFieldsGroup:
             length: 255
     oneToMany:
         customFields:
+            orderBy: { 'ordering': 'ASC' }
             targetEntity: Chill\CustomFieldsBundle\Entity\CustomField
             mappedBy: customFieldGroup
