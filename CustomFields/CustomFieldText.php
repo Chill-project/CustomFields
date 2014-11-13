@@ -50,7 +50,8 @@ class CustomFieldText implements CustomFieldInterface
               : 'textarea';
         
         $builder->add($customField->getSlug(), $type, array(
-            'label' => $customField->getName()[$this->requestStack->getCurrentRequest()->getLocale()]
+            'label' => $customField->getName()[$this->requestStack->getCurrentRequest()->getLocale()],
+            'required' => false
         ));
     }
 

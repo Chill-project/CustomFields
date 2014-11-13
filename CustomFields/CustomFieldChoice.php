@@ -80,7 +80,7 @@ class CustomFieldChoice implements CustomFieldInterface
         $options = array(
                 'multiple' => $customField->getOptions()[self::MULTIPLE],
                 'choices'  => $choices,
-                'required' => (count($choices) > 1) ? true : false //not required if only one
+                'required' => false
             );
         
         //if allow_other = true
