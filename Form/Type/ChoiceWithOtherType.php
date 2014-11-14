@@ -19,7 +19,7 @@ class ChoiceWithOtherType extends AbstractType
      public function buildForm(FormBuilderInterface $builder, array $options) 
      {
         //add an 'other' entry in choices array
-        $options['choices']['_other'] = '__other__';
+        $options['choices']['_other'] = 'Other value';
         //ChoiceWithOther must always be expanded
         $options['expanded'] = true;
         

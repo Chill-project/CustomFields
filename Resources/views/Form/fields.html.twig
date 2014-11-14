@@ -95,13 +95,11 @@ jQuery(document).ready(initialize_{{ form.vars.id }}('ul_' + '{{ form.vars.id }}
 
 {% block choice_with_other_widget %}
 <div {{ block('widget_container_attributes') }}>
-
 {%- for child in form.children._choices %}
-{%- if child.vars.value == '_other'  -%}
-{{- form_widget(child) -}} {{- form_widget(form.children._other) -}}
-{%- else -%}
 {{- form_widget(child) -}}
 {{- form_label(child) -}}
+{%- if child.vars.value == '_other'  -%}
+{{- form_widget(form.children._other) -}}
 {%- endif -%}
 {% endfor -%}
 </div>
