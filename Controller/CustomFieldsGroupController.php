@@ -6,7 +6,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Chill\CustomFieldsBundle\Entity\CustomFieldsGroup;
-use Chill\CustomFieldsBundle\Form\CustomFieldsGroupType;
 
 /**
  * CustomFieldsGroup controller.
