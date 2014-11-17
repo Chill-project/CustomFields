@@ -1,5 +1,5 @@
 {% if type == "title"%}
-    <h2>{{ title[app.request.locale] }}</h2>
+    <h2>{{ title | localize_translatable_string }}</h2>
 {% else %}
-    <h3>{{ title[app.request.locale] }}</h3>
+    <h3>{{ title | localize_translatable_string }}</h3>
 {% endif %}
