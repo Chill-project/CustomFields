@@ -1,0 +1,7 @@
+customfieldsdefaultgroup:
+    path:     /{_locale}/admin/customfieldsdefaultgroup/
+    defaults: { _controller: "ChillCustomFieldsBundle:CustomFieldsDefaultGroup:list" }
+
+customfieldsdefaultgroup_set:
+    path: /{_locale}/admin/customfieldsdefaultgroup/set/group/as/default/
+    defaults: { _controller: "ChillCustomFieldsBundle:CustomFieldsDefaultGroup:setAGroupAsDefault" }

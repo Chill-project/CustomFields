@@ -1,0 +1,20 @@
+Chill\CustomFieldsBundle\Entity\CustomFieldsDefaultGroup:
+    type: entity
+    table: null
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        entity:
+            type: string
+            length: 255
+    manyToOne:
+        customFieldsGroup:
+            targetEntity: Chill\CustomFieldsBundle\Entity\CustomFieldsGroup
+            inversedBy: customFields
+    uniqueConstraints:
+        unique_entity:
+            columns: [ entity ]

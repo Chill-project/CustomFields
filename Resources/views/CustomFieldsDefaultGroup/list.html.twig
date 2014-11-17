@@ -1,0 +1,30 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>CustomFieldsDefaultGroup list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Entity</th>
+                <th>CustomFieldGroup</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for defaultGroup in defaultGroups %}
+            <tr>
+                <td>{{ defaultGroup.entity  }}</td>
+                <td>{{ defaultGroup.customFieldsGroup.name['fr'] }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {{ form_start(form) }}
+    {{ form_row(form.cFGroup) }}
+
+    <button type="submit">
+        set as Default
+    </button>
+    {{ form_end(form) }}
+{% endblock %}
