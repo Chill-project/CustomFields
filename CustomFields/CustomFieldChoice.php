@@ -1,7 +1,7 @@
 <?php
 
 /*
- *  Chill is a software for social workers
+ * Chill is a software for social workers
  * Copyright (C) 2014, Champs Libres Cooperative SCRLFS, <http://www.champs-libres.coop>
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -29,11 +29,13 @@ use Chill\CustomFieldsBundle\Form\Type\ChoicesListType;
 use Chill\CustomFieldsBundle\Form\DataTransformer\CustomFieldDataTransformer;
 use Chill\CustomFieldsBundle\Form\Type\ChoiceWithOtherType;
 use Symfony\Bridge\Twig\TwigEngine;
+use Chill\MainBundle\Templating\TranslatableStringHelper;
 
 /**
  * 
  *
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
+ * @author Marc Ducobu <marc@champs-libes.coop>
  */
 class CustomFieldChoice implements CustomFieldInterface
 {
@@ -55,15 +57,20 @@ class CustomFieldChoice implements CustomFieldInterface
 	 * @var TwigEngine
 	 */
 	private $templating;
+
+    /**
+     * @var TranslatableStringHelper Helper that find the string in current locale from an array of translation
+     */
+    private $translatableStringHelper;
 	
-	public function __construct(RequestStack $requestStack, $defaultLocale, TwigEngine $templating)
+	public function __construct(RequestStack $requestStack, $defaultLocale, TwigEngine $templating,
+        TranslatableStringHelper $translatableStringHelper)
 	{
 	    $this->requestStack = $requestStack;
 	    $this->defaultLocale = $defaultLocale;
 	    $this->templating = $templating;
+        $this->translatableStringHelper = $translatableStringHelper;
 	}
-	
-	
 	
     public function buildForm(FormBuilderInterface $builder, CustomField $customField)
     {
@@ -72,16 +79,16 @@ class CustomFieldChoice implements CustomFieldInterface
         $choices = array();
         foreach($customField->getOptions()[self::CHOICES] as $persistedChoices) {
             if ($persistedChoices['active']){
-                $choices[$persistedChoices['slug']] = $persistedChoices['name'][$locale];
+                $choices[$persistedChoices['slug']] = $this->translatableStringHelper->localize($persistedChoices['name']);
             }
         }
         
         //prepare $options
         $options = array(
                 'multiple' => $customField->getOptions()[self::MULTIPLE],
-                'choices'  => $choices,
+                'choices' => $choices,
                 'required' => false,
-                'label'    => $customField->getName()[$locale]
+                'label' =>  $this->translatableStringHelper->localize($customField->getName())
             );
         
         //if allow_other = true

@@ -26,6 +26,7 @@ use Chill\CustomFieldsBundle\Entity\CustomField;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Bundle\TwigBundle\TwigEngine;
+use Chill\MainBundle\Templating\TranslatableStringHelper;
 
 class CustomFieldTitle implements CustomFieldInterface
 {
@@ -41,10 +42,17 @@ class CustomFieldTitle implements CustomFieldInterface
      */
     private $templating;
 
-    public function __construct(RequestStack $requestStack, TwigEngine $templating)
+    /**
+     * @var TranslatableStringHelper Helper that find the string in current locale from an array of translation
+     */
+    private $translatableStringHelper;
+
+    public function __construct(RequestStack $requestStack, TwigEngine $templating,
+        TranslatableStringHelper $translatableStringHelper)
     {
         $this->requestStack = $requestStack;
         $this->templating = $templating;
+        $this->translatableStringHelper = $translatableStringHelper;
     }
  
     public function buildForm(FormBuilderInterface $builder, CustomField $customField)
@@ -53,7 +61,7 @@ class CustomFieldTitle implements CustomFieldInterface
             'label' => false,
             'attr' => array(
                 'class' => 'no-label',
-                'title' => $customField->getName()[$this->requestStack->getCurrentRequest()->getLocale()],
+                'title' => $this->translatableStringHelper->localize($customField->getName()),
                 self::TYPE => $customField->getOptions()[self::TYPE ]
             )
         ));

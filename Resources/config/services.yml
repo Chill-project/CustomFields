@@ -40,6 +40,7 @@ services:
         arguments:
             - "@request_stack"
             - "@templating"
+            - "@chill.main.helper.translatable_string"
         tags:
             - { name: 'chill.custom_field', type: 'text' }
 
@@ -49,6 +50,7 @@ services:
             - "@request_stack"
             - %locale%
             - "@templating"
+            - "@chill.main.helper.translatable_string"
         tags:
             - { name: 'chill.custom_field', type: 'choice' }
 
@@ -69,6 +71,7 @@ services:
         arguments:
             - "@request_stack"
             - "@templating"
+            - "@chill.main.helper.translatable_string"
         tags:
             - { name: 'chill.custom_field', type: 'title' }
 
