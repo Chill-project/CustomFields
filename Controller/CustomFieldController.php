@@ -6,7 +6,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Chill\CustomFieldsBundle\Entity\CustomField;
-use Chill\CustomFieldsBundle\Form\CustomFieldType;
 
 /**
  * CustomField controller.
