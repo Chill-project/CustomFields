@@ -58,6 +58,7 @@ class CustomFieldText implements CustomFieldInterface
     }
     
     const MAX_LENGTH = 'maxLength';
+    const MULTIPLE_CF_INLINE ='MultipleCFInline';
     
     /**
      * Create a form according to the maxLength option
@@ -70,12 +71,22 @@ class CustomFieldText implements CustomFieldInterface
      */
     public function buildForm(FormBuilderInterface $builder, CustomField $customField)
     {
-        $type = ($customField->getOptions()[self::MAX_LENGTH] < 256) ? 'text' 
+        $options =  $customField->getOptions();
+
+        $type = ($options[self::MAX_LENGTH] < 256) ? 'text' 
               : 'textarea';
-        
+
+        $attrArray = array();
+
+        if(array_key_exists(self::MULTIPLE_CF_INLINE, $options) and
+            $options[self::MULTIPLE_CF_INLINE]) {
+            $attrArray['class'] = 'multiple-cf-inline';   
+        }
+         
         $builder->add($customField->getSlug(), $type, array(
             'label' => $this->translatableStringHelper->localize($customField->getName()),
-            'required' => false
+            'required' => false,
+            'attr' => $attrArray
         ));
     }
 
@@ -102,8 +113,10 @@ class CustomFieldText implements CustomFieldInterface
 
     public function buildOptionsForm(FormBuilderInterface $builder)
     {
-       return $builder
-             ->add(self::MAX_LENGTH, 'integer', array('empty_data' => 256))
-          ;
+        return $builder
+            ->add(self::MAX_LENGTH, 'integer', array('empty_data' => 256))
+            ->add(self::MULTIPLE_CF_INLINE, 'choice',  array(
+                'choices'  => array('1' => 'True', '0' => 'False')))
+        ;
     }
 }
