@@ -58,7 +58,7 @@ class CustomFieldText implements CustomFieldInterface
     }
     
     const MAX_LENGTH = 'maxLength';
-    const MULTIPLE_CF_INLINE ='MultipleCFInline';
+    const MULTIPLE_CF_INLINE ='multipleCFInline';
     
     /**
      * Create a form according to the maxLength option
