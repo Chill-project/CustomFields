@@ -158,10 +158,18 @@ class CustomFieldChoice implements CustomFieldInterface
         return 'Choices';
     }
 
+    /**
+     * 
+     * @internal this function is able to receive data whichever is the value of "other", "multiple"
+     * @param mixed $value
+     * @param CustomField $customField
+     * @return string html representation
+     */
     public function render($value, CustomField $customField)
     {
         //extract the data. They are under a _choice key if they are stored with allow_other
-        $data = (isset($value['_choices'])) ? $value['_choices'] : $value;
+        $data = (isset($value['_choices'])) ? $value['_choices'] : 
+            is_null($value) ? array() : $value;
         
         $selected = (is_array($data)) ? $data : array($data);
         

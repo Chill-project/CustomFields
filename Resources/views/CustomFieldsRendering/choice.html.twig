@@ -1,3 +1,4 @@
+{% if selected|length > 0 %}
 <ul class="custom_fields choice">
 {%- for choice in choices -%}
     {% if choice['slug'] in selected %}{%- set is_selected = true -%}{%- else -%}{%- set is_selected = false -%}{%- endif -%}
@@ -17,3 +18,6 @@
     {%- endif -%}
 {%- endfor -%}
 </ul>
+{% else %}
+    <div class="custom_fields_choice empty">{{ 'None'|trans }}</div>
+{% endif %}
