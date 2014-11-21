@@ -1,6 +1,11 @@
 customfield:
     path:     /{_locale}/admin/customfield/
     defaults: { _controller: "ChillCustomFieldsBundle:CustomField:index" }
+    options:
+        menus:
+            admin: 
+                order: 1000
+                label: "CustomFields"
 
 customfield_show:
     path:     /{_locale}/admin/customfield/{id}/show
