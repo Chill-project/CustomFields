@@ -1,6 +1,11 @@
 customfieldsdefaultgroup:
     path:     /{_locale}/admin/customfieldsdefaultgroup/
     defaults: { _controller: "ChillCustomFieldsBundle:CustomFieldsDefaultGroup:list" }
+    options:
+        menus:
+            admin: 
+                order: 1000
+                label: "CustomFields Default Groups : List"
 
 customfieldsdefaultgroup_set:
     path: /{_locale}/admin/customfieldsdefaultgroup/set/group/as/default/
