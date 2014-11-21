@@ -1,6 +1,11 @@
 customfieldsgroup:
     path:     /{_locale}/admin/customfieldsgroup/
     defaults: { _controller: "ChillCustomFieldsBundle:CustomFieldsGroup:index" }
+    options:
+        menus:
+            admin: 
+                order: 1010
+                label: "CustomFields Groups"
 
 customfieldsgroup_show:
     path:     /{_locale}/admin/customfieldsgroup/{id}/show
