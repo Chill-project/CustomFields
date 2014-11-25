@@ -60,7 +60,7 @@ class CustomFieldTitle implements CustomFieldInterface
         $builder->add($customField->getSlug(), 'custom_field_title', array(
             'label' => false,
             'attr' => array(
-                'class' => 'no-label',
+                'class' => 'cf-title',
                 'title' => $this->translatableStringHelper->localize($customField->getName()),
                 self::TYPE => $customField->getOptions()[self::TYPE ]
             )
