@@ -13,36 +13,41 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class ChoiceWithOtherType extends AbstractType
 {
-     /* (non-PHPdoc)
-      * @see \Symfony\Component\Form\AbstractType::buildForm()
-      */
-     public function buildForm(FormBuilderInterface $builder, array $options) 
-     {
+    private $otherValueLabel = 'Other value';
+
+    public function __construct($otherValueLabel = Null) {
+        if($otherValueLabel) {
+            $this->otherValueLabel = $otherValueLabel;
+        }
+    }
+
+    /* (non-PHPdoc)
+     * @see \Symfony\Component\Form\AbstractType::buildForm()
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options) 
+    {
         //add an 'other' entry in choices array
-        $options['choices']['_other'] = 'Other value';
+        $options['choices']['_other'] = $this->otherValueLabel;
         //ChoiceWithOther must always be expanded
         $options['expanded'] = true;
         
         $builder
             ->add('_other', 'text', array('required' => false))
             ->add('_choices', 'choice', $options)
-            ;
-    
-     }
+        ;    
+    }
 
-     /* (non-PHPdoc)
-      * @see \Symfony\Component\Form\AbstractType::setDefaultOptions()
-      */
-     public function setDefaultOptions(OptionsResolverInterface $resolver) 
-     {
+    /* (non-PHPdoc)
+     * @see \Symfony\Component\Form\AbstractType::setDefaultOptions()
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver) 
+    {
         $resolver
             ->setRequired(array('choices'))
             ->setAllowedTypes(array('choices' => array('array')))
             ->setDefaults(array('multiple' => false))
-            ;
-    
-     }
-
+        ;
+    }
 
     public function getName()
     {

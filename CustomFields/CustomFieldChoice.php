@@ -40,6 +40,7 @@ use Chill\MainBundle\Templating\TranslatableStringHelper;
 class CustomFieldChoice implements CustomFieldInterface
 {
 	const ALLOW_OTHER = 'other';
+    const OTHER_VALUE_LABEL = 'otherValueLabel';
 	const MULTIPLE = 'multiple';
 	const EXPANDED = 'expanded';
 	const CHOICES = 'choices';
@@ -77,7 +78,9 @@ class CustomFieldChoice implements CustomFieldInterface
         //prepare choices
         $locale = $this->requestStack->getCurrentRequest()->getLocale();
         $choices = array();
-        foreach($customField->getOptions()[self::CHOICES] as $persistedChoices) {
+        $customFieldOptions = $customField->getOptions();
+
+        foreach($customFieldOptions[self::CHOICES] as $persistedChoices) {
             if ($persistedChoices['active']){
                 $choices[$persistedChoices['slug']] = $this->translatableStringHelper->localize($persistedChoices['name']);
             }
@@ -85,21 +88,32 @@ class CustomFieldChoice implements CustomFieldInterface
         
         //prepare $options
         $options = array(
-                'multiple' => $customField->getOptions()[self::MULTIPLE],
+                'multiple' => $customFieldOptions[self::MULTIPLE],
                 'choices' => $choices,
                 'required' => false,
                 'label' =>  $this->translatableStringHelper->localize($customField->getName())
             );
-        
+
         //if allow_other = true
-        if ($customField->getOptions()[self::ALLOW_OTHER] == true) {
+        if ($customFieldOptions[self::ALLOW_OTHER] == true) {
+            $otherValueLabel = null;
+            if(array_key_exists(self::OTHER_VALUE_LABEL, $customFieldOptions)) {
+                $otherValueLabel = $this->translatableStringHelper->localize(
+                    $customFieldOptions[self::OTHER_VALUE_LABEL]
+                );
+            }
+
             $builder->add(
-                $builder->create($customField->getSlug(), new ChoiceWithOtherType(), $options)
-                         ->addModelTransformer(new CustomFieldDataTransformer($this, $customField)));
+                $builder
+                    ->create(
+                        $customField->getSlug(),
+                        new ChoiceWithOtherType($otherValueLabel),
+                        $options)
+                    ->addModelTransformer(new CustomFieldDataTransformer($this, $customField)));
             
         } else { //if allow_other = false
             //we add the 'expanded' to options
-            $options['expanded'] = $customField->getOptions()[self::EXPANDED];
+            $options['expanded'] = $customFieldOptions[self::EXPANDED];
             
             $builder->add(
                      $builder->create($customField->getSlug(), 'choice', $options)
@@ -140,10 +154,13 @@ class CustomFieldChoice implements CustomFieldInterface
                 'expanded' => true,
                 'multiple' => false
             ))
+            ->add(self::OTHER_VALUE_LABEL, 'translatable_string', array(
+                'label' => 'Other value label (empty if use by default)'))
             ->add(self::CHOICES, new ChoicesType(), array(
                 'type' => new ChoicesListType($this->defaultLocale),
                 'allow_add' => true
-            ));
+            ))
+            ;
             
             return $builder;
     }
