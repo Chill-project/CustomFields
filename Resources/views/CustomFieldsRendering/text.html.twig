@@ -1,1 +1,1 @@
-{% if text is not empty %}{{ text }}{% else %}<span class="custom_fields_text empty">{{ 'None'|trans }}</span>{% endif %}
+{% if text is not empty %}{{ text|nl2br }}{% else %}<span class="custom_fields_text empty">{{ 'None'|trans }}</span>{% endif %}
