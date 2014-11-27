@@ -185,11 +185,8 @@ class CustomFieldChoice implements CustomFieldInterface
     public function render($value, CustomField $customField)
     {
         //extract the data. They are under a _choice key if they are stored with allow_other
-        $data = (isset($value['_choices'])) ? $value['_choices'] : 
-            is_null($value) ? array() : $value;
-        
-        $selected = (is_array($data)) ? $data : array($data);
-        
+        $data = (isset($value['_choices'])) ? $value['_choices'] : $value;
+        $selected = (is_array($data)) ? $data : array($data);       
         $choices = $customField->getOptions()[self::CHOICES];
         
         if (in_array('_other', $selected)){

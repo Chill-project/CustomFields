@@ -5,15 +5,15 @@
     {%- if is_selected -%}
     <li class="{% if is_selected or expanded == 1 %} selected {% endif %}">
     {%- if is_selected -%}
-        <i class="fa fa-check-square-o"></i>
+        <i class="fa fa-check-square-o"></i>&nbsp;
     {%- else -%}
-        <i class="fa fa-square-o"></i>
+        <i class="fa fa-square-o"></i>&nbsp;
     {%- endif -%}
-        {%- if choice['slug'] is not same as('_other') -%}
-        {{ choice['name'][app.request.locale]|default(choice['name'][locale]|default('Not available in your language'|trans)) }}
-        {%- else -%}
-        <span class="other">{{ 'Other value'|trans }}&nbsp;:</span> {{ choice['name'] }}
-        {%- endif -%}
+    {%- if choice['slug'] is not same as('_other') -%}
+    {{ choice['name'][app.request.locale]|default(choice['name'][locale]|default('Not available in your language'|trans)) }}
+    {%- else -%}
+        {{ choice['name'] }}
+    {%- endif -%}
     </li>
     {%- endif -%}
 {%- endfor -%}
