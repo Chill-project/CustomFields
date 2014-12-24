@@ -14,7 +14,9 @@ addons:
 before_script:
   - psql -c 'create database test0;' -U postgres
   - cp Tests/Fixtures/App/app/config/parameters.travis.yml Tests/Fixtures/App/app/config/parameters.yml
-  - ./console.sh doctrine:schema:create
+  - ./console.sh --env=test cache:warmup
+  - ./console.sh doctrine:schema:create --no-interaction --env=test
+  - ./console.sh doctrine:fixtures:load --no-interaction --env=test
 
 install: 
    - composer install --dev
