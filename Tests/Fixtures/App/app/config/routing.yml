@@ -1,6 +1,9 @@
 cl_custom_fields:
     resource: .
     type: chill_routes
+    
+chill_main:
+    resource: "@ChillMainBundle/Resources/config/routing.yml"
 
 test_custom_field_form_render:
     path: /customfieldsgroup/test/render/{id}
