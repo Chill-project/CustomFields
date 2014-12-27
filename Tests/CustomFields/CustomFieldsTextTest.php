@@ -101,7 +101,9 @@ class CustomFieldsTextTest extends WebTestCase
     {
         $client = static::createClient();
         
-        $crawler = $client->request('GET', '/admin/customfield/new?type=text');
+        $crawler = $client->request('GET', '/fr/admin/customfield/new?type=text');
+        
+        $this->assertTrue($client->getResponse()->isSuccessful());
         
         $form = $crawler->selectButton('custom_field_choice_submit')->form();
         $this->assertTrue($form->has('custom_field_choice[options][maxLength]'));
