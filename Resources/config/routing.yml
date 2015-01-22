@@ -2,20 +2,8 @@ chill_customfields_customfieldsgroup:
     resource: "@ChillCustomFieldsBundle/Resources/config/routing/customfieldsgroup.yml"
     prefix:   /
 
-chill_customfields_blopentity2:
-    resource: "@ChillCustomFieldsBundle/Resources/config/routing/blopentity2.yml"
-    prefix:   /blopentity2
-
-chill_customfields_adress:
-    resource: "@ChillCustomFieldsBundle/Resources/config/routing/adress.yml"
-    prefix:   /adress
-
 chill_customfields_customfield:
     resource: "@ChillCustomFieldsBundle/Resources/config/routing/customfield.yml"
-    prefix:   /
-
-chill_customfields_blopentity:
-    resource: "@ChillCustomFieldsBundle/Resources/config/routing/blopentity.yml"
     prefix:   /
 
 chill_customfields_customfieldsdefaultgroup:
