@@ -43,5 +43,14 @@ class ChillCustomFieldsExtension extends Extension implements PrependExtensionIn
         // add form layout to twig resources
         $twigConfig['form']['resources'][] = 'ChillCustomFieldsBundle:Form:fields.html.twig';
         $container->prependExtensionConfig('twig', $twigConfig);
+        
+        //add routes for custom bundle
+         $container->prependExtensionConfig('chill_main', array(
+           'routing' => array(
+              'resources' => array(
+                 '@ChillCustomFieldsBundle/Resources/config/routing.yml'
+              )
+           )
+        ));
     }
 }
