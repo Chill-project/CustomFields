@@ -54,13 +54,6 @@ services:
         tags:
             - { name: 'chill.custom_field', type: 'choice' }
 
-    chill.custom_field.address:
-        class: Chill\CustomFieldsBundle\CustomFields\CustomFieldAddress
-        arguments:
-            - "@doctrine.orm.entity_manager"
-        tags:
-            - { name: 'chill.custom_field', type: 'address' }
-
     chill.custom_field.custom_fields_title_type:
         class: Chill\CustomFieldsBundle\Form\Type\CustomFieldsTitleType
         tags:
