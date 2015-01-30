@@ -8,6 +8,7 @@ matrix:
   - php: hhvm-nightly
 addons:
   postgresql: '9.3'
+sudo: false
 install:
   - composer config -g github-oauth.github.com $GITHUB_COMPOSER_AUTH
   - composer install --dev
