@@ -15,7 +15,8 @@ class AppKernel extends Kernel
             new \Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new \Chill\MainBundle\ChillMainBundle,
-            new \Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle()
+            new \Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
+            new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle()
             #add here all the required bundle (some bundle are not required)
         );
     }
