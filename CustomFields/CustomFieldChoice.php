@@ -73,7 +73,7 @@ class CustomFieldChoice implements CustomFieldInterface
           )
 	{
 	    $this->requestStack = $requestStack;
-	    $this->defaultLocales = $translator->getDefaultLocales();
+	    $this->defaultLocales = $translator->getFallbackLocales();
 	    $this->templating = $templating;
         $this->translatableStringHelper = $translatableStringHelper;
 	}
