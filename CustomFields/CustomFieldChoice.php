@@ -30,6 +30,7 @@ use Chill\CustomFieldsBundle\Form\DataTransformer\CustomFieldDataTransformer;
 use Chill\CustomFieldsBundle\Form\Type\ChoiceWithOtherType;
 use Symfony\Bridge\Twig\TwigEngine;
 use Chill\MainBundle\Templating\TranslatableStringHelper;
+use Symfony\Component\Translation\Translator;
 
 /**
  * 
@@ -51,7 +52,7 @@ class CustomFieldChoice implements CustomFieldInterface
 	 */
 	private $requestStack;
 	
-	private $defaultLocale;
+	private $defaultLocales;
 	
 	/**
 	 * 
@@ -64,11 +65,15 @@ class CustomFieldChoice implements CustomFieldInterface
      */
     private $translatableStringHelper;
 	
-	public function __construct(RequestStack $requestStack, $defaultLocale, TwigEngine $templating,
-        TranslatableStringHelper $translatableStringHelper)
+	public function __construct(
+          RequestStack $requestStack, 
+          Translator $translator, 
+          TwigEngine $templating,
+          TranslatableStringHelper $translatableStringHelper
+          )
 	{
 	    $this->requestStack = $requestStack;
-	    $this->defaultLocale = $defaultLocale;
+	    $this->defaultLocales = $translator->getDefaultLocales();
 	    $this->templating = $templating;
         $this->translatableStringHelper = $translatableStringHelper;
 	}
@@ -157,7 +162,7 @@ class CustomFieldChoice implements CustomFieldInterface
             ->add(self::OTHER_VALUE_LABEL, 'translatable_string', array(
                 'label' => 'Other value label (empty if use by default)'))
             ->add(self::CHOICES, new ChoicesType(), array(
-                'type' => new ChoicesListType($this->defaultLocale),
+                'type' => new ChoicesListType($this->defaultLocales),
                 'allow_add' => true
             ))
             ;
@@ -200,7 +205,7 @@ class CustomFieldChoice implements CustomFieldInterface
                     'selected' => $selected,
                     'multiple' => $customField->getOptions()[self::MULTIPLE],
                     'expanded' => $customField->getOptions()[self::EXPANDED],
-                    'locale' => $this->defaultLocale
+                    'locales' => $this->defaultLocales
                 )
             );
     }

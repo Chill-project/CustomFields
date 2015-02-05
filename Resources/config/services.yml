@@ -43,7 +43,7 @@ services:
         class: Chill\CustomFieldsBundle\CustomFields\CustomFieldChoice
         arguments:
             - "@request_stack"
-            - %locale%
+            - "@translator.default"
             - "@templating"
             - "@chill.main.helper.translatable_string"
         tags:

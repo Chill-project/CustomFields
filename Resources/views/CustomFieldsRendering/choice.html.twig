@@ -10,7 +10,7 @@
         <i class="fa fa-square-o"></i>&nbsp;
     {%- endif -%}
     {%- if choice['slug'] is not same as('_other') -%}
-    {{ choice['name'][app.request.locale]|default(choice['name'][locale]|default('Not available in your language'|trans)) }}
+    {{ choice['name']|localize_translatable_string }}
     {%- else -%}
         {{ choice['name'] }}
     {%- endif -%}

@@ -9,11 +9,11 @@ use Symfony\Component\Form\FormEvents;
 class ChoicesListType extends AbstractType
 {
     
-    private $defaultLocale;
+    private $defaultLocales;
     
-    public function __construct($defaultLocale)
+    public function __construct($defaultLocales)
     {
-        $this->defaultLocale = $defaultLocale;
+        $this->defaultLocales = $defaultLocales;
     }
 
     /* (non-PHPdoc)
@@ -21,7 +21,7 @@ class ChoicesListType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $locale = $this->defaultLocale;
+        $locales = $this->defaultLocales;
         
         $builder->add('name', 'translatable_string')
             ->add('active', 'checkbox', array(
@@ -31,14 +31,14 @@ class ChoicesListType extends AbstractType
             ->add('slug', 'hidden', array(
                 
             ))
-            ->addEventListener(FormEvents::SUBMIT, function(FormEvent $event) use ($locale){
+            ->addEventListener(FormEvents::SUBMIT, function(FormEvent $event) use ($locales){
                 $form = $event->getForm();
                 $data = $event->getData();
 
                 $formData = $form->getData();
                 
                 if (NULL === $formData['slug']) {
-                    $slug = $form['name'][$locale]->getData();
+                    $slug = $form['name'][$locales[0]]->getData();
                     $slug= strtolower($slug);
                     $slug= preg_replace('/[^a-zA-Z0-9 -]/','', $slug); // only take alphanumerical characters, but keep the spaces and dashes too...
                     $slug= str_replace(' ','-', $slug); // replace spaces by dashes
