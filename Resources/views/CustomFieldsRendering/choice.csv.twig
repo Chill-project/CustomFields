@@ -1,0 +1,13 @@
+{% if selected|length > 0 %}
+{%- for choice in choices -%}
+    {% if choice['slug'] in selected %}
+        {%- if choice['slug'] is not same as('_other') -%}
+            {{ choice['name']|localize_translatable_string }}
+        {%- else -%}
+            {{ choice['name'] }}
+        {%- endif -%}
+    {% endif %}
+{%- endfor -%}
+{% else %}
+    {{ 'None'|trans }}
+{% endif %}

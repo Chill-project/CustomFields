@@ -113,14 +113,14 @@ class CustomFieldsHelper
      * @param string $slug the slug you want to render. The html is be safe.
      * @throws CustomFieldsHelperException if slug is missing
      */
-    public function renderCustomField(array $fields, $classOrCustomField, $slug = null)
+    public function renderCustomField(array $fields, $classOrCustomField, $type='html', $slug = null)
     {
         $customField = ($classOrCustomField instanceof CustomField) ? $classOrCustomField : $this->getCustomField($classOrCustomField, $slug);
         $slug = $customField->getSlug();
         $rawValue = (isset($fields[$slug])) ? $fields[$slug] : null;
         
         return $this->provider->getCustomFieldByType($customField->getType())
-            ->render($rawValue, $customField);
+            ->render($rawValue, $customField, $type);
     }
     
 }

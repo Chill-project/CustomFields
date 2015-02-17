@@ -67,7 +67,7 @@ class CustomFieldTitle implements CustomFieldInterface
         ));
     }
 
-    public function render($value, CustomField $customField)
+    public function render($value, CustomField $customField, $documentType = 'html')
     {   
         return $this->templating
             ->render('ChillCustomFieldsBundle:CustomFieldsRendering:title.html.twig', 

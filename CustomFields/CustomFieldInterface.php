@@ -43,7 +43,7 @@ interface CustomFieldInterface
      * @param \Chill\CustomFieldsBundle\CustomField\CustomField $customField
      * @return string an html representation of the value
      */
-    public function render($value, CustomField $customField);
+    public function render($value, CustomField $customField, $documentType = 'html');
     
     public function getName();
     

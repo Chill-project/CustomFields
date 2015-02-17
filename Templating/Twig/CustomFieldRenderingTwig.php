@@ -100,10 +100,10 @@ class CustomFieldRenderingTwig extends \Twig_Extension implements ContainerAware
      * @param string $slug only necessary if the first argument is NOT a CustomField instance
      * @return string HTML representation of the custom field, as described in the CustomFieldInterface. Is HTML safe
      */
-    public function renderWidget(array $fields, $customFieldOrClass, $slug = null)
+    public function renderWidget(array $fields, $customFieldOrClass, $documentType='html', $slug = null)
     {
         return $this->container->get('chill.custom_field.helper')
-            ->renderCustomField($fields, $customFieldOrClass, $slug);
+            ->renderCustomField($fields, $customFieldOrClass, $documentType, $slug);
     }
     
     

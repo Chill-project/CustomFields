@@ -90,7 +90,7 @@ class CustomFieldText implements CustomFieldInterface
         ));
     }
 
-    public function render($value, CustomField $customField)
+    public function render($value, CustomField $customField,  $documentType = 'html')
     {
         return $this->templating
             ->render('ChillCustomFieldsBundle:CustomFieldsRendering:text.html.twig', array('text' => $value));

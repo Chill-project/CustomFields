@@ -187,7 +187,7 @@ class CustomFieldChoice implements CustomFieldInterface
      * @param CustomField $customField
      * @return string html representation
      */
-    public function render($value, CustomField $customField)
+    public function render($value, CustomField $customField, $documentType = 'html')
     {
         //extract the data. They are under a _choice key if they are stored with allow_other
         $data = (isset($value['_choices'])) ? $value['_choices'] : $value;
@@ -198,8 +198,13 @@ class CustomFieldChoice implements CustomFieldInterface
             $choices[] = array('name' => $value['_other'], 'slug' => '_other');
         }
         
+        $template = 'ChillCustomFieldsBundle:CustomFieldsRendering:choice.html.twig';
+        if($documentType == 'csv') {
+            $template = 'ChillCustomFieldsBundle:CustomFieldsRendering:choice.csv.twig';
+        }
+
         return $this->templating
-            ->render('ChillCustomFieldsBundle:CustomFieldsRendering:choice.html.twig',
+            ->render($template,
                 array(
                     'choices' => $choices, 
                     'selected' => $selected,
