@@ -2,9 +2,9 @@
 {%- for choice in choices -%}
     {% if choice['slug'] in selected %}
         {%- if choice['slug'] is not same as('_other') -%}
-            {{ choice['name']|localize_translatable_string|replace({'"':'""'})|raw }}
+            {{ choice['name']|localize_translatable_string|csv_cell }}
         {%- else -%}
-            {{ choice['name']|replace({'"':'""'})|raw }}
+            {{ choice['name']|csv_cell }}
         {%- endif -%}
     {% endif %}
 {%- endfor -%}
