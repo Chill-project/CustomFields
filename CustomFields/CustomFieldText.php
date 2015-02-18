@@ -3,12 +3,13 @@
 /*
  * Chill is a software for social workers
  *
- * Copyright (C) 2014, Champs Libres Cooperative SCRLFS, <http://www.champs-libres.coop>
+ * Copyright (C) 2014-2015, Champs Libres Cooperative SCRLFS, 
+ * <http://www.champs-libres.coop>, <info@champs-libres.coop>
  *
  * This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Affero General Public License as
+ * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
- *  License, or (at your option) any later version.
+ * License, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -92,8 +93,13 @@ class CustomFieldText implements CustomFieldInterface
 
     public function render($value, CustomField $customField,  $documentType = 'html')
     {
+        $template = 'ChillCustomFieldsBundle:CustomFieldsRendering:text.html.twig';
+        if($documentType == 'csv') {
+            $template = 'ChillCustomFieldsBundle:CustomFieldsRendering:text.csv.twig';
+        }
+
         return $this->templating
-            ->render('ChillCustomFieldsBundle:CustomFieldsRendering:text.html.twig', array('text' => $value));
+            ->render($template, array('text' => $value));
     }
 
     public function serialize($value, CustomField $customField)
