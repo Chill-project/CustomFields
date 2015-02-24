@@ -22,6 +22,8 @@ class Configuration implements ConfigurationInterface
         
         $classInfo = "The class which may receive custom fields";
         $nameInfo = "The name which will appears in the user interface. May be translatable";
+        $optionsInfo = "Options available for custom fields groups referencing this class";
+        $prototypeTypeInfo = "The name of the form to append";
         $customizableEntitiesInfo = "A list of customizable entities";
 
         $rootNode
@@ -33,9 +35,24 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->scalarNode('class')->isRequired()->info($classInfo)->end()
                         ->scalarNode('name') ->isRequired()->info($nameInfo) ->end()
+                        ->arrayNode('options')
+                                ->info($optionsInfo)
+                                ->defaultValue(array())
+                                ->useAttributeAsKey('key')
+                                ->prototype('array')
+                                    ->children()
+                                        ->scalarNode('form_type')
+                                            ->isRequired()
+                                            ->info($prototypeTypeInfo)
+                                            ->end()
+                                        ->variableNode('form_options')
+                                            ->defaultValue(array())
+                                            ->end()
+                                    ->end()
+                            ->end()
+                        ->end()
                     ->end()
                 ->end()
-            ->end()
         ;
 
         return $treeBuilder;

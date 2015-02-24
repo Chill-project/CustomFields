@@ -45,6 +45,12 @@ class CustomFieldsGroup
      * @var \Doctrine\Common\Collections\Collection
      */
     private $customFields;
+    
+    /**
+     *
+     * @var array
+     */
+    private $options = array();
 
         /**
      * Constructor
@@ -161,5 +167,29 @@ class CustomFieldsGroup
     {
         return $this->entity;
     }
+    
+    /**
+     * get options array
+     * 
+     * @return array
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
+    /**
+     * set options array
+     * 
+     * @param array $options
+     * @return \Chill\CustomFieldsBundle\Entity\CustomFieldsGroup
+     */
+    public function setOptions(array $options)
+    {
+        $this->options = $options;
+        return $this;
+    }
+
+
 
 }

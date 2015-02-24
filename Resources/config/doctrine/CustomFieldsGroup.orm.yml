@@ -13,6 +13,8 @@ Chill\CustomFieldsBundle\Entity\CustomFieldsGroup:
         entity:
             type: string
             length: 255
+        options:
+            type: json_array
     oneToMany:
         customFields:
             orderBy: { 'ordering': 'ASC' }
