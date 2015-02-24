@@ -49,10 +49,15 @@ class CustomFieldsGroupType extends AbstractType
             ))
         ;
 
-        $builder->addEventListener(FormEvents::POST_SET_DATA, function(FormEvent $event) 
-                use ($customizableEntities, $builder){
+        $builder->addEventListener(FormEvents::POST_SET_DATA, 
+                function(FormEvent $event) use ($customizableEntities, $builder){
                     $form = $event->getForm();
                     $group = $event->getData();
+                    
+                    //stop the function if entity is not set
+                    if ($group->getEntity() === NULL) {
+                        return;
+                    }
                     
                     if (count($customizableEntities[$group->getEntity()]['options']) > 0) {
                         $optionBuilder = $builder
