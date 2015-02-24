@@ -48,6 +48,13 @@ services:
             - "@chill.main.helper.translatable_string"
         tags:
             - { name: 'chill.custom_field', type: 'choice' }
+            
+    chill.custom_field.custom_fields_group_linked_custom_fields:
+        class: Chill\CustomFieldsBundle\Form\Type\LinkedCustomFieldsType
+        arguments:
+            - "@chill.main.helper.translatable_string"
+        tags:
+            - { name: form.type, alias: custom_fields_group_linked_custom_fields }
 
     chill.custom_field.custom_fields_title_type:
         class: Chill\CustomFieldsBundle\Form\Type\CustomFieldsTitleType
