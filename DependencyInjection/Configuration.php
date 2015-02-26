@@ -6,7 +6,8 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
- * This is the class that validates and merges configuration from your app/config files
+ * This is the class that validates and merges configuration from 
+ * your app/config files
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
  */
@@ -23,7 +24,8 @@ class Configuration implements ConfigurationInterface
         $classInfo = "The class which may receive custom fields";
         $nameInfo = "The name which will appears in the user interface. May be translatable";
         $optionsInfo = "Options available for custom fields groups referencing this class";
-        $prototypeTypeInfo = "The name of the form to append";
+        $optionsFormType = "The name of the form to append";
+        $optionsFormOptionsInfos = "the arguments to pass the form";
         $customizableEntitiesInfo = "A list of customizable entities";
 
         $rootNode
@@ -43,9 +45,10 @@ class Configuration implements ConfigurationInterface
                                     ->children()
                                         ->scalarNode('form_type')
                                             ->isRequired()
-                                            ->info($prototypeTypeInfo)
+                                            ->info($optionsFormType)
                                             ->end()
                                         ->variableNode('form_options')
+                                            ->info($optionsFormOptionsInfos)
                                             ->defaultValue(array())
                                             ->end()
                                     ->end()
