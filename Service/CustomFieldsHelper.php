@@ -26,44 +26,50 @@ use Doctrine\ORM\EntityManagerInterface;
 use Chill\CustomFieldsBundle\Service\CustomFieldProvider;
 use Chill\CustomFieldsBundle\Entity\CustomFieldsGroup;
 use Chill\CustomFieldsBundle\Entity\CustomField;
-use Symfony\Bundle\TwigBundle\TwigEngine;
 
 /**
+ * Helpers for manipulating custom fields.
+ * 
+ * Herlpers for getting a certain custom field, for getting the raw value
+ * of a custom field and for rendering the value of a custom field.
  * 
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
  *
  */
 class CustomFieldsHelper
 {
-    /**
-     * 
-     * @var EntityManagerInterface
-     */
+    /** @var EntityManagerInterface $em The entity manager */
     private $em;
     
-    /**
-     * 
-     * @var CustomFieldProvider
-     */
+    /** @var CustomFieldProvider $provider Provider of all the declared custom 
+     * fields */
     private $provider;
     
-    
-    /**
-     * 
-     * @var array
-     */
+    /**  @var array $cache Matrix to cache all the custom fields. The array
+     * is indexed by the EntityClass then the slug  */
     private $cache = array();
     
-    
-    public function __construct(EntityManagerInterface $em, CustomFieldProvider $provider)
+    /**
+     * Constructor
+     * 
+     * @param EntityManagerInterface $em The entity manager
+     * @param CustomFieldProvider $provider The customfield provider that 
+     * contains all the declared custom fields
+     */
+    public function __construct(EntityManagerInterface $em,
+        CustomFieldProvider $provider)
     {
         $this->em = $em;
         $this->provider = $provider;
     }
     
     /**
+     * Set in cache all the custom fields of a given class containing some
+     * custom fields.
      * 
-     * @param object|string $class
+     * @param object|string $class The given class.
+     * @todo check if this fucntions has to call _cacheCustomFieldsGroup instead of 
+     * _cacheCustomFields ?
      */
     private function _cacheCustomFields($class)
     {
@@ -78,9 +84,11 @@ class CustomFieldsHelper
             $this->_cacheCustomFields($cfGroup);
         }
     }
+    
     /**
+     * Set in cache of the custom fields of a customfield Group.
      * 
-     * @param CustomFieldsGroup $group
+     * @param CustomFieldsGroup $group The given CustomFieldsGroup
      */
     private function _cacheCustomFieldsGroup(CustomFieldsGroup $group)
     {
@@ -90,10 +98,11 @@ class CustomFieldsHelper
     }
     
     /**
+     * Return a requested customField
      * 
-     * @param object|string $class
-     * @param string $slug If the slug is null, throw a proper CustomFieldsHelperException
-     * @return CustomField
+     * @param object|string $class The requested class
+     * @param string $slug The slug. BEWARE If the slug is null, throw a proper CustomFieldsHelperException
+     * @return CustomField The requested CustomField
      * @throws CustomFieldsHelperException if $slug is null
      */
     public function getCustomField($class, $slug = null)
@@ -111,11 +120,14 @@ class CustomFieldsHelper
     }
     
     /**
+     * Return the stored/raw value of a custom field.
      * 
-     * @param array $fields
+     * The method return null if the slug is not recorded.
+     * 
+     * @param array $fields  the **raw** array, as stored in the db
      * @param object|string $class
      * @param string $slug
-     * @return mixed|null null if the slug is not recorded
+     * @return mixed|null The value or null if the slug is not recorded
      */
     private function getCustomFieldValue(array $fields, $class, $slug)
     {
@@ -126,21 +138,22 @@ class CustomFieldsHelper
     }
     
     /**
+     * Render the value of a custom field
      * 
      * @param array $fields the **raw** array, as stored in the db
      * @param CustomField|object|string $classOrCustomField the object OR the get_class($object) string OR The CustomField
-     * @param string slug The Slug to render, if CustomField is not Given
-     * @param string $slug the slug you want to render. The html is be safe.
+     * @param string $documentType The type of document in which the rendered value is displayed ('html' or 'csv').
+     * @param string $slug The slug of the custom field to render.
      * @throws CustomFieldsHelperException if slug is missing
+     * @return The representation of the value the customField.
      */
-    public function renderCustomField(array $fields, $classOrCustomField, $type='html', $slug = null)
+    public function renderCustomField(array $fields, $classOrCustomField, $documentType='html', $slug = null)
     {
         $customField = ($classOrCustomField instanceof CustomField) ? $classOrCustomField : $this->getCustomField($classOrCustomField, $slug);
         $slug = $customField->getSlug();
         $rawValue = (isset($fields[$slug])) ? $fields[$slug] : null;
         
         return $this->provider->getCustomFieldByType($customField->getType())
-            ->render($rawValue, $customField, $type);
+            ->render($rawValue, $customField, $documentType);
     }
-    
 }
