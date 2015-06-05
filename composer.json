@@ -17,7 +17,7 @@
     ],
     "require": {
         "php": "~5.5",
-        "symfony/symfony": "2.5.*",
+        "symfony/symfony": "~2.7",
         "doctrine/orm": "~2.4",
         "doctrine/dbal" : "~2.5",
         "doctrine/common": "~2.4",
@@ -28,7 +28,7 @@
         "symfony/monolog-bundle": "~2.4",
         "sensio/distribution-bundle": "~3.0",
         "sensio/framework-extra-bundle": "~3.0",
-        "chill-project/main": "*@dev",
+        "chill-project/main": "dev-add_acl@dev",
         "champs-libres/composer-bundle-migration": "~1.0",
         "doctrine/doctrine-migrations-bundle": "dev-master@dev",
         "doctrine/migrations": "~1.0@dev"
