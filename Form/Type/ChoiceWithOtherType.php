@@ -38,9 +38,9 @@ class ChoiceWithOtherType extends AbstractType
     }
 
     /* (non-PHPdoc)
-     * @see \Symfony\Component\Form\AbstractType::setDefaultOptions()
+     * @see \Symfony\Component\Form\AbstractType::configureOptions()
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver) 
+    public function configureOptions(OptionsResolverInterface $resolver) 
     {
         $resolver
             ->setRequired(array('choices'))

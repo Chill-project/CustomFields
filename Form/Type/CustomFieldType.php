@@ -52,7 +52,7 @@ class CustomFieldType extends AbstractType
         }
     }
     
-    public function setDefaultOptions(\Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver)
+    public function configureOptions(\Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver)
     {
         $resolver
               ->setRequired(array('group'))
