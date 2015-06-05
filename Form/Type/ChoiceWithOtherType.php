@@ -3,7 +3,7 @@ namespace Chill\CustomFieldsBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Return a choice widget with an "other" option
@@ -40,7 +40,7 @@ class ChoiceWithOtherType extends AbstractType
     /* (non-PHPdoc)
      * @see \Symfony\Component\Form\AbstractType::configureOptions()
      */
-    public function configureOptions(OptionsResolverInterface $resolver) 
+    public function configureOptions(OptionsResolver $resolver) 
     {
         $resolver
             ->setRequired(array('choices'))
