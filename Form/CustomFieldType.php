@@ -4,7 +4,7 @@ namespace Chill\CustomFieldsBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Chill\CustomFieldsBundle\Service\CustomFieldProvider;
 use Chill\CustomFieldsBundle\Entity\CustomField;
 use Symfony\Component\Form\FormEvent;
@@ -75,7 +75,7 @@ class CustomFieldType extends AbstractType
     /**
      * @param OptionsResolverInterface $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Chill\CustomFieldsBundle\Entity\CustomField'

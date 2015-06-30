@@ -19,6 +19,7 @@ use Chill\CustomFieldsBundle\Form\AdressType;
 use Chill\CustomFieldsBundle\Service\CustomFieldProvider;
 use Chill\CustomFieldsBundle\Form\DataTransformer\CustomFieldDataTransformer;
 use Chill\CustomFieldsBundle\Entity\CustomFieldsGroup;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CustomFieldType extends AbstractType
 {
@@ -52,7 +53,7 @@ class CustomFieldType extends AbstractType
         }
     }
     
-    public function setDefaultOptions(\Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver)
+    public function configureOptions(\Symfony\Component\OptionsResolver\OptionsResolver $resolver)
     {
         $resolver
               ->setRequired(array('group'))
