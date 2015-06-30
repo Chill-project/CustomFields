@@ -28,7 +28,7 @@
         "symfony/monolog-bundle": "~2.4",
         "sensio/distribution-bundle": "~3.0",
         "sensio/framework-extra-bundle": "~3.0",
-        "chill-project/main": "dev-add_acl@dev",
+        "chill-project/main": "dev-master@dev",
         "champs-libres/composer-bundle-migration": "~1.0",
         "doctrine/doctrine-migrations-bundle": "dev-master@dev",
         "doctrine/migrations": "~1.0@dev"
