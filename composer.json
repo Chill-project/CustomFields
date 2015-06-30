@@ -4,7 +4,7 @@
     "type": "symfony-bundle",
     "description": "This bundle allow to add custom fields on entities.",
     "keywords" : ["chill", "social work"],
-    "homepage" : "https://github.com/Chill-project/custom-fields",
+    "homepage" : "https://github.com/Chill-project/CustomFields",
     "autoload": {
         "psr-4": { "Chill\\CustomFieldsBundle\\": "" }
     },
