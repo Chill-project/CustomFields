@@ -40,7 +40,7 @@ class CustomFieldType extends AbstractType
         
         $builder
             ->add('name', 'translatable_string')
-            ->add('active')
+            ->add('active', 'checkbox', array('required' => false))
             ->add('customFieldsGroup', 'entity', array(
                'class' => 'ChillCustomFieldsBundle:CustomFieldsGroup',
                'property' => 'name['.$this->culture.']'
