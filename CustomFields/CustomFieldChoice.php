@@ -121,8 +121,8 @@ class CustomFieldChoice implements CustomFieldInterface
             $options['expanded'] = $customFieldOptions[self::EXPANDED];
             
             $builder->add(
-                     $builder->create($customField->getSlug(), 'choice', $options)
-                         ->addModelTransformer(new CustomFieldDataTransformer($this, $customField))
+                $builder->create($customField->getSlug(), 'choice', $options)
+                    ->addModelTransformer(new CustomFieldDataTransformer($this, $customField))
             );
             
         }
