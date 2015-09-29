@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormEvent;
 class CustomFieldsGroupType extends AbstractType
 {
     
-    private $customizableEntities;
+    private $customizableEntities; //TOOD : add comment about this variable
     
     /**
      *
@@ -31,11 +31,12 @@ class CustomFieldsGroupType extends AbstractType
      * @param FormBuilderInterface $builder
      * @param array $options
      */
+    //TODO : details about the function
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         //prepare translation
         $entities = array();
-        $customizableEntities = array();
+        $customizableEntities = array(); //TODO : change name too close than $this->customizableEntities
         
         foreach($this->customizableEntities as $key => $definition) {
             $entities[$definition['class']] = $this->translator->trans($definition['name']);
