@@ -130,11 +130,11 @@ class CustomField
     }
 
     /**
-     * Get active
+     * Returns true if the custom field is active
      *
      * @return boolean
      */
-    public function getActive()
+    public function isActive()
     {
         return $this->active;
     }
