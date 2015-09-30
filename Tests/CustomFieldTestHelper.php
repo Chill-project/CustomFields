@@ -47,36 +47,32 @@ class CustomFieldTestHelper
     public static function getCrawlerForField(CustomField $field, KernelTestCase $testCase, KernelInterface $kernel, $locale = 'en')
     {
         //check a kernel is accessible
-        
-        
         $customFieldsGroup = $testCase->getMock('Chill\CustomFieldsBundle\Entity\CustomFieldsGroup');
         $customFieldsGroup->expects($testCase->once())
-              ->method('getCustomFields')
-              ->will($testCase->returnValue(array($field)))
-              ;
+            ->method('getCustomFields')
+            ->will($testCase->returnValue(array($field)));
         
         $request = $testCase->getMock('Symfony\Component\HttpFoundation\Request');
         $request->expects($testCase->any())
-              ->method('getLocale')
-              ->will($testCase->returnValue($locale))
-              ;
+            ->method('getLocale')
+            ->will($testCase->returnValue($locale));
+
         $kernel->getContainer()->get('request_stack')->push($request);
         
         $builder = $kernel->getContainer()->get('form.factory')->createBuilder();
         $form = $builder->add('tested', 'custom_field', 
-              array('group' => $customFieldsGroup))
-              ->getForm()
-              ;
+            array('group' => $customFieldsGroup))
+            ->getForm();
         
         $kernel->getContainer()->get('twig.loader')
-                ->addPath(__DIR__.'/Fixtures/App/app/Resources/views/', 
-                      $namespace = 'test');
+            ->addPath(__DIR__.'/Fixtures/App/app/Resources/views/', $namespace = 'test');
+
         $content = $kernel
-                ->getContainer()->get('templating')
-                ->render('@test/CustomField/simple_form_render.html.twig', array(
-                   'form' => $form->createView(),
-                   'inputKeys' => array('tested')
-                ));
+            ->getContainer()->get('templating')
+            ->render('@test/CustomField/simple_form_render.html.twig', array(
+                'form' => $form->createView(),
+                'inputKeys' => array('tested')
+            ));
 
         $crawler = new Crawler();
         $crawler->addHtmlContent($content);
