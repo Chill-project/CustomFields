@@ -48,7 +48,7 @@ services:
             - "@chill.main.helper.translatable_string"
         tags:
             - { name: 'chill.custom_field', type: 'choice' }
-            
+
     chill.custom_field.custom_fields_group_linked_custom_fields:
         class: Chill\CustomFieldsBundle\Form\Type\LinkedCustomFieldsType
         arguments:
@@ -78,6 +78,13 @@ services:
 
     chill.custom_field.twig.custom_fields_rendering:
         class: Chill\CustomFieldsBundle\Templating\Twig\CustomFieldRenderingTwig
+        calls:
+            - [setContainer, ["@service_container"]]
+        tags:
+            - { name: twig.extension }
+
+    chill.custom_field.twig.custom_fields_group_rendering:
+        class: Chill\CustomFieldsBundle\Templating\Twig\CustomFieldsGroupRenderingTwig
         calls:
             - [setContainer, ["@service_container"]]
         tags:

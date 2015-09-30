@@ -1,0 +1,8 @@
+{% for customField in cFGroup.activeCustomFields %}
+    {% if customField.type == 'title' %}
+        {{ chill_custom_field_widget(cFData , customField) }}
+    {% else %}
+        <dt>{{ chill_custom_field_label(customField) }}</dt>
+        <dd>{{ chill_custom_field_widget(cFData , customField) }}</dd>
+    {% endif %}
+{% endfor %}

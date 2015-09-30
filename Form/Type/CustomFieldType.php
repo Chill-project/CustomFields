@@ -46,10 +46,10 @@ class CustomFieldType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        foreach ($options['group']->getCustomFields() as $cf) {
+        foreach ($options['group']->getActiveCustomFields() as $cf) {
             $this->customFieldCompiler
-                    ->getCustomFieldByType($cf->getType())
-                    ->buildForm($builder, $cf);
+                ->getCustomFieldByType($cf->getType())
+                ->buildForm($builder, $cf);
         }
     }
     
