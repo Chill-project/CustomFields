@@ -49,7 +49,7 @@ class CustomFieldTestHelper
         //check a kernel is accessible
         $customFieldsGroup = $testCase->getMock('Chill\CustomFieldsBundle\Entity\CustomFieldsGroup');
         $customFieldsGroup->expects($testCase->once())
-            ->method('getCustomFields')
+            ->method('getActiveCustomFields')
             ->will($testCase->returnValue(array($field)));
         
         $request = $testCase->getMock('Symfony\Component\HttpFoundation\Request');
