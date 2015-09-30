@@ -32,9 +32,11 @@ use Symfony\Component\Yaml\Exception\ParseException;
 use Chill\CustomFieldsBundle\Entity\CustomField;
 
 /**
- * 
+ * Class for the command 'chill:custom_fields:populate_group' that
+ * Create custom fields from a yml file
  *
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
+ * @author Marc Ducobu <marc.ducobu@champs-libres.coop>
  */
 class CreateFieldsOnGroupCommand extends ContainerAwareCommand
 {
@@ -49,6 +51,21 @@ class CreateFieldsOnGroupCommand extends ContainerAwareCommand
                 'Path to description file')
             ->addOption(self::ARG_DELETE, null, InputOption::VALUE_NONE,
                 'If set, delete existing fields');
+    }
+
+    /**
+     * Delete the existing custom fields for a given customFieldGroup
+     *
+     * @param CustomFieldsGroup $customFieldsGroup : The custom field group
+     */
+    protected function deleteFieldsForCFGroup($customFieldsGroup)
+    {
+        $em = $this->getContainer()
+            ->get('doctrine.orm.default_entity_manager');
+
+        foreach ($customFieldsGroup->getCustomFields() as $field) {
+            $em->remove($field);
+        }
     }
     
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -87,11 +104,8 @@ class CreateFieldsOnGroupCommand extends ContainerAwareCommand
             }
         );
           
-        // TODO : getCustomFields or getActiveCustomFields ?
         if ($input->getOption(self::ARG_DELETE)) {
-            foreach ($customFieldsGroup->getCustomFields() as $field) {
-                $em->remove($field);
-            }
+            $this->deleteFieldsForCFGroup($customFieldsGroup);
         }
             
         $fieldsInput = $this->_parse($input->getArgument(self::ARG_PATH), 
@@ -154,9 +168,8 @@ class CreateFieldsOnGroupCommand extends ContainerAwareCommand
     private function _addFields(CustomFieldsGroup $group, $values, OutputInterface $output)
     {
         $cfProvider = $this->getContainer()->get('chill.custom_field.provider');
-        
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        
+        $em = $this->getContainer()->get('doctrine.orm.default_entity_manager');
+
         $languages = $this->getContainer()
             ->getParameter('chill_main.available_languages');
         
