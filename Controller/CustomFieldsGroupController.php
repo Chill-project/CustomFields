@@ -251,7 +251,7 @@ class CustomFieldsGroupController extends Controller
         
         if ($form->isSubmitted()) {
             if ($form->get('submit_render')->isClicked()) {
-                return $this->render('ChillCustomFieldsBundle:CustomFieldsGroup:render.html.twig', array(
+                return $this->render('ChillCustomFieldsBundle:CustomFieldsGroup:render_for_test.html.twig', array(
                     'fields' => $form->getData(),
                     'customFieldsGroup' => $entity
                 ));
