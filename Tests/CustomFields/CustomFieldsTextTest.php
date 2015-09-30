@@ -44,12 +44,8 @@ class CustomFieldsTextTest extends WebTestCase
     {
         static::bootKernel();
         $this->customFieldProvider = static::$kernel->getContainer()
-              ->get('chill.custom_field.provider');
-        
-        
+            ->get('chill.custom_field.provider');
     }
-    
-    
     
     public function testCustomFieldsTextExists()
     {
@@ -65,31 +61,27 @@ class CustomFieldsTextTest extends WebTestCase
     {
         $customField = new CustomField();
         $customField->setType('text')
-              ->setOptions(array(CustomFieldText::MAX_LENGTH => 255))
-              ->setSlug('slug')
-              ->setOrdering(10)
-              ->setActive(true)
-              ->setName(array('en' => 'my label'))
-              ;
+            ->setOptions(array(CustomFieldText::MAX_LENGTH => 255))
+            ->setSlug('slug')
+            ->setOrdering(10)
+            ->setActive(true)
+            ->setName(array('en' => 'my label'));
         
         $crawler = CustomFieldTestHelper::getCrawlerForField($customField, $this, static::$kernel);
         
         $this->assertCount(1, $crawler->filter("input[type=text]"));
-        $this->assertCount(1, $crawler->filter("label:contains('my label')"));
-        
-              
+        $this->assertCount(1, $crawler->filter("label:contains('my label')"));   
     }
     
     public function testPublicFormRenderingLengthMoreThan25()
     {
         $customField = new CustomField();
         $customField->setType('text')
-              ->setOptions(array(CustomFieldText::MAX_LENGTH => 256))
-              ->setSlug('slug')
-              ->setOrdering(10)
-              ->setActive(true)
-              ->setName(array('en' => 'my label'))
-              ;
+            ->setOptions(array(CustomFieldText::MAX_LENGTH => 256))
+            ->setSlug('slug')
+            ->setOrdering(10)
+            ->setActive(true)
+            ->setName(array('en' => 'my label'));
         
         $crawler = CustomFieldTestHelper::getCrawlerForField($customField, $this, static::$kernel);
         
@@ -108,5 +100,4 @@ class CustomFieldsTextTest extends WebTestCase
         $form = $crawler->selectButton('custom_field_choice_submit')->form();
         $this->assertTrue($form->has('custom_field_choice[options][maxLength]'));
     }
-    
 }
