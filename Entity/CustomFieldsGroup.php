@@ -21,6 +21,8 @@
 
 namespace Chill\CustomFieldsBundle\Entity;
 
+use \Doctrine\Common\Collections\Collection;
+
 /**
  * CustomFieldGroup
  */
@@ -42,9 +44,18 @@ class CustomFieldsGroup
     private $entity;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var \Doctrine\Common\Collections\Collection $customFields: The custom
+     * fields of the group. The custom fields are asc-ordered regarding to their
+     * property "ordering".
      */
     private $customFields;
+
+    /**
+     * @var array(customField) | null $activeCustomFields: The custom fields
+     * of the group that are active. This variable if null, if this
+     * informations has not been computed.
+     */
+    private $activeCustomFields = null;
     
     /**
      *
@@ -52,7 +63,7 @@ class CustomFieldsGroup
      */
     private $options = array();
 
-        /**
+    /**
      * Constructor
      */
     public function __construct()
@@ -91,6 +102,25 @@ class CustomFieldsGroup
     public function getCustomFields()
     {
        return $this->customFields;
+    }
+
+    /**
+     * Get all the custom
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getActiveCustomFields()
+    {
+        if($this->activeCustomFields === null) {
+            $this->activeCustomFields = array();
+            foreach ($this->customFields as $cf) {
+                if($cf->isActive()) {
+                    array_push($this->activeCustomFields, $cf);
+                }
+            }
+        }
+
+        return $this->activeCustomFields;
     }
 
     
@@ -189,7 +219,4 @@ class CustomFieldsGroup
         $this->options = $options;
         return $this;
     }
-
-
-
 }
