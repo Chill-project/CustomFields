@@ -39,9 +39,9 @@ class ChoicesListType extends AbstractType
                 
                 if (NULL === $formData['slug']) {
                     $slug = $form['name'][$locales[0]]->getData();
-                    $slug= strtolower($slug);
-                    $slug= preg_replace('/[^a-zA-Z0-9 -]/','', $slug); // only take alphanumerical characters, but keep the spaces and dashes too...
-                    $slug= str_replace(' ','-', $slug); // replace spaces by dashes
+                    $slug = strtolower($slug);
+                    $slug = preg_replace('/[^a-zA-Z0-9 -]/','', $slug); // only take alphanumerical characters, but keep the spaces and dashes too...
+                    $slug = str_replace(' ','-', $slug); // replace spaces by dashes
                     
                     $data['slug'] = $slug;
                     $event->setData($data);
