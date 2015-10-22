@@ -40,43 +40,42 @@ use Symfony\Component\Translation\Translator;
  */
 class CustomFieldChoice implements CustomFieldInterface
 {
-	const ALLOW_OTHER = 'other';
+    const ALLOW_OTHER = 'other';
     const OTHER_VALUE_LABEL = 'otherValueLabel';
-	const MULTIPLE = 'multiple';
-	const EXPANDED = 'expanded';
-	const CHOICES = 'choices';
+    const MULTIPLE = 'multiple';
+    const EXPANDED = 'expanded';
+    const CHOICES = 'choices';
 	
-	/**
-	 * 
-	 * @var RequestStack
-	 */
-	private $requestStack;
-	
-	private $defaultLocales;
-	
-	/**
-	 * 
-	 * @var TwigEngine
-	 */
-	private $templating;
+    /**
+     * 
+     * @var RequestStack
+     */
+    private $requestStack;
+
+    private $defaultLocales;
+
+    /**
+     * 
+     * @var TwigEngine
+     */
+    private $templating;
 
     /**
      * @var TranslatableStringHelper Helper that find the string in current locale from an array of translation
      */
     private $translatableStringHelper;
 	
-	public function __construct(
-          RequestStack $requestStack, 
-          Translator $translator, 
-          TwigEngine $templating,
-          TranslatableStringHelper $translatableStringHelper
-          )
-	{
-	    $this->requestStack = $requestStack;
-	    $this->defaultLocales = $translator->getFallbackLocales();
-	    $this->templating = $templating;
+    public function __construct(
+        RequestStack $requestStack, 
+        Translator $translator, 
+        TwigEngine $templating,
+        TranslatableStringHelper $translatableStringHelper)
+    {
+        $this->requestStack = $requestStack;
+        $this->defaultLocales = $translator->getFallbackLocales();
+        $this->templating = $templating;
         $this->translatableStringHelper = $translatableStringHelper;
-	}
+    }
 	
     public function buildForm(FormBuilderInterface $builder, CustomField $customField)
     {
@@ -93,11 +92,10 @@ class CustomFieldChoice implements CustomFieldInterface
         
         //prepare $options
         $options = array(
-                'multiple' => $customFieldOptions[self::MULTIPLE],
-                'choices' => $choices,
-                'required' => false,
-                'label' =>  $this->translatableStringHelper->localize($customField->getName())
-            );
+            'multiple' => $customFieldOptions[self::MULTIPLE],
+            'choices' => $choices,
+            'required' => false,
+            'label' =>  $this->translatableStringHelper->localize($customField->getName()));
 
         //if allow_other = true
         if ($customFieldOptions[self::ALLOW_OTHER] == true) {
@@ -131,30 +129,28 @@ class CustomFieldChoice implements CustomFieldInterface
 
     public function buildOptionsForm(FormBuilderInterface $builder)
     {
-        $builder->add(self::MULTIPLE, 'choice', array(
-        	'expanded' => true,
-        	'multiple' => false,
-            'choices' => array(
-                1 => 'Multiple',
-                0 => 'Unique'
-            ),
-            'empty_data' => 0
-            ))
+        $builder
+            ->add(self::MULTIPLE, 'choice', array(
+                'expanded' => true,
+                'multiple' => false,
+                'choices' => array(
+                    1 => 'Multiple',
+                    0 => 'Unique'),
+                'empty_data' => 0
+                ))
             ->add(self::EXPANDED, 'choice', array(
                 'expanded' => true,
                 'multiple' => false,
                 'choices' => array(
                     1 => 'Expanded',
-                    0 => 'Non expanded'
-                ),
+                    0 => 'Non expanded'),
                 'empty_data' => 0
-            ))
+                ))
             ->add(self::ALLOW_OTHER, 'choice', array(
                 'label' => 'Allow other',
                 'choices' => array(
                     0 => 'No',
-                    1 => 'Yes'
-                ),
+                    1 => 'Yes'),
                 'empty_data' => 0,
                 'expanded' => true,
                 'multiple' => false
@@ -164,8 +160,7 @@ class CustomFieldChoice implements CustomFieldInterface
             ->add(self::CHOICES, new ChoicesType(), array(
                 'type' => new ChoicesListType($this->defaultLocales),
                 'allow_add' => true
-            ))
-            ;
+            ));
             
             return $builder;
     }
