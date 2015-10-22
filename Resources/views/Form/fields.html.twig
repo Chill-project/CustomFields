@@ -35,61 +35,37 @@
 {# render the possibility to add different elements in a choice list #}
 {% block cf_choices_widget %}
 
-{{ form(form) }}
+    {{ form(form) }}
+    
+    {# we use javascrit to add an additional element. All functions are personnalized with the id ( = form.vars.id) #}
+    <script type="text/javascript">
+        function addElementInDiv(div_id) {
+            var div = $('#' + div_id);
+            var prototype = div.data('prototype');
+            var index = div.data('index');
+            var add_element_link = $('#' + div_id + '_add_element_link');
+            var new_fields = prototype.replace(/__name__label__/g, index);
+            var new_fields = prototype.replace(/__name__/g, index);
 
-<ul id="ul_{{ form.vars.id }}"></ul>
-{# we use javascrit to add an additional element. All functions are personnalized with the id ( = form.vars.id) #}
-<script type="text/javascript">
-var $collectionHolder_{{ form.vars.id }};
+            div.data('index', index + 1);
+            console.log(index);
+            add_element_link.before(new_fields);
+        }
 
-// setup an "add a tag" link
-var $addTagLink_{{ form.vars.id }} = $('<a href="#" class="add_tag_link">Add an element</a>');
-var $newLinkLi_{{ form.vars.id }} = $('<li></li>').append($addTagLink_{{ form.vars.id }});
+        function initializeCFChoiceOptionsChoices(div_id) {
+            var add_element_link = $('<a id="' + div_id + '_add_element_link"" href="#" class="sc-button bt-submit">Add an element</a>');
+            var div = $('#' + div_id);
+            div.append(add_element_link);
+            div.data('index', div.find(':input').length / 5);
 
-function initialize_{{ form.vars.id }}(ULelementId) {
-    // Get the ul that holds the collection of tags
-    $collectionHolder_{{ form.vars.id }} = $('#' + ULelementId);
+            add_element_link.on('click', function (e) {
+                e.preventDefault();
+                addElementInDiv(div_id);
+            });
+        }
 
-    // add the "add a tag" anchor and li to the tags ul
-    $collectionHolder_{{ form.vars.id }}.append($newLinkLi_{{ form.vars.id }});
-
-    // count the current form inputs we have (e.g. 2), use that as the new
-    // index when inserting a new item (e.g. 2)
-    $collectionHolder_{{ form.vars.id }}.data('index', $collectionHolder_{{ form.vars.id }}.find(':input').length);
-
-    $addTagLink_{{ form.vars.id }}.on('click', function(e) {
-        // prevent the link from creating a "#" on the URL
-        e.preventDefault();
-
-        // add a new tag form (see next code block)
-        addTagForm_{{ form.vars.id }}($collectionHolder_{{ form.vars.id }}, $newLinkLi_{{ form.vars.id }});
-    });
-};
-
-function addTagForm_{{ form.vars.id }}(collection, newLinkLi) {
-	console.log($collectionHolder_{{ form.vars.id }});
-    // Get the data-prototype explained earlier
-    var prototype = $( '#' + '{{ form.vars.id }}').data('prototype');
-    console.log(prototype);
-    // get the new index
-    var index = collection.data('index');
-
-    // Replace '__name__' in the prototype's HTML to
-    // instead be a number based on how many items we have
-    var newForm = prototype.replace(/__name__/g, index);
-
-    // increase the index with one for the next item
-    collection.data('index', index + 1);
-
-    // Display the form in the page in an li, before the "Add a tag" link li
-    var $newFormLi = $('<li></li>').append(newForm);
-    newLinkLi.before($newFormLi);
-};
-
-
-jQuery(document).ready(initialize_{{ form.vars.id }}('ul_' + '{{ form.vars.id }}'));
-
-</script>
+        jQuery(document).ready(initializeCFChoiceOptionsChoices('{{ form.vars.id }}'));
+    </script>
 
 {%  endblock cf_choices_widget %} 
 
