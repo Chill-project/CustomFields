@@ -62,14 +62,13 @@ class CustomFieldType extends AbstractType
         
         
         $builder->add(
-              $this->customFieldProvider
-                    ->getCustomFieldByType($options['type'])
-                    ->buildOptionsForm(
-                        $builder
-                          ->create('options', null, array('compound' => true))
+            $this->customFieldProvider
+                ->getCustomFieldByType($options['type'])
+                ->buildOptionsForm(
+                    $builder
+                         ->create('options', null, array('compound' => true))
                     )
-              );
-        
+            );
     }
     
     /**
