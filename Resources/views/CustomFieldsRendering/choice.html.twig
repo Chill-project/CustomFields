@@ -1,23 +1,29 @@
 {% if selected|length > 0 %}
-<ul class="custom_fields choice">
-{%- for choice in choices -%}
-    {% if choice['slug'] in selected %}{%- set is_selected = true -%}{%- else -%}{%- set is_selected = false -%}{%- endif -%}
-    {%- if is_selected -%}
-    <li class="{% if is_selected or expanded == 1 %} selected {% endif %}">
-    {%- if is_selected -%}
-        <i class="fa fa-check-square-o"></i>&nbsp;
-    {%- else -%}
-        <i class="fa fa-square-o"></i>&nbsp;
-    {%- endif -%}
-    {%- if choice['slug'] is not same as('_other') -%}
-    {{ choice['name']|localize_translatable_string }}
-    {%- else -%}
-        {{ choice['name'] }}
-    {%- endif -%}
-    </li>
-    {%- endif -%}
-{%- endfor -%}
-</ul>
+    <ul class="custom_fields choice">
+        {%- for choice in choices -%}
+            {% if choice['slug'] in selected %}
+                {%- set is_selected = true -%}
+            {%- else -%}
+                {%- set is_selected = false -%}
+            {%- endif -%}
+            
+            {%- if is_selected -%}
+                <li class="{% if is_selected or expanded == 1 %} selected {% endif %}">
+                    {%- if is_selected -%}
+                        <i class="fa fa-check-square-o"></i>&nbsp;
+                    {%- else -%}
+                        <i class="fa fa-square-o"></i>&nbsp;
+                    {%- endif -%}
+
+                    {%- if choice['slug'] is not same as('_other') -%}
+                        {{ choice['name']|localize_translatable_string }}
+                    {%- else -%}
+                         {{ choice['name'] }}
+                    {%- endif -%}
+                </li>
+            {%- endif -%}
+        {%- endfor -%}
+    </ul>
 {% else %}
     <div class="custom_fields_choice empty">{{ 'None'|trans }}</div>
 {% endif %}
