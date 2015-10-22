@@ -21,6 +21,4 @@ class ChoicesType extends AbstractType
     {
         return 'collection';
     }
-
-     
 }
