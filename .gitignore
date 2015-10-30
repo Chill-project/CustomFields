@@ -15,6 +15,7 @@
 .gitignore~
 *~
 composer.phar
+composer.lock
 /nbproject/private/
 parameters.yml
 app/config/parameters.yml
