@@ -1,5 +1,6 @@
 {#
- * Copyright (C) 2014, Champs Libres Cooperative SCRLFS, <http://www.champs-libres.coop>
+ * Copyright (C) 2014-2015, Champs Libres Cooperative SCRLFS, 
+ <info@champs-libres.coop> / <http://www.champs-libres.coop>
  *
  * This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as
@@ -14,18 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #}
-{% extends "ChillCustomFieldsBundle::Admin/layout.html.twig" %}
 
-{% block admin_content %}
-    <h1>CustomFieldsGroup creation</h1>
-
-    {{ form(form) }}
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('customfieldsgroup') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
-{% endblock %}
+{% extends "ChillMainBundle::Menu/verticalMenu.html.twig" %}
+{% block v_menu_title %}{{ 'Custom fields configuration menu'|trans }}{% endblock %}

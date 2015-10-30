@@ -1,11 +1,21 @@
-customfield:
+customfield_section:
     path:     /{_locale}/admin/customfield/
+    defaults: { _controller: "ChillCustomFieldsBundle:Admin:index" }
+    options:
+        menus:
+            admin_section: 
+                order: 1000
+                label: "Custom fields configuration"
+                icons: ['asterisk']
+
+customfield:
+    path:     /{_locale}/admin/customfield/list
     defaults: { _controller: "ChillCustomFieldsBundle:CustomField:index" }
     options:
         menus:
-            admin: 
+            admin_custom_fields: 
                 order: 1000
-                label: "CustomFields"
+                label: "CustomFields List"
 
 customfield_show:
     path:     /{_locale}/admin/customfield/{id}/show

@@ -3,7 +3,7 @@ customfieldsgroup:
     defaults: { _controller: "ChillCustomFieldsBundle:CustomFieldsGroup:index" }
     options:
         menus:
-            admin: 
+            admin_custom_fields: 
                 order: 1010
                 label: "CustomFields Groups"
 
