@@ -1,3 +1,14 @@
 'Not available in your language': 'Traduction pas disponible dans votre langue'
 'Other value': 'Autre valeur'
 'None': 'Pas spécifié'
+
+Custom fields configuration: Configuration des champs personnalisés
+CustomFieldsGroup list: Groupes de champs personnalisés
+Entity: Entité
+"Is default ?": "Par défaut ?"
+"Some module select default groups for some usage. Example: the default person group is shown under person page.": "Certains modules sélectionnent en priorité les formulaires par défaut. Exemple: le formulaire par défaut pour une personne est affiché sur la page principale pour la personne"
+Make default: Assigner comme formulaire par défaut
+Create a new group: Créer un nouveau groupe
+
+CustomFields List: Liste des champs personnalisés
+CustomFields Groups: Groupe de champs personnalisés

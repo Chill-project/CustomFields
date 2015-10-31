@@ -10,6 +10,10 @@ customfieldsgroup:
 customfieldsgroup_show:
     path:     /{_locale}/admin/customfieldsgroup/{id}/show
     defaults: { _controller: "ChillCustomFieldsBundle:CustomFieldsGroup:show" }
+    
+customfieldsgroup_makedefault:
+    path:     /{_locale}/admin/customfieldsgroup/make_default
+    defaults: { _controller: "ChillCustomFieldsBundle:CustomFieldsGroup:makeDefault" }
 
 customfieldsgroup_new:
     path:     /{_locale}/admin/customfieldsgroup/new

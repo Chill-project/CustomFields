@@ -4,7 +4,7 @@ namespace Chill\CustomFieldsBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use Doctrine\ORM\Query;
 use Chill\CustomFieldsBundle\Entity\CustomFieldsGroup;
 
 /**
@@ -22,12 +22,64 @@ class CustomFieldsGroupController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('ChillCustomFieldsBundle:CustomFieldsGroup')->findAll();
+        $cfGroups = $em->getRepository('ChillCustomFieldsBundle:CustomFieldsGroup')->findAll();
+        $defaultGroups = $this->getDefaultGroupsId();
+        
+        $makeDefaultFormViews = array();
+        foreach ($cfGroups as $group) {
+            if (!in_array($group->getId(), $defaultGroups)){
+                $makeDefaultFormViews[$group->getId()] = $this->createMakeDefaultForm($group)->createView();
+            }
+        }
 
         return $this->render('ChillCustomFieldsBundle:CustomFieldsGroup:index.html.twig', array(
-            'entities' => $entities,
+            'entities' => $cfGroups,
+            'default_groups' => $defaultGroups,
+            'make_default_forms' => $makeDefaultFormViews
         ));
     }
+    
+    /**
+     * Get an array of CustomFieldsGroupId which are marked as default
+     * for their entity
+     * 
+     * @return int[]
+     */
+    private function getDefaultGroupsId()
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        $customFieldsGroupIds = $em->createQuery('SELECT g.id FROM '
+                . 'ChillCustomFieldsBundle:CustomFieldsDefaultGroup d '
+                . 'JOIN d.customFieldsGroup g')
+                ->getResult(Query::HYDRATE_SCALAR);
+        
+        $result = array();
+        foreach ($customFieldsGroupIds as $row) {
+            $result[] = $row['id'];
+        }
+        
+        return $result;
+    }
+    
+    /**
+     * create a form to make the group default
+     * 
+     * @param CustomFieldsGroup $group
+     * @return \Symfony\Component\Form\Form
+     */
+    private function createMakeDefaultForm(CustomFieldsGroup $group)
+    {
+        return $this->createFormBuilder($group, array(
+                    'method' => 'POST',
+                    'action' => $this->generateUrl('customfieldsgroup_makedefault')
+                ))
+                ->add('id', 'hidden')
+                ->add('submit', 'submit', array('label' => 'Make default'))
+                ->getForm();
+    }
+    
+    
     /**
      * Creates a new CustomFieldsGroup entity.
      *
