@@ -57,11 +57,9 @@
         </tbody>
     </table>
 
-        <ul>
-        <li>
-            <a href="{{ path('customfieldsgroup_new') }}">
-                {{ 'Create a new group'|trans }}
-            </a>
-        </li>
-    </ul>
+    <p>
+        <a href="{{ path('customfieldsgroup_new') }}" class="sc-button bt-create">
+            {{ 'Create a new group'|trans }}
+        </a>
+    </p>
     {% endblock %}
