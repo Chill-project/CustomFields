@@ -2,7 +2,7 @@
 'Other value': 'Autre valeur'
 'None': 'Pas spécifié'
 
-Custom fields configuration: Configuration des champs personnalisés
+
 CustomFieldsGroup list: Groupes de champs personnalisés
 CustomFieldsGroup creation: Nouveau groupe de champs personnalisés
 Entity: Entité
@@ -10,6 +10,17 @@ Entity: Entité
 "Some module select default groups for some usage. Example: the default person group is shown under person page.": "Certains modules sélectionnent en priorité les formulaires par défaut. Exemple: le formulaire par défaut pour une personne est affiché sur la page principale pour la personne"
 Make default: Assigner comme formulaire par défaut
 Create a new group: Créer un nouveau groupe
+CustomFieldsGroup details: Détail du groupe de champs personnalisés
+Fields associated with this group: Champs associés à ce groupe
+Any field is currently associated with this group: Aucun champ n'est associé à ce groupe actuellement
+Create a new field: Créer un champ personnalisé
+Add a new field: Ajouter un champ personnalisé
+ordering: ordre
+label_field: label du champ
+active: actif
 
+
+#menu entries
+Custom fields configuration: Champs personnalisés
 CustomFields List: Liste des champs personnalisés
 CustomFields Groups: Groupe de champs personnalisés

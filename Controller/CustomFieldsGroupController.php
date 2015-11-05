@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\ORM\Query;
 use Chill\CustomFieldsBundle\Entity\CustomFieldsGroup;
+use Chill\CustomFieldsBundle\Entity\CustomField;
 
 /**
  * CustomFieldsGroup controller.
@@ -152,11 +153,9 @@ class CustomFieldsGroupController extends Controller
             throw $this->createNotFoundException('Unable to find CustomFieldsGroup entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-
         return $this->render('ChillCustomFieldsBundle:CustomFieldsGroup:show.html.twig', array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+            'create_field_form' => $this->createCreateFieldForm($entity)->createView()
         ));
     }
 
@@ -201,6 +200,29 @@ class CustomFieldsGroupController extends Controller
 
         return $form;
     }
+    
+    private function createCreateFieldForm(CustomFieldsGroup $customFieldsGroup)
+    {
+        
+        $fieldChoices = array();
+        foreach ($this->get('chill.custom_field.provider')->getAllFields() 
+              as $key => $customType) {
+            $fieldChoices[$key] = $customType->getName();
+        }
+        
+        return $this->createFormBuilder(new CustomField(), array(
+                    'method' => 'GET',
+                    'action' => $this->generateUrl('customfield_new', 
+                            array('cfGroup' => $customFieldsGroup->getId())),
+                    'csrf_protection' => false
+                    ))
+              ->add('type', 'choice', array(
+                    'choices' => $fieldChoices
+                   ))
+              ->add('submit', 'submit')
+              ->getForm();
+    }
+    
     /**
      * Edits an existing CustomFieldsGroup entity.
      *
