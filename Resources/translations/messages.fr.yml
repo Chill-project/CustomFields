@@ -18,6 +18,7 @@ Add a new field: Ajouter un champ personnalisé
 ordering: ordre
 label_field: label du champ
 active: actif
+CustomFieldsGroup edit: Edition d'un groupe de champs personnalisé
 
 
 #menu entries
