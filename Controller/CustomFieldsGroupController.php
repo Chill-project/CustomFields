@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\ORM\Query;
 use Chill\CustomFieldsBundle\Entity\CustomFieldsGroup;
 use Chill\CustomFieldsBundle\Entity\CustomField;
+use Chill\CustomFieldsBundle\Form\DataTransformer\CustomFieldsGroupToIdTransformer;
 
 /**
  * CustomFieldsGroup controller.
@@ -210,17 +211,25 @@ class CustomFieldsGroupController extends Controller
             $fieldChoices[$key] = $customType->getName();
         }
         
-        return $this->createFormBuilder(new CustomField(), array(
+        $customfield = (new CustomField())
+              ->setCustomFieldsGroup($customFieldsGroup);
+        
+        $builder = $this->get('form.factory')
+              ->createNamedBuilder(null, 'form', $customfield, array(
                     'method' => 'GET',
-                    'action' => $this->generateUrl('customfield_new', 
-                            array('cfGroup' => $customFieldsGroup->getId())),
+                    'action' => $this->generateUrl('customfield_new'),
                     'csrf_protection' => false
                     ))
               ->add('type', 'choice', array(
                     'choices' => $fieldChoices
                    ))
-              ->add('submit', 'submit')
-              ->getForm();
+              ->add('customFieldsGroup', 'hidden')
+              ->add('submit', 'submit');
+        $builder->get('customFieldsGroup')
+              ->addViewTransformer(new CustomFieldsGroupToIdTransformer(
+                       $this->getDoctrine()->getManager()));
+        
+        return $builder->getForm();
     }
     
     /**

@@ -33,6 +33,14 @@ class CustomFieldsGroupToIdTransformer implements DataTransformerInterface
         if (null === $customFieldsGroup) {
             return "";
         }
+        
+        if (!$customFieldsGroup instanceof CustomFieldsGroup) {
+            throw new TransformationFailedException(sprintf('Transformation failed: '
+                  . 'the expected type of the transforme function is an '
+                  . 'object of type Chill\CustomFieldsBundle\Entity\CustomFieldsGroup, '
+                  . '%s given (value : %s)', gettype($customFieldsGroup), 
+                  $customFieldsGroup));
+        }
 
         return $customFieldsGroup->getId();
     }
@@ -48,6 +56,14 @@ class CustomFieldsGroupToIdTransformer implements DataTransformerInterface
     {
         if (!$id) {
             return null;
+        }
+        
+        if ($id instanceof CustomFieldsGroup) {
+            throw new TransformationFailedException(sprintf(
+                  'The transformation failed: the expected argument on '
+                  . 'reverseTransform is an object of type int,'
+                  . 'Chill\CustomFieldsBundle\Entity\CustomFieldsGroup, '
+                  . 'given', gettype($id)));
         }
 
         $customFieldsGroup = $this->om
