@@ -16,7 +16,7 @@
 #}
 {% extends "ChillCustomFieldsBundle::Admin/layout.html.twig" %}
 
-{% block title%}{{ 'CustomFieldsGroup details'|trans }}{% endblock %}
+{% block title %}{{ 'CustomFieldsGroup details'|trans }}{% endblock %}
 
 {% block admin_content %}
     <h1>{{ 'CustomFieldsGroup details'|trans }}</h1>
@@ -31,6 +31,22 @@
                 <th>{{ 'Entity'|trans }}</th>
                 <td>{{ entity.entity|trans }}</td>
             </tr>
+            {%- for key in options -%}
+            <tr>
+                <th>{{ key ~ '_label'|trans }}</th>
+                <td>
+                    {%- if entity.options[key] is not defined -%}
+                    {{ 'No value defined for this option'|trans }}
+                    {%- elseif entity.options[key] is iterable -%}
+                    {{ entity.options[key]|join(', ') }}
+                    {% else %}
+                    {{ entity.options[key] }}
+                    {%- endif -%}
+                </td>
+            </tr>
+            {%- else -%}
+             <!-- no option available for this entity -->
+            {%- endfor -%}
         </tbody>
     </table>
 

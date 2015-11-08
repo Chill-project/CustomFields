@@ -154,11 +154,35 @@ class CustomFieldsGroupController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find CustomFieldsGroup entity.');
         }
+        
+        $options = $this->getOptionsAvailable($entity->getEntity());
 
         return $this->render('ChillCustomFieldsBundle:CustomFieldsGroup:show.html.twig', array(
             'entity'      => $entity,
-            'create_field_form' => $this->createCreateFieldForm($entity)->createView()
+            'create_field_form' => $this->createCreateFieldForm($entity)->createView(),
+            'options' => $options
         ));
+    }
+    
+    /**
+     * Return an array of available key option for custom fields group
+     * on the given entity
+     * 
+     * @param string $entity the entity to filter
+     */
+    private function getOptionsAvailable($entity)
+    {
+        $options = $this->getParameter('chill_custom_fields.'
+              . 'customizables_entities');
+                
+        foreach($options as $key => $definition) {
+            if ($definition['class'] == $entity) {
+                foreach ($definition['options'] as $key => $value) {
+                    yield $key;
+                }
+            }
+        }
+          //    [$entity->getEntity()];
     }
 
     /**
