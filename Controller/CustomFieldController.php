@@ -4,7 +4,7 @@ namespace Chill\CustomFieldsBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use Chill\CustomFieldsBundle\Form\DataTransformer\CustomFieldsGroupToIdTransformer;
 use Chill\CustomFieldsBundle\Entity\CustomField;
 
 /**
@@ -85,9 +85,10 @@ class CustomFieldController extends Controller
             'action' => $this->generateUrl('customfield_create', 
                   array('type' => $type)),
             'method' => 'POST',
-            'type' => $type
+            'type' => $type,
+            'group_widget' => ($entity->getCustomFieldsGroup()) ? 'hidden' :'entity'
         ));
-
+        
         $form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;
@@ -100,6 +101,18 @@ class CustomFieldController extends Controller
     public function newAction(Request $request)
     {
         $entity = new CustomField();
+        
+        //add the custom field group if defined in URL
+        $cfGroupId = $request->query->get('customFieldsGroup', null);
+        $cfGroup = $this->getDoctrine()->getManager()
+              ->getRepository('ChillCustomFieldsBundle:CustomFieldsGroup')
+              ->find($cfGroupId);
+        if (!$cfGroup) {
+            throw $this->createNotFoundException('CustomFieldsGroup with id '
+                  . $cfGroupId.' is not found !');
+        }
+        $entity->setCustomFieldsGroup($cfGroup);
+        
         $form   = $this->createCreateForm($entity, $request->query->get('type'));
 
         return $this->render('ChillCustomFieldsBundle:CustomField:new.html.twig', array(

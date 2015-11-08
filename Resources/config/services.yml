@@ -11,6 +11,7 @@ services:
         class: Chill\CustomFieldsBundle\Form\CustomFieldType
         arguments:
             - "@chill.custom_field.provider"
+            - "@doctrine.orm.entity_manager"
         tags:
             - { name: 'form.type', alias: 'custom_field_choice' }
 

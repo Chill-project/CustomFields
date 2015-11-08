@@ -6,9 +6,11 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Chill\CustomFieldsBundle\Service\CustomFieldProvider;
-use Chill\CustomFieldsBundle\Entity\CustomField;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Doctrine\Common\Persistence\ObjectManager;
+use Chill\CustomFieldsBundle\Form\DataTransformer\CustomFieldsGroupToIdTransformer;
+
 
 class CustomFieldType extends AbstractType
 {
@@ -20,10 +22,17 @@ class CustomFieldType extends AbstractType
     
     private $culture = 'fr';
     
+    /**
+     * @var ObjectManager
+     */
+    private $om;
     
-    public function __construct(CustomFieldProvider $compiler)
+    
+    public function __construct(CustomFieldProvider $compiler,
+          ObjectManager $om)
     {
         $this->customFieldProvider = $compiler;
+        $this->om = $om;
     }
     /**
      * @param FormBuilderInterface $builder
@@ -40,11 +49,22 @@ class CustomFieldType extends AbstractType
         
         $builder
             ->add('name', 'translatable_string')
-            ->add('active', 'checkbox', array('required' => false))
-            ->add('customFieldsGroup', 'entity', array(
+            ->add('active', 'checkbox', array('required' => false));
+        
+        if ($options['group_widget'] === 'entity') {
+            $builder->add('customFieldsGroup', 'entity', array(
                'class' => 'ChillCustomFieldsBundle:CustomFieldsGroup',
                'property' => 'name['.$this->culture.']'
-            ))
+            ));
+        } elseif ($options['group_widget'] === 'hidden') {
+            $builder->add('customFieldsGroup', 'hidden');
+            $builder->get('customFieldsGroup')
+                  ->addViewTransformer(new CustomFieldsGroupToIdTransformer($this->om));
+        } else {
+            throw new \LogicException('The value of group_widget is not handled');
+        }
+        
+        $builder
             ->add('ordering', 'number')
             ->add('type', 'hidden', array('data' => $options['type']))
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) 
@@ -80,10 +100,12 @@ class CustomFieldType extends AbstractType
             'data_class' => 'Chill\CustomFieldsBundle\Entity\CustomField'
         )); 
         
-        $resolver->setRequired(array('type'))
-              ->addAllowedValues(array('type' => 
-                 array_keys($this->customFieldProvider->getAllFields())
-              ));
+        $resolver->setRequired(array('type', 'group_widget'))
+              ->addAllowedValues(array(
+                 'type' => array_keys($this->customFieldProvider->getAllFields()),
+                 'group_widget' => array('hidden', 'entity')
+              ))
+              ->setDefault('group_widget', 'entity');
     }
 
     /**
