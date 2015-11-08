@@ -8,6 +8,7 @@ use Doctrine\ORM\Query;
 use Chill\CustomFieldsBundle\Entity\CustomFieldsGroup;
 use Chill\CustomFieldsBundle\Entity\CustomField;
 use Chill\CustomFieldsBundle\Form\DataTransformer\CustomFieldsGroupToIdTransformer;
+use Chill\CustomFieldsBundle\Entity\CustomFieldsDefaultGroup;
 
 /**
  * CustomFieldsGroup controller.
@@ -70,7 +71,7 @@ class CustomFieldsGroupController extends Controller
      * @param CustomFieldsGroup $group
      * @return \Symfony\Component\Form\Form
      */
-    private function createMakeDefaultForm(CustomFieldsGroup $group)
+    private function createMakeDefaultForm(CustomFieldsGroup $group = null)
     {
         return $this->createFormBuilder($group, array(
                     'method' => 'POST',
@@ -256,9 +257,52 @@ class CustomFieldsGroupController extends Controller
         return $this->render('ChillCustomFieldsBundle:CustomFieldsGroup:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-        ));
+      
+           ));
     }
     
+    /**
+     * Set the CustomField Group with id $cFGroupId as default
+     */
+    public function makeDefaultAction(Request $request)
+    {
+        
+        $form = $this->createMakeDefaultForm(null);
+        $form->handleRequest($request);
+
+        $cFGroupId = $form->get('id')->getData();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $cFGroup = $em->getRepository('ChillCustomFieldsBundle:CustomFieldsGroup')->findOneById($cFGroupId);
+
+        if(!$cFGroup) {
+            throw $this
+                  ->createNotFoundException("customFieldsGroup not found with "
+                        . "id $cFGroupId");
+        }
+
+        $cFDefaultGroup = $em->getRepository('ChillCustomFieldsBundle:CustomFieldsDefaultGroup')
+            ->findOneByEntity($cFGroup->getEntity());
+
+        if($cFDefaultGroup) {
+            $em->remove($cFDefaultGroup);
+            $em->flush(); /*this is necessary, if not doctrine
+             * will not remove old entity before adding a new one, 
+             * and this leads to violation constraint of unique entity
+             * in postgresql
+             */
+        } 
+        
+        $newCFDefaultGroup = new CustomFieldsDefaultGroup();
+        $newCFDefaultGroup->setCustomFieldsGroup($cFGroup);
+        $newCFDefaultGroup->setEntity($cFGroup->getEntity());
+
+        $em->persist($newCFDefaultGroup);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('customfieldsgroup'));
+    }
     
     /**
      * This function render the customFieldsGroup as a form.

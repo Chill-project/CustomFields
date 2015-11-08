@@ -41,37 +41,4 @@ class CustomFieldsDefaultGroupController extends Controller
             'form' => $form->createView()
         ));
     }
-
-    /**
-     * Set the CustomField Group with id $cFGroupId as default
-     */
-    public function setAGroupAsDefaultAction(Request $request)
-    {
-        $cFGroupId = $request->query->get('cFGroup');
-
-        $em = $this->getDoctrine()->getManager();
-
-        $cFGroup = $em->getRepository('ChillCustomFieldsBundle:CustomFieldsGroup')->findOneById($cFGroupId);
-
-        if(!$cFGroup) {
-            throw new Exception("No CF GROUP with ID".$cFGroupId, 1);
-        }
-
-        $cFDefaultGroup = $em->getRepository('ChillCustomFieldsBundle:CustomFieldsDefaultGroup')
-            ->findOneByEntity($cFGroup->getEntity());
-
-        if($cFDefaultGroup) {
-            $em->remove($cFDefaultGroup);
-            $em->flush();
-        }
-
-        $newCFDefaultGroup = new CustomFieldsDefaultGroup();
-        $newCFDefaultGroup->setCustomFieldsGroup($cFGroup);
-        $newCFDefaultGroup->setEntity($cFGroup->getEntity());
-
-        $em->persist($newCFDefaultGroup);
-        $em->flush();
-
-        return $this->redirect($this->generateUrl('customfieldsdefaultgroup'));
-    }
 }
