@@ -5,7 +5,3 @@ chill_customfields_customfieldsgroup:
 chill_customfields_customfield:
     resource: "@ChillCustomFieldsBundle/Resources/config/routing/customfield.yml"
     prefix:   /
-
-chill_customfields_customfieldsdefaultgroup:
-    resource: "@ChillCustomFieldsBundle/Resources/config/routing/customfieldsdefaultgroup.yml"
-    prefix:   /
