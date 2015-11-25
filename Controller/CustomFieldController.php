@@ -159,7 +159,7 @@ class CustomFieldController extends Controller
 
         $editForm = $this->createEditForm($entity, $entity->getType());
         $deleteForm = $this->createDeleteForm($id);
-
+        
         return $this->render('ChillCustomFieldsBundle:CustomField:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),

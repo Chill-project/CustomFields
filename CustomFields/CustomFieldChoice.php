@@ -136,7 +136,8 @@ class CustomFieldChoice implements CustomFieldInterface
                 'choices' => array(
                     1 => 'Multiple',
                     0 => 'Unique'),
-                'empty_data' => 0
+                'empty_data' => 0,
+                'label' => 'Multiplicity'
                 ))
             ->add(self::EXPANDED, 'choice', array(
                 'expanded' => true,
@@ -144,7 +145,8 @@ class CustomFieldChoice implements CustomFieldInterface
                 'choices' => array(
                     1 => 'Expanded',
                     0 => 'Non expanded'),
-                'empty_data' => 0
+                'empty_data' => 0,
+                'label' => 'Choice display'
                 ))
             ->add(self::ALLOW_OTHER, 'choice', array(
                 'label' => 'Allow other',

@@ -2,7 +2,7 @@
 'Other value': 'Autre valeur'
 'None': 'Pas spécifié'
 
-
+#customfieldsgroup administration
 CustomFieldsGroup list: Groupes de champs personnalisés
 CustomFieldsGroup creation: Nouveau groupe de champs personnalisés
 Entity: Entité
@@ -26,3 +26,24 @@ CustomFieldsGroup edit: Edition d'un groupe de champs personnalisé
 Custom fields configuration: Champs personnalisés
 CustomFields List: Liste des champs personnalisés
 CustomFields Groups: Groupe de champs personnalisés
+
+#customfield administration
+CustomField edit: Modification d'un champ personnalisé
+General informations: Informations générales
+Options: Options
+Custom fields group: Groupe de champ personnalisé
+Ordering: Ordre d'apparition
+Back to the group: Retour au groupe de champs personnalisé
+
+#custom field choice
+Multiplicity: Multiplicité
+Multiple: Multiple
+Unique: Un seul choix possible
+Choice display: Affichage des choix
+Expanded: Choix étendus (boutons radio)
+Non expanded: Choix rassemblés
+Allow other: Autoriser une autre valeur
+No: Non
+Yes: Oui
+Other value label (empty if use by default): Label du champ "autre valeur"
+Choices: Choix
