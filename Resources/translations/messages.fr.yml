@@ -20,6 +20,7 @@ label_field: label du champ
 active: actif
 No value defined for this option: Pas de valeur pour cette option
 CustomFieldsGroup edit: Edition d'un groupe de champs personnalisé
+type: type
 
 
 #menu entries
@@ -29,11 +30,19 @@ CustomFields Groups: Groupe de champs personnalisés
 
 #customfield administration
 CustomField edit: Modification d'un champ personnalisé
+CustomField creation: Nouveau champ personnalisé
 General informations: Informations générales
 Options: Options
 Custom fields group: Groupe de champ personnalisé
 Ordering: Ordre d'apparition
 Back to the group: Retour au groupe de champs personnalisé
+Slug: Identifiant textuel
+
+#custom field name
+choice: choix
+title: titre
+text: texte
+text field: champ texte
 
 #custom field choice
 Multiplicity: Multiplicité
@@ -47,3 +56,15 @@ No: Non
 Yes: Oui
 Other value label (empty if use by default): Label du champ "autre valeur"
 Choices: Choix
+Add an element: Ajouter un élément
+
+#custom field text
+Max length: Longueur maximum
+Box appearance: Apparence du champ
+Multiple boxes on the line: Plusieurs champs sur la ligne
+One box on the line: Un seul champ sur la ligne
+
+#custom field title
+Title level: Niveau de titre
+Main title: Titre principal
+Subtitle: Sous-titre

@@ -96,10 +96,13 @@ class CustomFieldTitle implements CustomFieldInterface
     public function buildOptionsForm(FormBuilderInterface $builder)
     {
         return $builder->add(self::TYPE, 'choice',
-            array('choices' => array(
-                self::TYPE_TITLE => self::TYPE_TITLE,
-                self::TYPE_SUBTITLE => self::TYPE_SUBTITLE
-            ))
+            array(
+               'choices' => array(
+                    self::TYPE_TITLE => 'Main title',
+                    self::TYPE_SUBTITLE => 'Subtitle'
+                ),
+               'label' => 'Title level'
+            )
         );
     }
 }
