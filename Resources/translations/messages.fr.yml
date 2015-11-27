@@ -21,6 +21,10 @@ active: actif
 No value defined for this option: Pas de valeur pour cette option
 CustomFieldsGroup edit: Edition d'un groupe de champs personnalisé
 type: type
+The custom fields group has been created: Le groupe de champs personnalisés a été créé
+The custom fields group has been updated: Le groupe de champs personnalisés a été mis à jour
+The custom fields group form contains errors: Le formulaire contient des erreurs
+The default custom fields group has been changed: Le groupe par défaut a été changé
 
 
 #menu entries

@@ -97,9 +97,15 @@ class CustomFieldsGroupController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
+            
+            $this->addFlash('success', $this->get('translator')
+                  ->trans("The custom fields group has been created"));
 
             return $this->redirect($this->generateUrl('customfieldsgroup_show', array('id' => $entity->getId())));
         }
+        
+        $this->addFlash('error', $this->get('translator')
+              ->trans("The custom fields group form contains errors"));
 
         return $this->render('ChillCustomFieldsBundle:CustomFieldsGroup:new.html.twig', array(
             'entity' => $entity,
@@ -274,9 +280,15 @@ class CustomFieldsGroupController extends Controller
 
         if ($editForm->isValid()) {
             $em->flush();
+            
+            $this->addFlash('success', $this->get('translator')
+                  ->trans("The custom fields group has been updated"));
 
             return $this->redirect($this->generateUrl('customfieldsgroup_edit', array('id' => $id)));
         }
+        
+        $this->addFlash('error', $this->get('translator')
+              ->trans("The custom fields group form contains errors"));
 
         return $this->render('ChillCustomFieldsBundle:CustomFieldsGroup:edit.html.twig', array(
             'entity'      => $entity,
@@ -324,6 +336,9 @@ class CustomFieldsGroupController extends Controller
 
         $em->persist($newCFDefaultGroup);
         $em->flush();
+        
+        $this->addFlash('success', $this->get('translator')
+                  ->trans("The default custom fields group has been changed"));
 
         return $this->redirect($this->generateUrl('customfieldsgroup'));
     }
