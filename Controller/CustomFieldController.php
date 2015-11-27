@@ -27,9 +27,16 @@ class CustomFieldController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
+            
+            $this->addFlash('success', $this->get('translator')
+                  ->trans('The custom field has been created'));
 
-            return $this->redirect($this->generateUrl('customfield_show', array('id' => $entity->getId())));
-        }
+            return $this->redirect($this->generateUrl('customfieldsgroup_show', 
+                  array('id' => $entity->getCustomFieldsGroup()->getId())));
+        } 
+        
+        $this->addFlash('error', $this->get('translator')
+              ->trans("The custom field form contains errors"));
 
         return $this->render('ChillCustomFieldsBundle:CustomField:new.html.twig', array(
             'entity' => $entity,
@@ -166,9 +173,15 @@ class CustomFieldController extends Controller
 
         if ($editForm->isValid()) {
             $em->flush();
+            
+            $this->addFlash('success', $this->get('translator')
+                  ->trans("The custom field has been updated"));
 
             return $this->redirect($this->generateUrl('customfield_edit', array('id' => $id)));
         }
+        
+        $this->addFlash('error', $this->get('translator')
+              ->trans("The custom field form contains errors"));
 
         return $this->render('ChillCustomFieldsBundle:CustomField:edit.html.twig', array(
             'entity'      => $entity,

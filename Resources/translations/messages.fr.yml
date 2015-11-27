@@ -37,6 +37,9 @@ Custom fields group: Groupe de champ personnalisé
 Ordering: Ordre d'apparition
 Back to the group: Retour au groupe de champs personnalisé
 Slug: Identifiant textuel
+The custom field has been created: Le champ personnalisé est créé
+The custom field form contains errors: Le formulaire contient des erreurs
+The custom field has been updated: Le champ personnalisé a été mis à jour
 
 #custom field name
 choice: choix
