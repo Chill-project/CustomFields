@@ -16,31 +16,41 @@
 #}
 {% extends "ChillCustomFieldsBundle::Admin/layout.html.twig" %}
 
+{% block title %}{{ 'CustomFieldsGroup list'|trans }}{% endblock %}
+
 {% block admin_content %}
-    <h1>CustomFieldsGroup list</h1>
+    <h1>{{ 'CustomFieldsGroup list'|trans }}</h1>
 
     <table class="records_list">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Entity</th>
-                <th>Actions</th>
+                <th>{{ 'Name'|trans }}</th>
+                <th>{{ 'Entity'|trans }}</th>
+                <th>{{ 'Is default ?'|trans }} <i class="fa fa-info-circle" title="{{ 'Some module select default groups for some usage. Example: the default person group is shown under person page.'|trans|escape('html_attr') }}"></i></th>
+                <th>{{ 'Actions'|trans }}</th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('customfieldsgroup_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.name['fr'] }}</td>
-                <td>{{ entity.entity }}</td>
+                <td><a href="{{ path('customfieldsgroup_show', { 'id': entity.id }) }}">{{ entity.name|localize_translatable_string }}</a></td>
+                <td>{{ entity.entity|trans }}</td>
+                <td style="text-align: center;">
+                    {%- if entity.id in default_groups -%}
+                        <i class="fa fa-star"></i>
+                    {%- else -%}
+                        {{ form_start(make_default_forms[entity.id]) }}
+                        {{ form_widget(make_default_forms[entity.id].submit, { 'attr' : { 'class' : 'sc-button bt-action' } } ) }}
+                        {{ form_end(make_default_forms[entity.id]) }}
+                    {%- endif -%}
+                </td>
                 <td>
                 <ul>
                     <li>
-                        <a href="{{ path('customfieldsgroup_show', { 'id': entity.id }) }}">show</a>
+                        <a href="{{ path('customfieldsgroup_show', { 'id': entity.id }) }}">{{ 'show'|trans }}</a>
                     </li>
                     <li>
-                        <a href="{{ path('customfieldsgroup_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('customfieldsgroup_edit', { 'id': entity.id }) }}" class="sc-button btn-edit">{{ 'edit'|trans }}</a>
                     </li>
                 </ul>
                 </td>
@@ -49,11 +59,9 @@
         </tbody>
     </table>
 
-        <ul>
-        <li>
-            <a href="{{ path('customfieldsgroup_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
+    <p>
+        <a href="{{ path('customfieldsgroup_new') }}" class="sc-button bt-create">
+            {{ 'Create a new group'|trans }}
+        </a>
+    </p>
     {% endblock %}

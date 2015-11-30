@@ -32,10 +32,24 @@
 
 {% endblock cf_choices_list_widget %}
 
-{# render the possibility to add different elements in a choice list #}
-{% block cf_choices_widget %}
-
-    {{ form(form) }}
+{# CFChoice : render the different elements in a choice list #}
+{% block cf_choices_row %}
+    <h3>{{ 'Choices'|trans }}</h3>
+    
+    <div id="{{ form.vars.id }}" data-prototype="{{- form_row(form.vars.prototype.children.name)
+        ~ form_row(form.vars.prototype.children.active)
+        ~ form_row(form.vars.prototype.children.slug)  -}}">
+    <table><tbody>
+    {% for choice in form %}
+        <tr><td>
+        {{ form_row(choice.name) }}
+        {{ form_row(choice.active) }}
+        {{ form_row(choice.slug) }}
+        </td></tr>
+    {% endfor %}
+    </tbody></table>
+    </div>
+    
     
     {# we use javascrit to add an additional element. All functions are personnalized with the id ( = form.vars.id) #}
     <script type="text/javascript">
@@ -53,7 +67,7 @@
         }
 
         function initializeCFChoiceOptionsChoices(div_id) {
-            var add_element_link = $('<a id="' + div_id + '_add_element_link"" href="#" class="sc-button bt-submit">Add an element</a>');
+            var add_element_link = $('<a id="' + div_id + '_add_element_link"" href="#" class="sc-button bt-submit">{{ 'Add an element'|trans }}</a>');
             var div = $('#' + div_id);
             div.append(add_element_link);
             div.data('index', div.find(':input').length / 5);
@@ -67,7 +81,7 @@
         jQuery(document).ready(initializeCFChoiceOptionsChoices('{{ form.vars.id }}'));
     </script>
 
-{%  endblock cf_choices_widget %} 
+{%  endblock cf_choices_row %} 
 
 {% block choice_with_other_widget %}
 <div {{ block('widget_container_attributes') }}>

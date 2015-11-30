@@ -17,15 +17,16 @@
 {% extends "ChillCustomFieldsBundle::Admin/layout.html.twig" %}
 
 {% block admin_content %}
-    <h1>CustomFieldsGroup creation</h1>
+    <h1>{{ 'CustomFieldsGroup creation'|trans }}</h1>
 
-    {{ form(form) }}
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('customfieldsgroup') }}">
-            Back to the list
+    {{ form_start(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.entity) }}
+    <p>
+        {{ form_widget(form.submit, { 'attr' : { 'class': 'sc-button bt-create' } } ) }}
+        <a href="{{ path('customfieldsgroup') }}" class="sc-button bt-cancel">
+            {{ 'Back to the list'|trans }}
         </a>
-    </li>
-</ul>
+    </p>
+    {{ form_end(form) }}
 {% endblock %}

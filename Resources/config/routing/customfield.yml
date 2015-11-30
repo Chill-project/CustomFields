@@ -8,19 +8,6 @@ customfield_section:
                 label: "Custom fields configuration"
                 icons: ['asterisk']
 
-customfield:
-    path:     /{_locale}/admin/customfield/list
-    defaults: { _controller: "ChillCustomFieldsBundle:CustomField:index" }
-    options:
-        menus:
-            admin_custom_fields: 
-                order: 1000
-                label: "CustomFields List"
-
-customfield_show:
-    path:     /{_locale}/admin/customfield/{id}/show
-    defaults: { _controller: "ChillCustomFieldsBundle:CustomField:show" }
-
 customfield_new:
     path:     /{_locale}/admin/customfield/new
     defaults: { _controller: "ChillCustomFieldsBundle:CustomField:new" }
@@ -38,8 +25,3 @@ customfield_update:
     path:     /{_locale}/admin/customfield/{id}/update
     defaults: { _controller: "ChillCustomFieldsBundle:CustomField:update" }
     requirements: { _method: post|put }
-
-customfield_delete:
-    path:     /{_locale}/admin/customfield/{id}/delete
-    defaults: { _controller: "ChillCustomFieldsBundle:CustomField:delete" }
-    requirements: { _method: post|delete }

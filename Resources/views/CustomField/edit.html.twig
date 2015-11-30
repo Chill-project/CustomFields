@@ -16,17 +16,33 @@
 #}
 {% extends "ChillCustomFieldsBundle::Admin/layout.html.twig" %}
 
-{% block admin_content %}
-    <h1>CustomField edit</h1>
+{% block title %}{{ 'CustomField edit'|trans }}{% endblock title %}
 
-    {{ form(edit_form) }}
+{% block admin_content %}
+    <h1>{{ 'CustomField edit'|trans }}</h1>
+
+    <h2>{{ 'General informations'|trans }}</h2>
+    {{ form_start(edit_form) }}
+    {{ form_row(edit_form.name) }}
+    {{ form_row(edit_form.active) }}
+    {% if edit_form.customFieldsGroup is defined %}
+    {{ form_row(edit_form.customFieldsGroup) }}
+    {% endif %}
+    {{ form_row(edit_form.ordering) }}
+    {% if edit_form.options is not empty %}
+    <h2>{{ 'Options'|trans }}</h2>
+    {% for option in edit_form.options %}
+        {{ form_row(option) }}
+    {% endfor %}
+    {% endif %}
+    {{ form_row(edit_form.submit, {'attr': { 'class': 'sc-button btn-update' } } ) }}
+    {{ form_end(edit_form) }}
 
         <ul class="record_actions">
     <li>
-        <a href="{{ path('customfield') }}">
-            Back to the list
+        <a href="{{ path('customfieldsgroup_show', { 'id': entity.customFieldsGroup.id }) }}" class="sc-button btn-reset">
+            {{ 'Back to the group'|trans }}
         </a>
     </li>
-    <li>{{ form(delete_form) }}</li>
 </ul>
 {% endblock %}

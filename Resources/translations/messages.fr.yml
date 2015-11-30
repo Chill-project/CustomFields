@@ -1,3 +1,77 @@
 'Not available in your language': 'Traduction pas disponible dans votre langue'
 'Other value': 'Autre valeur'
 'None': 'Pas spécifié'
+
+#customfieldsgroup administration
+CustomFieldsGroup list: Groupes de champs personnalisés
+CustomFieldsGroup creation: Nouveau groupe de champs personnalisés
+Entity: Entité
+"Is default ?": "Par défaut ?"
+"Some module select default groups for some usage. Example: the default person group is shown under person page.": "Certains modules sélectionnent en priorité les formulaires par défaut. Exemple: le formulaire par défaut pour une personne est affiché sur la page principale pour la personne"
+Make default: Rendre groupe par défaut
+Create a new group: Créer un nouveau groupe
+CustomFieldsGroup details: Détail du groupe de champs personnalisés
+Fields associated with this group: Champs associés à ce groupe
+Any field is currently associated with this group: Aucun champ n'est associé à ce groupe actuellement
+Create a new field: Créer un champ personnalisé
+Add a new field: Ajouter un champ personnalisé
+ordering: ordre
+label_field: label du champ
+active: actif
+No value defined for this option: Pas de valeur pour cette option
+CustomFieldsGroup edit: Edition d'un groupe de champs personnalisé
+type: type
+The custom fields group has been created: Le groupe de champs personnalisés a été créé
+The custom fields group has been updated: Le groupe de champs personnalisés a été mis à jour
+The custom fields group form contains errors: Le formulaire contient des erreurs
+The default custom fields group has been changed: Le groupe par défaut a été changé
+
+
+#menu entries
+Custom fields configuration: Champs personnalisés
+CustomFields List: Liste des champs personnalisés
+CustomFields Groups: Groupe de champs personnalisés
+
+#customfield administration
+CustomField edit: Modification d'un champ personnalisé
+CustomField creation: Nouveau champ personnalisé
+General informations: Informations générales
+Options: Options
+Custom fields group: Groupe de champ personnalisé
+Ordering: Ordre d'apparition
+Back to the group: Retour au groupe de champs personnalisé
+Slug: Identifiant textuel
+The custom field has been created: Le champ personnalisé est créé
+The custom field form contains errors: Le formulaire contient des erreurs
+The custom field has been updated: Le champ personnalisé a été mis à jour
+
+#custom field name
+choice: choix
+title: titre
+text: texte
+text field: champ texte
+
+#custom field choice
+Multiplicity: Multiplicité
+Multiple: Multiple
+Unique: Un seul choix possible
+Choice display: Affichage des choix
+Expanded: Choix étendus (boutons radio)
+Non expanded: Choix rassemblés
+Allow other: Autoriser une autre valeur
+No: Non
+Yes: Oui
+Other value label (empty if use by default): Label du champ "autre valeur"
+Choices: Choix
+Add an element: Ajouter un élément
+
+#custom field text
+Max length: Longueur maximum
+Box appearance: Apparence du champ
+Multiple boxes on the line: Plusieurs champs sur la ligne
+One box on the line: Un seul champ sur la ligne
+
+#custom field title
+Title level: Niveau de titre
+Main title: Titre principal
+Subtitle: Sous-titre

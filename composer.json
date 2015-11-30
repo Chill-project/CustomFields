@@ -17,7 +17,7 @@
     ],
     "require": {
         "php": "~5.5",
-        "symfony/symfony": "~2.7",
+        "symfony/symfony": "2.7.*",
         "doctrine/orm": "~2.4",
         "doctrine/dbal" : "~2.5",
         "doctrine/common": "~2.4",
@@ -34,7 +34,8 @@
         "chill-project/main": "dev-master"
     },
     "require-dev": {
-        "doctrine/doctrine-fixtures-bundle": "~2.2@dev"
+        "doctrine/doctrine-fixtures-bundle": "~2.2@dev",
+        "chill-project/person": "dev-master@dev"
     },
     "scripts": {
         "post-install-cmd": [
@@ -54,6 +55,9 @@
     },
     "extra": {
         "symfony-app-dir": "Tests/Fixtures/App/app",
-        "app-migrations-dir": "Tests/Fixtures/App/app/DoctrineMigrations"
+        "app-migrations-dir": "Tests/Fixtures/App/app/DoctrineMigrations",
+        "branch-alias": {
+                "dev-master": "fix_admin_interface-dev"
+            }
     }
 }

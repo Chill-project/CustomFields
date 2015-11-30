@@ -16,15 +16,40 @@
 #}
 {% extends "ChillCustomFieldsBundle::Admin/layout.html.twig" %}
 
-{% block admin_content %}
-    <h1>CustomField creation</h1>
+{% block title %}{{ 'CustomField creation'|trans }}{% endblock title %}
 
-    {{ form(form) }}
-        <ul class="record_actions">
+{% block admin_content %}
+    <h1>{{ 'CustomField creation'|trans }}</h1>
+
+    <h2>{{ 'General informations'|trans }}</h2>
+    {{ form_start(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.active) }}
+    {{ form_row(form.slug) }}
+    {% if form.customFieldsGroup is defined %}
+    {{ form_row(form.customFieldsGroup) }}
+    {% endif %}
+    {{ form_row(form.ordering) }}
+    {% if form.options is not empty %}
+    <h2>{{ 'Options'|trans }}</h2>
+    {% for option in form.options %}
+        {{ form_row(option) }}
+    {% endfor %}
+    {% endif %}
+    {{ form_row(form.submit, {'attr': { 'class': 'sc-button btn-create' } } ) }}
+    {{ form_end(form) }}
+    
+    <ul class="record_actions">
     <li>
-        <a href="{{ path('customfield') }}">
-            Back to the list
+        {% if entity.customFieldsGroup is not null %}
+        <a href="{{ path('customfieldsgroup_show', { 'id': entity.customFieldsGroup.id }) }}" class="sc-button btn-reset">
+            {{ 'Back to the group'|trans }}
         </a>
+        {% else %}
+        <a href="{{ path('customfieldsgroup') }}" class="sc-button btn-reset">
+            {{ 'Back to the list'|trans }}
+        </a>
+        {% endif %}
     </li>
 </ul>
 {% endblock %}

@@ -4,8 +4,11 @@ namespace Chill\CustomFieldsBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use Doctrine\ORM\Query;
 use Chill\CustomFieldsBundle\Entity\CustomFieldsGroup;
+use Chill\CustomFieldsBundle\Entity\CustomField;
+use Chill\CustomFieldsBundle\Form\DataTransformer\CustomFieldsGroupToIdTransformer;
+use Chill\CustomFieldsBundle\Entity\CustomFieldsDefaultGroup;
 
 /**
  * CustomFieldsGroup controller.
@@ -22,12 +25,64 @@ class CustomFieldsGroupController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('ChillCustomFieldsBundle:CustomFieldsGroup')->findAll();
+        $cfGroups = $em->getRepository('ChillCustomFieldsBundle:CustomFieldsGroup')->findAll();
+        $defaultGroups = $this->getDefaultGroupsId();
+        
+        $makeDefaultFormViews = array();
+        foreach ($cfGroups as $group) {
+            if (!in_array($group->getId(), $defaultGroups)){
+                $makeDefaultFormViews[$group->getId()] = $this->createMakeDefaultForm($group)->createView();
+            }
+        }
 
         return $this->render('ChillCustomFieldsBundle:CustomFieldsGroup:index.html.twig', array(
-            'entities' => $entities,
+            'entities' => $cfGroups,
+            'default_groups' => $defaultGroups,
+            'make_default_forms' => $makeDefaultFormViews
         ));
     }
+    
+    /**
+     * Get an array of CustomFieldsGroupId which are marked as default
+     * for their entity
+     * 
+     * @return int[]
+     */
+    private function getDefaultGroupsId()
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        $customFieldsGroupIds = $em->createQuery('SELECT g.id FROM '
+                . 'ChillCustomFieldsBundle:CustomFieldsDefaultGroup d '
+                . 'JOIN d.customFieldsGroup g')
+                ->getResult(Query::HYDRATE_SCALAR);
+        
+        $result = array();
+        foreach ($customFieldsGroupIds as $row) {
+            $result[] = $row['id'];
+        }
+        
+        return $result;
+    }
+    
+    /**
+     * create a form to make the group default
+     * 
+     * @param CustomFieldsGroup $group
+     * @return \Symfony\Component\Form\Form
+     */
+    private function createMakeDefaultForm(CustomFieldsGroup $group = null)
+    {
+        return $this->createFormBuilder($group, array(
+                    'method' => 'POST',
+                    'action' => $this->generateUrl('customfieldsgroup_makedefault')
+                ))
+                ->add('id', 'hidden')
+                ->add('submit', 'submit', array('label' => 'Make default'))
+                ->getForm();
+    }
+    
+    
     /**
      * Creates a new CustomFieldsGroup entity.
      *
@@ -42,9 +97,15 @@ class CustomFieldsGroupController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
+            
+            $this->addFlash('success', $this->get('translator')
+                  ->trans("The custom fields group has been created"));
 
             return $this->redirect($this->generateUrl('customfieldsgroup_show', array('id' => $entity->getId())));
         }
+        
+        $this->addFlash('error', $this->get('translator')
+              ->trans("The custom fields group form contains errors"));
 
         return $this->render('ChillCustomFieldsBundle:CustomFieldsGroup:new.html.twig', array(
             'entity' => $entity,
@@ -99,13 +160,35 @@ class CustomFieldsGroupController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find CustomFieldsGroup entity.');
         }
-
-        $deleteForm = $this->createDeleteForm($id);
+        
+        $options = $this->getOptionsAvailable($entity->getEntity());
 
         return $this->render('ChillCustomFieldsBundle:CustomFieldsGroup:show.html.twig', array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+            'create_field_form' => $this->createCreateFieldForm($entity)->createView(),
+            'options' => $options
         ));
+    }
+    
+    /**
+     * Return an array of available key option for custom fields group
+     * on the given entity
+     * 
+     * @param string $entity the entity to filter
+     */
+    private function getOptionsAvailable($entity)
+    {
+        $options = $this->getParameter('chill_custom_fields.'
+              . 'customizables_entities');
+                
+        foreach($options as $key => $definition) {
+            if ($definition['class'] == $entity) {
+                foreach ($definition['options'] as $key => $value) {
+                    yield $key;
+                }
+            }
+        }
+          //    [$entity->getEntity()];
     }
 
     /**
@@ -123,12 +206,10 @@ class CustomFieldsGroupController extends Controller
         }
 
         $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('ChillCustomFieldsBundle:CustomFieldsGroup:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -149,6 +230,37 @@ class CustomFieldsGroupController extends Controller
 
         return $form;
     }
+    
+    private function createCreateFieldForm(CustomFieldsGroup $customFieldsGroup)
+    {
+        
+        $fieldChoices = array();
+        foreach ($this->get('chill.custom_field.provider')->getAllFields() 
+              as $key => $customType) {
+            $fieldChoices[$key] = $customType->getName();
+        }
+        
+        $customfield = (new CustomField())
+              ->setCustomFieldsGroup($customFieldsGroup);
+        
+        $builder = $this->get('form.factory')
+              ->createNamedBuilder(null, 'form', $customfield, array(
+                    'method' => 'GET',
+                    'action' => $this->generateUrl('customfield_new'),
+                    'csrf_protection' => false
+                    ))
+              ->add('type', 'choice', array(
+                    'choices' => $fieldChoices
+                   ))
+              ->add('customFieldsGroup', 'hidden')
+              ->add('submit', 'submit');
+        $builder->get('customFieldsGroup')
+              ->addViewTransformer(new CustomFieldsGroupToIdTransformer(
+                       $this->getDoctrine()->getManager()));
+        
+        return $builder->getForm();
+    }
+    
     /**
      * Edits an existing CustomFieldsGroup entity.
      *
@@ -163,61 +275,72 @@ class CustomFieldsGroupController extends Controller
             throw $this->createNotFoundException('Unable to find CustomFieldsGroup entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->flush();
+            
+            $this->addFlash('success', $this->get('translator')
+                  ->trans("The custom fields group has been updated"));
 
             return $this->redirect($this->generateUrl('customfieldsgroup_edit', array('id' => $id)));
         }
+        
+        $this->addFlash('error', $this->get('translator')
+              ->trans("The custom fields group form contains errors"));
 
         return $this->render('ChillCustomFieldsBundle:CustomFieldsGroup:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+      
+           ));
     }
+    
     /**
-     * Deletes a CustomFieldsGroup entity.
-     *
+     * Set the CustomField Group with id $cFGroupId as default
      */
-    public function deleteAction(Request $request, $id)
+    public function makeDefaultAction(Request $request)
     {
-        $form = $this->createDeleteForm($id);
+        
+        $form = $this->createMakeDefaultForm(null);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('ChillCustomFieldsBundle:CustomFieldsGroup')->find($id);
+        $cFGroupId = $form->get('id')->getData();
 
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find CustomFieldsGroup entity.');
-            }
+        $em = $this->getDoctrine()->getManager();
 
-            $em->remove($entity);
-            $em->flush();
+        $cFGroup = $em->getRepository('ChillCustomFieldsBundle:CustomFieldsGroup')->findOneById($cFGroupId);
+
+        if(!$cFGroup) {
+            throw $this
+                  ->createNotFoundException("customFieldsGroup not found with "
+                        . "id $cFGroupId");
         }
 
-        return $this->redirect($this->generateUrl('customfieldsgroup'));
-    }
+        $cFDefaultGroup = $em->getRepository('ChillCustomFieldsBundle:CustomFieldsDefaultGroup')
+            ->findOneByEntity($cFGroup->getEntity());
 
-    /**
-     * Creates a form to delete a CustomFieldsGroup entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('customfieldsgroup_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
+        if($cFDefaultGroup) {
+            $em->remove($cFDefaultGroup);
+            $em->flush(); /*this is necessary, if not doctrine
+             * will not remove old entity before adding a new one, 
+             * and this leads to violation constraint of unique entity
+             * in postgresql
+             */
+        } 
+        
+        $newCFDefaultGroup = new CustomFieldsDefaultGroup();
+        $newCFDefaultGroup->setCustomFieldsGroup($cFGroup);
+        $newCFDefaultGroup->setEntity($cFGroup->getEntity());
+
+        $em->persist($newCFDefaultGroup);
+        $em->flush();
+        
+        $this->addFlash('success', $this->get('translator')
+                  ->trans("The default custom fields group has been changed"));
+
+        return $this->redirect($this->generateUrl('customfieldsgroup'));
     }
     
     /**
@@ -258,7 +381,7 @@ class CustomFieldsGroupController extends Controller
             }
             
             var_dump($form->getData());
-            var_dump(json_encode($form->getData()));
+            var_dump(json_enccode($form->getData()));
         }
     
         

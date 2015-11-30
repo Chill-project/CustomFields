@@ -122,7 +122,13 @@ class CustomFieldText implements CustomFieldInterface
         return $builder
             ->add(self::MAX_LENGTH, 'integer', array('empty_data' => 256))
             ->add(self::MULTIPLE_CF_INLINE, 'choice',  array(
-                'choices'  => array('1' => 'True', '0' => 'False')))
+                'choices'  => array(
+                   '1' => 'Multiple boxes on the line', 
+                   '0' => 'One box on the line'
+                   ),
+                'label' => 'Box appearance',
+                'expanded' => True
+               ))
         ;
     }
 }
