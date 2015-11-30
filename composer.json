@@ -55,9 +55,6 @@
     },
     "extra": {
         "symfony-app-dir": "Tests/Fixtures/App/app",
-        "app-migrations-dir": "Tests/Fixtures/App/app/DoctrineMigrations",
-        "branch-alias": {
-                "dev-master": "fix_admin_interface-dev"
-            }
+        "app-migrations-dir": "Tests/Fixtures/App/app/DoctrineMigrations"
     }
 }
