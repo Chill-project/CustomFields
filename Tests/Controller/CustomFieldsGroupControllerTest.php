@@ -52,7 +52,7 @@ class CustomFieldsGroupControllerTest extends WebTestCase
     {
         $crawler = $client->request('GET', '/fr/admin/customfieldsgroup/');
         $crawler = $client->click($crawler->selectLink('modifier')->link());
-        fwrite(STDOUT, $crawler->text());
+        
         $form = $crawler->selectButton('Update')->form(array(
             'custom_fields_group[name][fr]'  => 'Foo',
         ));
