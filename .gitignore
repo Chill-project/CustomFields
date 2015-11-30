@@ -28,3 +28,5 @@ src/Chill/CustomFieldsBundle/vendor/*
 bootstrap.php.cache
 #the file created by composer to store creds
 auth.json
+Tests/Fixtures/App/app/config/parameters.yml
+

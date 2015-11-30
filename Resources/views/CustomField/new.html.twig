@@ -41,9 +41,15 @@
     
     <ul class="record_actions">
     <li>
+        {% if entity.customFieldsGroup is not null %}
         <a href="{{ path('customfieldsgroup_show', { 'id': entity.customFieldsGroup.id }) }}" class="sc-button btn-reset">
             {{ 'Back to the group'|trans }}
         </a>
+        {% else %}
+        <a href="{{ path('customfieldsgroup') }}" class="sc-button btn-reset">
+            {{ 'Back to the list'|trans }}
+        </a>
+        {% endif %}
     </li>
 </ul>
 {% endblock %}

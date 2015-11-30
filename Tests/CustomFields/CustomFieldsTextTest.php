@@ -100,4 +100,5 @@ class CustomFieldsTextTest extends WebTestCase
         $form = $crawler->selectButton('custom_field_choice_submit')->form();
         $this->assertTrue($form->has('custom_field_choice[options][maxLength]'));
     }
+    
 }

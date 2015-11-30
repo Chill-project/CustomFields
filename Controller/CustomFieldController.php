@@ -76,14 +76,17 @@ class CustomFieldController extends Controller
         
         //add the custom field group if defined in URL
         $cfGroupId = $request->query->get('customFieldsGroup', null);
-        $cfGroup = $this->getDoctrine()->getManager()
-              ->getRepository('ChillCustomFieldsBundle:CustomFieldsGroup')
-              ->find($cfGroupId);
-        if (!$cfGroup) {
-            throw $this->createNotFoundException('CustomFieldsGroup with id '
-                  . $cfGroupId.' is not found !');
+        
+        if ($cfGroupId !== null) {
+            $cfGroup = $this->getDoctrine()->getManager()
+                  ->getRepository('ChillCustomFieldsBundle:CustomFieldsGroup')
+                  ->find($cfGroupId);
+            if (!$cfGroup) {
+                throw $this->createNotFoundException('CustomFieldsGroup with id '
+                      . $cfGroupId.' is not found !');
+            }
+            $entity->setCustomFieldsGroup($cfGroup);
         }
-        $entity->setCustomFieldsGroup($cfGroup);
         
         $form   = $this->createCreateForm($entity, $request->query->get('type'));
 
