@@ -43,7 +43,7 @@ class ConfigCustomizablesEntitiesTest extends KernelTestCase
                 ->getParameter('chill_custom_fields.customizables_entities');
         
         $this->assertInternalType('array', $customizableEntities);
-        $this->assertCount(0, $customizableEntities);
+        $this->assertCount(1, $customizableEntities);
     }
     
     /**
@@ -59,7 +59,7 @@ class ConfigCustomizablesEntitiesTest extends KernelTestCase
                 ->getParameter('chill_custom_fields.customizables_entities');
         
         $this->assertInternalType('array', $customizableEntities);
-        $this->assertCount(1, $customizableEntities);
+        $this->assertCount(2, $customizableEntities);
         
         foreach($customizableEntities as $key => $config) {
             $this->assertInternalType('array', $config);
