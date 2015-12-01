@@ -25,8 +25,7 @@ class ChoicesListType extends AbstractType
         
         $builder->add('name', 'translatable_string')
             ->add('active', 'checkbox', array(
-                'required' => false,
-                'empty_data' => true
+                'required' => false
             ))
             ->add('slug', 'hidden', array(
                 
