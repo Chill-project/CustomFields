@@ -87,6 +87,7 @@ class CustomFieldType extends AbstractType
                 ->buildOptionsForm(
                     $builder
                          ->create('options', null, array('compound' => true))
+                         ->setRequired(false)
                     )
             );
     }
