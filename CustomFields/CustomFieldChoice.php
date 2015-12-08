@@ -20,14 +20,14 @@
 
 namespace Chill\CustomFieldsBundle\CustomFields;
 
+use Chill\CustomFieldsBundle\Form\Type\ChoicesListType;
+use Chill\CustomFieldsBundle\Form\Type\ChoicesType;
+use Chill\CustomFieldsBundle\Form\Type\ChoiceWithOtherType;
 use Chill\CustomFieldsBundle\CustomFields\CustomFieldInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Chill\CustomFieldsBundle\Entity\CustomField;
-use Chill\CustomFieldsBundle\Form\Type\ChoicesType;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Chill\CustomFieldsBundle\Form\Type\ChoicesListType;
 use Chill\CustomFieldsBundle\Form\DataTransformer\CustomFieldDataTransformer;
-use Chill\CustomFieldsBundle\Form\Type\ChoiceWithOtherType;
 use Symfony\Bridge\Twig\TwigEngine;
 use Chill\MainBundle\Templating\TranslatableStringHelper;
 use Symfony\Component\Translation\Translator;
@@ -122,9 +122,7 @@ class CustomFieldChoice implements CustomFieldInterface
                 $builder->create($customField->getSlug(), 'choice', $options)
                     ->addModelTransformer(new CustomFieldDataTransformer($this, $customField))
             );
-            
         }
-        
     }
 
     public function buildOptionsForm(FormBuilderInterface $builder)
