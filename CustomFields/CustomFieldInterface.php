@@ -13,7 +13,9 @@ interface CustomFieldInterface
 {
 
     /**
-     * 
+     * Return a form type to edit the custom field. This form is shown to the 
+     * user. 
+     *
      * @param \Chill\CustomFieldsBundle\CustomField\FormBuilderInterface $builder
      * @param \Chill\CustomFieldsBundle\CustomField\CustomField $customField
      * @return \Symfony\Component\Form\FormTypeInterface the form type
@@ -21,7 +23,7 @@ interface CustomFieldInterface
     public function buildForm(FormBuilderInterface $builder, CustomField $customField);
 
     /**
-     * transform the value into a format that can be stored in DB
+     * Transform the value into a format that can be stored in DB
      * 
      * @param mixed $value
      * @param \Chill\CustomFieldsBundle\CustomField\CustomField $customField
@@ -38,6 +40,7 @@ interface CustomFieldInterface
     public function deserialize($serialized, CustomField $customField);
 
     /**
+     * Return a repsentation of the value of the CustomField.
      * 
      * @param mixed $value the raw value, **not deserialized** (= as stored in the db)
      * @param \Chill\CustomFieldsBundle\CustomField\CustomField $customField
@@ -48,7 +51,7 @@ interface CustomFieldInterface
     public function getName();
     
     /**
-     * return a formType which allow to edit option for the custom type.
+     * Return a formType which allow to edit option for the custom type.
      * This FormType is shown in admin
      * 
      * @param \Chill\CustomFieldsBundle\CustomField\FormBuilderInterface $builder

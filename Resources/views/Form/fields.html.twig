@@ -25,11 +25,9 @@
 {# CustomFields Choice #}
 {# render an alement in a choice list #}
 {% block cf_choices_list_widget %}
-
-{{ form_row(form.name) }}
-{{ form_row(form.active) }}
-{{ form_row(form.slug) }}
-
+    {{ form_row(form.name) }}
+    {{ form_row(form.active) }}
+    {{ form_row(form.slug) }}
 {% endblock cf_choices_list_widget %}
 
 {# CFChoice : render the different elements in a choice list #}
@@ -80,42 +78,7 @@
 
         jQuery(document).ready(initializeCFChoiceOptionsChoices('{{ form.vars.id }}'));
     </script>
+{%  endblock cf_choices_row %}
 
-{%  endblock cf_choices_row %} 
+{# The choice_with_other_widget widget is defined in the main bundle #}
 
-{% block choice_with_other_widget %}
-<div {{ block('widget_container_attributes') }}>
-{%- for child in form.children._choices %}
-{{- form_widget(child) -}}
-{{- form_label(child) -}}
-{%- if child.vars.value == '_other'  -%}
-{{- form_widget(form.children._other) -}}
-{%- endif -%}
-{% endfor -%}
-</div>
-
-{% endblock choice_with_other_widget %}
-    
-{# extend the integer type to add post_text extension #}
-{% block integer_widget %}
-{%- if post_text is defined and post_text is not empty-%}
-<div class="input_with_post_text">
-{%- endif -%}
-{{ block('form_widget') }}
-{%- if post_text is defined and post_text is not empty-%}
-<span class="cf_post_text">{{ post_text }}</span>
-</div>
-{%- endif -%}
-{% endblock %}
-
-{# extend the number type to add post_text extension #}
-{% block number_widget %}
-{%- if post_text is defined and post_text is not empty-%}
-<div class="input_with_post_text">
-{%- endif -%}
-{{ block('form_widget') }}
-{%- if post_text is defined and post_text is not empty-%}
-<span class="cf_post_text">{{ post_text }}</span>
-</div>
-{%- endif -%}
-{% endblock %}
