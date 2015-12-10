@@ -66,6 +66,11 @@ class CustomFieldType extends AbstractType
         
         $builder
             ->add('ordering', 'number')
+            ->add('required', 'checkbox', array(
+                'required' => false,
+                //'expanded' => TRUE,
+                'label' => 'Required field'
+            ))
             ->add('type', 'hidden', array('data' => $options['type']))
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) 
             {

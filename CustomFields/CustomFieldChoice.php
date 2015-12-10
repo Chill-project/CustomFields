@@ -94,7 +94,7 @@ class CustomFieldChoice implements CustomFieldInterface
         $options = array(
             'multiple' => $customFieldOptions[self::MULTIPLE],
             'choices' => $choices,
-            'required' => false,
+            'required' => $customField->isRequired(),
             'label' =>  $this->translatableStringHelper->localize($customField->getName()));
 
         //if allow_other = true

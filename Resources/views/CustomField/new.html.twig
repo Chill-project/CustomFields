@@ -30,6 +30,7 @@
     {{ form_row(form.customFieldsGroup) }}
     {% endif %}
     {{ form_row(form.ordering) }}
+    {{ form_row(form.required) }}
     {% if form.options is not empty %}
     <h2>{{ 'Options'|trans }}</h2>
     {% for option in form.options %}

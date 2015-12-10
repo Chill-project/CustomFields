@@ -22,6 +22,8 @@ Chill\CustomFieldsBundle\Entity\CustomField:
             type: float
         options:
             type: json_array
+        required:
+            type: boolean
     lifecycleCallbacks: {  }
     manyToOne:
         customFieldGroup:

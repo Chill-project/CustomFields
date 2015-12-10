@@ -22,6 +22,8 @@ namespace Chill\CustomFieldsBundle\Tests;
 use Chill\CustomFieldsBundle\CustomFields\CustomFieldNumber;
 use Symfony\Component\Form\FormBuilderInterface;
 use Chill\CustomFieldsBundle\Entity\CustomField;
+use Chill\CustomFieldsBundle\Entity\CustomFieldsGroup;
+use Chill\CustomFieldsBundle\Form\CustomFieldsGroupType;
 
 /**
  * Test CustomFieldsNumber
@@ -137,6 +139,52 @@ class CustomFieldsNumberTest extends \Symfony\Bundle\FrameworkBundle\Test\WebTes
         $this->assertTrue($form->isSynchronized());
         $this->assertFalse($form->isValid()); 
         $this->assertEquals(1, count($form['default']->getErrors()));
+    }
+    
+    public function testRequiredFieldIsFalse()
+    {
+        $cf = $this->createCustomFieldNumber(array(
+            'min' => 1000,
+            'max' => null,
+            'scale' => null,
+            'post_text' => null
+        ));
+        $cf->setRequired(false);
+        
+        $cfGroup = (new \Chill\CustomFieldsBundle\Entity\CustomFieldsGroup())
+                ->addCustomField($cf);
+        
+        $form = static::$kernel->getContainer()->get('form.factory')
+                ->createBuilder('custom_field', array(), array(
+                    'group' => $cfGroup
+                ))
+            ->getForm();
+        
+        $this->assertFalse($form['default']->isRequired(),
+                "The field should not be required");
+    }
+    
+    public function testRequiredFieldIsTrue()
+    {
+        $cf = $this->createCustomFieldNumber(array(
+            'min' => 1000,
+            'max' => null,
+            'scale' => null,
+            'post_text' => null
+        ));
+        $cf->setRequired(true);
+        
+        $cfGroup = (new \Chill\CustomFieldsBundle\Entity\CustomFieldsGroup())
+                ->addCustomField($cf);
+        
+        $form = static::$kernel->getContainer()->get('form.factory')
+                ->createBuilder('custom_field', array(), array(
+                    'group' => $cfGroup
+                ))
+            ->getForm();
+        
+        $this->assertTrue($form['default']->isRequired(),
+                "The field should be required");
     }
     
     

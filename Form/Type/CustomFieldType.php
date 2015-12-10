@@ -20,6 +20,7 @@ use Chill\CustomFieldsBundle\Service\CustomFieldProvider;
 use Chill\CustomFieldsBundle\Form\DataTransformer\CustomFieldDataTransformer;
 use Chill\CustomFieldsBundle\Entity\CustomFieldsGroup;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Chill\CustomFieldsBundle\CustomFields\CustomFieldTitle;
 
 class CustomFieldType extends AbstractType
 {
@@ -50,6 +51,7 @@ class CustomFieldType extends AbstractType
             $this->customFieldCompiler
                 ->getCustomFieldByType($cf->getType())
                 ->buildForm($builder, $cf);
+            $builder->get($cf->getSlug())->setRequired($cf->isRequired());
         }
     }
     
