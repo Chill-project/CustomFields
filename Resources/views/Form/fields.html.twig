@@ -95,3 +95,27 @@
 </div>
 
 {% endblock choice_with_other_widget %}
+    
+{# extend the integer type to add post_text extension #}
+{% block integer_widget %}
+{%- if post_text is defined and post_text is not empty-%}
+<div class="input_with_post_text">
+{%- endif -%}
+{{ block('form_widget') }}
+{%- if post_text is defined and post_text is not empty-%}
+<span class="cf_post_text">{{ post_text }}</span>
+</div>
+{%- endif -%}
+{% endblock %}
+
+{# extend the number type to add post_text extension #}
+{% block number_widget %}
+{%- if post_text is defined and post_text is not empty-%}
+<div class="input_with_post_text">
+{%- endif -%}
+{{ block('form_widget') }}
+{%- if post_text is defined and post_text is not empty-%}
+<span class="cf_post_text">{{ post_text }}</span>
+</div>
+{%- endif -%}
+{% endblock %}

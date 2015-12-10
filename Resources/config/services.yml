@@ -39,6 +39,24 @@ services:
             - "@chill.main.helper.translatable_string"
         tags:
             - { name: 'chill.custom_field', type: 'text' }
+            
+    chill.custom_field.number:
+        class: Chill\CustomFieldsBundle\CustomFields\CustomFieldNumber
+        arguments:
+            - "@templating"
+            - "@chill.main.helper.translatable_string"
+        tags:
+            - { name: 'chill.custom_field', type: 'number' }
+            
+    chill.form_extension.post_text_integer:
+        class: Chill\CustomFieldsBundle\Form\Extension\PostTextIntegerExtension
+        tags:
+            - { name: form.type_extension, alias: 'integer' }
+            
+    chill.form_extension.post_text_number:
+        class: Chill\CustomFieldsBundle\Form\Extension\PostTextNumberExtension
+        tags:
+            - { name: form.type_extension, alias: 'number' }
 
     chill.custom_field.choice:
         class: Chill\CustomFieldsBundle\CustomFields\CustomFieldChoice
