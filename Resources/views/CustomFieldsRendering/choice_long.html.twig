@@ -1,0 +1,11 @@
+{% if values|length > 0 %}
+    <ul class="custom_fields long_choice {% if values|length == 1 %}unique{% endif %}">
+        {%- for value in values -%}
+            <li class="long_choice_item long_choice-key-{{ value.key }} long_choice-ikey-{{ value.internalKey }} long_choice-parent-ikey-{{ value.parent.internalKey }}">
+                    <i class="fa fa-check-square-o"></i>&nbsp;{{ value.text|localize_translatable_string }}
+            </li>
+        {%- endfor -%}
+    </ul>
+{% else %}
+    <div class="custom_fields_choice long_choice empty">{{ 'None'|trans }}</div>
+{% endif %}

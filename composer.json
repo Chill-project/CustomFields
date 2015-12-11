@@ -34,8 +34,9 @@
         "chill-project/main": "dev-master"
     },
     "require-dev": {
-        "doctrine/doctrine-fixtures-bundle": "~2.2@dev",
-        "chill-project/person": "dev-master@dev"
+        "chill-project/person": "dev-master@dev",
+        "fzaninotto/faker": "~1",
+        "doctrine/doctrine-fixtures-bundle": "~2.2"
     },
     "scripts": {
         "post-install-cmd": [
