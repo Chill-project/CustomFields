@@ -51,7 +51,10 @@ class CustomFieldsGroupControllerTest extends WebTestCase
     private function editCustomFieldsGroup(Client $client)
     {
         $crawler = $client->request('GET', '/fr/admin/customfieldsgroup/');
-        $crawler = $client->click($crawler->selectLink('modifier')->link());
+        $links = $crawler->selectLink('modifier');
+        $crawler = $client->click($links->last()->link());
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
         
         $form = $crawler->selectButton('Update')->form(array(
             'custom_fields_group[name][fr]'  => 'Foo',

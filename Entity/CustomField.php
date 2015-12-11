@@ -60,6 +60,12 @@ class CustomField
      */
     private $ordering;
     
+    /**
+     *
+     * @var bolean
+     */
+    private $required = FALSE;
+    
     
     const ONE_TO_ONE = 1;
     const ONE_TO_MANY = 2;
@@ -246,6 +252,34 @@ class CustomField
         $this->slug = $slug;
         return $this;
     }
+    
+    /**
+     * alias for isRequired
+     * 
+     * @return boolean
+     */
+    public function getRequired()
+    {
+        return $this->isRequired();
+    }
+    
+    /**
+     * return true if the field required
+     * 
+     * @return boolean
+     */
+    public function isRequired()
+    {
+        return $this->required;
+    }
+
+    public function setRequired($required)
+    {
+        $this->required = $required;
+        return $this;
+    }
+
+
 
 
 }

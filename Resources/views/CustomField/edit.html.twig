@@ -29,6 +29,7 @@
     {{ form_row(edit_form.customFieldsGroup) }}
     {% endif %}
     {{ form_row(edit_form.ordering) }}
+    {{ form_row(edit_form.required) }}
     {% if edit_form.options is not empty %}
     <h2>{{ 'Options'|trans }}</h2>
     {% for option in edit_form.options %}
