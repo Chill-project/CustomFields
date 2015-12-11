@@ -108,3 +108,19 @@ services:
             - [setContainer, ["@service_container"]]
         tags:
             - { name: twig.extension }
+            
+    chill.custom_field.custom_field_long_choice:
+        class: Chill\CustomFieldsBundle\CustomFields\CustomFieldLongChoice
+        arguments:
+            - "@chill.custom_field.custom_field_long_choice_option_repository"
+            - "@chill.main.helper.translatable_string"
+            - "@templating"
+        tags:
+            - { name: 'chill.custom_field', type: 'long_choice' }
+            
+    chill.custom_field.custom_field_long_choice_option_repository:
+        class: Chill\CustomFieldsBundle\EntityRepository\CustomFieldLongChoice\OptionRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - "Chill\CustomFieldsBundle\Entity\CustomFieldLongChoice\Option"
+        

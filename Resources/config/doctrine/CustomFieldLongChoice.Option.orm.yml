@@ -1,0 +1,33 @@
+Chill\CustomFieldsBundle\Entity\CustomFieldLongChoice\Option:
+    type: entity
+    table: custom_field_long_choice_options
+    repositoryClass: Chill\CustomFieldsBundle\EntityRepository\CustomFieldLongChoice\OptionRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator: 
+                strategy: AUTO
+    fields:
+        key:
+            type: string
+            length: 15
+        text:
+            type: json_array
+        internalKey:
+            type: string
+            length: 50
+            column: internal_key
+        active:
+            type: boolean
+            default: true
+    oneToMany:
+        children:
+            targetEntity: Chill\CustomFieldsBundle\Entity\CustomFieldLongChoice\Option
+            mappedBy: parent
+    manyToOne:
+        parent:
+            targetEntity: Chill\CustomFieldsBundle\Entity\CustomFieldLongChoice\Option
+            inversedBy: children
+            nullable: true
+        
