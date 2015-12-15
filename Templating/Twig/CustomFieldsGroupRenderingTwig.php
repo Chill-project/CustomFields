@@ -37,14 +37,24 @@ use Chill\CustomFieldsBundle\Entity\CustomField;
  */
 class CustomFieldsGroupRenderingTwig extends \Twig_Extension implements ContainerAwareInterface
 {
-
+    
     /** @var Container $container The container */
     private $container;
     
     /** @var array $defaultParams The default parameters */
     private $defaultParams = array(
-        'layout' => 'ChillCustomFieldsBundle:CustomFieldsGroup:render.html.twig'
+        'layout' => 'ChillCustomFieldsBundle:CustomFieldsGroup:render.html.twig',
+        'show_empty' => True
     );
+    
+    /**
+     * 
+     * @param boolean $showEmptyValues whether the empty values must be rendered
+     */
+    public function __construct($showEmptyValues)
+    {
+        $this->defaultParams['show_empty'] = $showEmptyValues;
+    }
     
     /*
      * (non-PHPdoc)
@@ -92,6 +102,7 @@ class CustomFieldsGroupRenderingTwig extends \Twig_Extension implements Containe
      * @param array $params The parameters for rendering : 
      *  - layout : allow to choose a different layout by default :
      *             ChillCustomFieldsBundle:CustomFieldsGroup:render.html.twig
+     *  - show_empty : force show empty field
      * @return string HTML representation of the custom field group value, as described in 
      * the CustomFieldInterface. Is HTML safe
      */
@@ -102,6 +113,7 @@ class CustomFieldsGroupRenderingTwig extends \Twig_Extension implements Containe
         return $this->container->get('templating')
             ->render($resolvedParams['layout'], array(
             	'cFGroup' => $customFielsGroup,
-            	'cFData' => $fields));
+            	'cFData' => $fields,
+                'show_empty' => $resolvedParams['show_empty']));
     }
 }

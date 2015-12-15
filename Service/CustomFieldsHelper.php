@@ -137,6 +137,17 @@ class CustomFieldsHelper
             : null;
     }
     
+    public function isEmptyValue(array $fields, $classOrCustomField, $slug = null)
+    {
+        $customField = ($classOrCustomField instanceof CustomField) ? $classOrCustomField : $this->getCustomField($classOrCustomField, $slug);
+        $slug = $customField->getSlug();
+        $rawValue = (isset($fields[$slug])) ? $fields[$slug] : null;
+        
+        $customFieldType =  $this->provider->getCustomFieldByType($customField->getType());
+        
+        return $customFieldType->isEmptyValue($rawValue, $customField);
+    }
+    
     /**
      * Render the value of a custom field
      * 
@@ -144,16 +155,17 @@ class CustomFieldsHelper
      * @param CustomField|object|string $classOrCustomField the object OR the get_class($object) string OR The CustomField
      * @param string $documentType The type of document in which the rendered value is displayed ('html' or 'csv').
      * @param string $slug The slug of the custom field to render.
+     * @param boolean $showIfEmpty If the widget must be rendered if the value is empty. An empty value is all values described as http://php.net/manual/fr/function.empty.php, except `FALSE`
      * @throws CustomFieldsHelperException if slug is missing
      * @return The representation of the value the customField.
      */
-    public function renderCustomField(array $fields, $classOrCustomField, $documentType='html', $slug = null)
+    public function renderCustomField(array $fields, $classOrCustomField, $documentType='html', $slug = null, $showIfEmpty = true)
     {
         $customField = ($classOrCustomField instanceof CustomField) ? $classOrCustomField : $this->getCustomField($classOrCustomField, $slug);
         $slug = $customField->getSlug();
         $rawValue = (isset($fields[$slug])) ? $fields[$slug] : null;
+        $customFieldType =  $this->provider->getCustomFieldByType($customField->getType());
         
-        return $this->provider->getCustomFieldByType($customField->getType())
-            ->render($rawValue, $customField, $documentType);
+        return $customFieldType->render($rawValue, $customField, $documentType);
     }
 }

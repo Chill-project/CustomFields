@@ -58,4 +58,12 @@ interface CustomFieldInterface
      * @return \Symfony\Component\Form\FormTypeInterface|null the form type
      */
     public function buildOptionsForm(FormBuilderInterface $builder);
+    
+    /**
+     * Return if the value can be considered as empty
+     * 
+     * @param mixed $value the value passed throug the deserialize function
+     * @param CustomField $customField
+     */
+    public function isEmptyValue($value, CustomField $customField);
 }

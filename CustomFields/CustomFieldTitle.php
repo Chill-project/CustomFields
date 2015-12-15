@@ -28,7 +28,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 use Chill\MainBundle\Templating\TranslatableStringHelper;
 
-class CustomFieldTitle implements CustomFieldInterface
+class CustomFieldTitle extends AbstractCustomField
 {
     const TYPE = 'type';
     const TYPE_TITLE = 'title';
@@ -91,6 +91,11 @@ class CustomFieldTitle implements CustomFieldInterface
     public function getName()
     {
         return 'title';
+    }
+    
+    public function isEmptyValue($value, CustomField $customField)
+    {
+        return false;
     }
 
     public function buildOptionsForm(FormBuilderInterface $builder)

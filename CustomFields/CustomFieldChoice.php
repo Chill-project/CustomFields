@@ -38,7 +38,7 @@ use Symfony\Component\Translation\Translator;
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
  * @author Marc Ducobu <marc@champs-libes.coop>
  */
-class CustomFieldChoice implements CustomFieldInterface
+class CustomFieldChoice extends AbstractCustomField
 {
     const ALLOW_OTHER = 'other';
     const OTHER_VALUE_LABEL = 'otherValueLabel';
@@ -173,6 +173,11 @@ class CustomFieldChoice implements CustomFieldInterface
     public function getName()
     {
         return 'Choices';
+    }
+    
+    public function isEmptyValue($value, CustomField $customField)
+    {
+        return $value['_choices'] === NULL;
     }
 
     /**

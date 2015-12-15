@@ -2,7 +2,9 @@
     {% if customField.type == 'title' %}
         {{ chill_custom_field_widget(cFData , customField) }}
     {% else %}
+        {%- if show_empty == true or (chill_custom_field_is_empty(customField, cFData) == false) -%}
         <dt>{{ chill_custom_field_label(customField) }}</dt>
         <dd>{{ chill_custom_field_widget(cFData , customField) }}</dd>
-    {% endif %}
+        {%- endif -%}
+    {%- endif -%}
 {% endfor %}

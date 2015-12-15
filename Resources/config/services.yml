@@ -106,6 +106,8 @@ services:
         class: Chill\CustomFieldsBundle\Templating\Twig\CustomFieldsGroupRenderingTwig
         calls:
             - [setContainer, ["@service_container"]]
+        arguments:
+            - "%chill_custom_fields.show_empty_values%"
         tags:
             - { name: twig.extension }
             

@@ -33,7 +33,7 @@ use Symfony\Bridge\Twig\TwigEngine;
  *
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
  */
-class CustomFieldLongChoice implements CustomFieldInterface
+class CustomFieldLongChoice extends AbstractCustomField
 {
     /**
      *

@@ -33,6 +33,8 @@ class ChillCustomFieldsExtension extends Extension implements PrependExtensionIn
         
         $container->setParameter('chill_custom_fields.customizables_entities', 
                 $config['customizables_entities']);
+        $container->setParameter('chill_custom_fields.show_empty_values', 
+                $config['show_empty_values_in_views']);
     }
     
      /* (non-PHPdoc)

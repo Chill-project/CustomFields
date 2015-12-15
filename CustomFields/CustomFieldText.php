@@ -33,7 +33,7 @@ use Chill\MainBundle\Templating\TranslatableStringHelper;
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
  * @author Marc Ducobu <marc@champs-libres.coop>
  */
-class CustomFieldText implements CustomFieldInterface
+class CustomFieldText extends AbstractCustomField
 {
     
     private $requestStack;

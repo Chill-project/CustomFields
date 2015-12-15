@@ -76,8 +76,19 @@ class CustomFieldRenderingTwig extends \Twig_Extension implements ContainerAware
                 'is_safe' => array(
                     'html'
                 )
+            )),
+            new \Twig_SimpleFunction('chill_custom_field_is_empty', array(
+                $this,
+                'isEmptyValue'
             ))
         ];
+    }
+    
+    
+    public function isEmptyValue($customFieldorClass, $fields, $slug = null)
+    {
+        return $this->container->get('chill.custom_field.helper')
+            ->isEmptyValue($fields, $customFieldorClass);
     }
     
     /* (non-PHPdoc)

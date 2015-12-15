@@ -39,7 +39,7 @@ use Chill\MainBundle\Templating\TranslatableStringHelper;
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
  * @author Marc Ducobu <marc@champs-libres.coop>
  */
-class CustomFieldNumber implements CustomFieldInterface
+class CustomFieldNumber extends AbstractCustomField
 {
     /**
      * key for the minimal value of the field
