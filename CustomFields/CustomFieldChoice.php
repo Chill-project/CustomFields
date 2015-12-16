@@ -177,7 +177,35 @@ class CustomFieldChoice extends AbstractCustomField
     
     public function isEmptyValue($value, CustomField $customField)
     {
-        return $value['_choices'] === NULL;
+        if ($value === NULL) {
+            return true;
+        }
+        
+        // if only one choice...
+        if (is_string($value)) {
+            return empty($value);
+        }
+        
+        // if multiple choice OR multiple/single choice with other
+        if (is_array($value))
+        {
+            // if allow other
+            if (isset($value['_choices'])) {
+                if ($value['_choices'] === NULL) {
+                    return true;
+                }
+                if (is_string($value['_choices'])) {
+                    return empty($value);
+                }
+                if (is_array($value['_choices'])){
+                    return count($value['_choices']) > 0;
+                }
+            } else { // we do not have 'allow other'
+                return count($value) > .0;
+            }
+        }
+        
+        throw \LogicException("This case is not expected.");
     }
 
     /**
