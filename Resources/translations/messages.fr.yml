@@ -2,6 +2,10 @@
 'Other value': 'Autre valeur'
 'None': 'Pas spécifié'
 
+#customfieldsgroup rendering
+Empty data: Données vides
+No data to show: Pas de valeurs à afficher
+
 #customfieldsgroup administration
 CustomFieldsGroup list: Groupes de champs personnalisés
 CustomFieldsGroup creation: Nouveau groupe de champs personnalisés

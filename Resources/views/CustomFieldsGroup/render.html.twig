@@ -1,10 +1,43 @@
+{#- a customField element will be stored in title variable -#}
+{%- set title = null -%}
+{#- a customField element will be stored in subtitle variable -#}
+{%- set subtitle = null -%}
+{%- set type = constant('Chill\\CustomFieldsBundle\\CustomFields\\CustomFieldTitle::TYPE') -%}
+{%- set type_subtitle = constant('Chill\\CustomFieldsBundle\\CustomFields\\CustomFieldTitle::TYPE_SUBTITLE') -%}
+{%- set type_title = constant('Chill\\CustomFieldsBundle\\CustomFields\\CustomFieldTitle::TYPE_TITLE') -%}
+{# a variable to store that "something has been printed #}
+{%- set something_has_been_printed = false -%}
 {% for customField in cFGroup.activeCustomFields %}
     {% if customField.type == 'title' %}
+        {%- if show_empty == true %}
         {{ chill_custom_field_widget(cFData , customField) }}
+        {%- else -%}
+            {# we keep the customfield in memory, and print it only if 'something' has been filled after the title #}
+            {%- if customField.options[type] == type_title -%}
+                {%- set title = customField -%}
+                {# we have to reset the title hierarchy if we misused titles hierarchy #}
+                {%- set subtitle = null -%}
+            {%- elseif customField.options[type] == type_subtitle -%}
+                {%- set subtitle = customField -%}
+            {%- endif -%}
+        {%- endif -%}
     {% else %}
         {%- if show_empty == true or (chill_custom_field_is_empty(customField, cFData) == false) -%}
-        <dt>{{ chill_custom_field_label(customField) }}</dt>
-        <dd>{{ chill_custom_field_widget(cFData , customField) }}</dd>
+            {%- if title is not empty -%}
+                {{ chill_custom_field_widget(cFData, title) }}
+                {%- set title = null -%}
+            {%- endif -%}
+            {%- if subtitle is not empty -%}
+                {{ chill_custom_field_widget(cFData, subtitle) }}
+                {%- set subtitle = null -%}
+            {%- endif -%}
+        <dt class="custom_fields_group_rendering">{{ chill_custom_field_label(customField) }}</dt>
+        <dd class="custom_fields_group_rendering">{{ chill_custom_field_widget(cFData , customField) }}</dd>
+        {%- set something_has_been_printed = true -%}
         {%- endif -%}
     {%- endif -%}
 {% endfor %}
+{% if something_has_been_printed == false %}
+    <dt class="custom_field_no_data custom_fields_group_rendering">{{ 'Empty data'|trans }}</dt>
+    <dd class="custom_field_no_data custom_fields_group_rendering">{{ 'No data to show' | trans }}</dd>
+{% endif %}
